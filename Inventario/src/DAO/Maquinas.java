@@ -48,7 +48,7 @@ public class Maquinas extends Thread
 	
 	private Maquinas()
 	{
-		
+		 
 	}
 	
 	public static Maquinas getInstance()

@@ -1,0 +1,81 @@
+
+
+
+package Controle;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import DAO.ServicoPersistencia;
+import Entidades.SO;
+
+
+@WebServlet("/VerMaquina")
+public class VerMaquina extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+    private DAO.ServicoPersistencia servico;
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		
+		
+		SO sistema = new SO();
+		sistema.setArquitetura("64 bits");
+		sistema.setAtualizacao("SP1");
+		sistema.setNome("Windows 7 Ultimate");
+		sistema.setVersao("6.1");
+		
+		
+		request.setAttribute("sistema", sistema);
+		
+		request.getRequestDispatcher("/inventario.jsp").forward(request,response);
+	}
+	
+	@SuppressWarnings("unused")
+	private void setDAO(ServicoPersistencia servico)
+	{
+		this.servico=servico;
+	}
+	
+	
+
+
+}
+
+
+
+
+<table class="table">
+																	
+												<tr>
+													<th>Nome </th>
+													<th>Versão </th>
+													<th>Arquitetura </th>
+													<th>Última Atualização</th>
+												</tr>
+																			
+												<tr>
+													<%	
+													if (request.getAttribute("sistema")!=null){
+														SO sistema =(SO)request.getAttribute("sistema");
+													//SO sistema = new SO("Windows 7","7.1","64 bits","SP1");
+													
+													%>
+														
+													<td><%=sistema.getNome() %> </td>
+													<td><%=sistema.getVersao() %></td>
+													<td><%=sistema.getArquitetura()%></td>
+													<td><%=sistema.getAtualizacao()%></td>
+													
+													<%} %>
+												</tr>
+																			
+												 				
+																			
+																			
+											</table>

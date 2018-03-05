@@ -1,0 +1,66 @@
+
+
+1 Manter informações de máquinas , referentes a sistema operacional,programas instalados , hardware, usuários.
+2 Manter informações sobre o bom funcionamento das máquinas. Em caso de informação de mal funcionamente, emitir
+algum tipo de alarme ao administrador do sistema.
+
+
+- Manter informações de máquina referentes ao sistema operacional executado, programas instalados, hardware.
+- Manter informações sobre o bom funcionamento do sistema. Em caso de mal funcionamento, emitir alarme
+ao administrador do sistema;
+
+- Manter informações detalhadas de softwares instalados na máquina como nome, versão, arquitetura de sistema,
+data de instalação, data de ultima atualização, data de expiração de licença;
+
+- Problema : Para que uma máquina cliente seja registrada no servidor pela primeira vez
+			 - Verificar se máquina já foi registrada com outro nome - Podemos fazer isso utilizando o endereço mac 
+			 	- caso positivo : atualizar nome
+			 	- caso negativo : registrar normalmente.	
+
+			Caso a máquina não tenha registro será negado acesso até que o programa cliente seja instalado e seja crido 
+			o registro. 
+			
+
+Primeira idéia:
+	- Maquina cliente solicita instalação
+	- servidor verifica se maquina já tem registro
+	- caso ainda não , envia ao cliente numero de registro
+	- cliente recebe registro e grava essa informação , em seguida responde ao servidor que tudo ok
+	- servidor finaliza processo de inclusão de maquina e responde ao cliente que tudo ok
+	- caso o cliente não receba informação solicita novamente validação.
+
+
+Requisitos do servidor
+-----------------------
+
+	Receber requisição via socket 
+	Autenticar maquina usando codigo 
+	Criar um fila de espera onde os objetos aguardarão para serem armazenados no banco de dados
+	Verificar se objeto já está na fila, caso esteja, atualizar dados do objeto na fila, antes de inserir o mesmo no banco
+	Mater objetos em banco dados
+	
+	Receber requisição via browser
+	Autenticar usuario via servlet e consulta em banco
+	Criar novos usuários e definir seu nível de acesso
+	Realizar querys 
+	Editar E criar registros em tabelas específicas  (Inventário , Usuários , )
+    ...	
+		 
+
+Gerenciamento de Servidor e Usuários
+--------------------------
+
+Gerenciamento de Usuários
+-------------------------
+
+	- Listagem de usuários
+	- Mudança de nível de Permissão de Acesso
+	- Verificação de Histórico de acesso
+	
+
+Gerenciamento de Servidor
+-------------------------
+
+	- 
+	
+				

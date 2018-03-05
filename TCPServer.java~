@@ -1,0 +1,111 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+
+public class TCPServer {
+	
+	public static void main(String args[])throws Exception{
+		
+		
+		
+		int porta = Integer.parseInt(Util.LePropriedades.lePropriedade("porta"));
+		
+		ServerSocket serverSocket=new ServerSocket(porta);
+		Socket clientSocket =serverSocket.accept();
+		
+		InputStream socketIn=clientSocket.getInputStream();
+		DataInputStream din=new DataInputStream(socketIn);
+		
+		int valor =din.readInt();
+		System.out.println("Servidor : Recebeu valor :"+valor);
+		valor++;
+		
+		OutputStream socketOut=clientSocket.getOutputStream();
+		DataOutputStream dout=new DataOutputStream(socketOut);
+		dout.writeInt(valor);
+		System.out.println("Servidor : Enviou o valor :"+valor);
+			
+		
+		
+	}
+	
+
+}
+
+
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.util.Properties;
+
+
+public class TCPCLient {
+	
+	public static void main(String args[])throws Exception{
+		
+		String servidor=Util.LePropriedades.lePropriedade("servidor");
+		int porta=Integer.parseInt(Util.LePropriedades.lePropriedade("porta"));
+						
+		try (Socket socket=new Socket(servidor,porta)){
+			
+		
+		int valor=5;
+		
+		//Saida para o servidor 
+		//Criado Stream de saida e apontado para o socket
+		//Objeto DataOutputStream para facilitar manipulação de mais alto nivel
+		//escrita do valor no socket
+		
+		OutputStream socketOut=socket.getOutputStream();
+		DataOutputStream dout = new DataOutputStream(socketOut);
+		dout.writeInt(valor);
+		
+		System.out.println("Cliente : Valor "+valor+" enviado para o servidor .");
+		
+		//aberto stream e apontado para socket de entrada de dados
+		//criado objeto para facilitar manipulação de dados de alto nivel
+		//lido valor do DataInputStream que veio do servidor
+		
+		InputStream socketIn=socket.getInputStream();
+		DataInputStream din =new DataInputStream(socketIn);
+		int valorIncrementado=din.readInt();
+		System.out.println("Cliente : Valor recebido do servirdor"+valorIncrementado);
+		
+		
+	   }
+	}
+
+}
+
+
+// Arquivo de propriedades;
+
+package Util;
+
+import java.io.FileInputStream;
+import java.util.Properties;
+
+public class LePropriedades {
+	
+	public static String lePropriedade(String propriedade) throws Exception{
+		
+		Properties prop=new Properties();
+		FileInputStream fis = new FileInputStream("propriedades.txt");
+		prop.load(fis);
+		
+		String valorDeRetorno=prop.getProperty(propriedade);
+		
+		return valorDeRetorno;
+		
+	}
+
+}
+

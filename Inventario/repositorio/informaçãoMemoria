@@ -1,0 +1,109 @@
+' (0 ou > 21 = dd3  , 21 = ddr2  , 20 = ddr  ,  1-19 = NON DDR)
+
+Informações sobre produtos instalados
+wmic product get name,version /format:htable >> x:\%computername%.html
+ 
+Serviços em execução
+WMIC SERVICE WHERE (state=”running”) get caption, state, name, startname /format:htable >> x:\%computername%.html
+Compartilhamentos existentes no computador
+wmic share get caption,name,path /format:htable >> x:\%computername%.html
+ 
+Informações relacionadas ao CPU
+wmic cpu get deviceID, Addresswidth, MaxClockSpeed, Name, Manufacturer, ProcessorID /format:htable x:\%computername%.html
+ 
+Informações relacionadas a Discos
+wmic logicaldisk where drivetype=3 get name, freespace, systemname, filesystem, size, volumeserialnumber /format:htable x:\%computername%.html
+ 
+ 
+Informações relacionadas a memoria
+wmic memlogical get AvailableVirtualMemory, TotalPhysicalMemory, TotalVirtualMemory /format:htable x:\%computername%.html
+Informações relacionadas as interfaces de rede
+wmic nicconfig where “IPEnabled = ‘TRUE’” get caption, macaddress, ipaddress, DefaultIPGateway /format:htable x:\%computername%.html
+Agora vamos desconectar a unidade mapeada no fim do script
+ 
+Net use x: /del
+Salve o arquivo texto com a extensão .bat e defina como script de logon para obter as informações desejadas.
+Para obter mais informações basta utilizar o ajuda do comando
+Wmic /?
+Segue abaixo algumas possibilidades retiradas da ajuda do comando
+ALIAS                    – Acesso aos aliases disponíveis no sistema local
+BASEBOARD                – Gerenciamento de placa base (tambem conhecida como placa-mãe ou placa do sistema).
+BIOS                     – Gerenciamento de BIOS (Basic input/output services).
+BOOTCONFIG               – Gerenciamento de configurações o de inicialização.
+CDROM                    – Gerenciamento de CD-ROM.
+COMPUTERSYSTEM           – Gerenciamento do sistema do computador.
+CPU                      – Gerenciamento de CPU.
+CSPRODUCT                – Informações sobre produtos do sistema de computador de SMBIOS.
+DATAFILE                 – Gerenciamento de DataFile.
+DCOMAPP                  – Gerenciamento de Aplicativo DCOM.
+DESKTOP                  – Gerenciamento da área  de Trabalho do Usuário.
+DESKTOPMONITOR           – Gerenciamento de Monitor da área de Trabalho.
+DEVICEMEMORYADDRESS      – Gerenciamento de endereços de memória de dispositivo.
+DISKDRIVE                – Gerenciamento de unidades de disco físicas.
+DISKQUOTA                – Uso de espaço em disco para volumes NTFS.
+DMACHANNEL               – Gerenciamento de canal de DMA (Direct memory access).
+ENVIRONMENT              – Gerenciamento de configurações de ambiente do sistema.
+FSDIR                    – Gerenciamento de entrada de diretório de Filesystem.
+GROUP                    – Gerenciamento de contas de grupo.
+IDECONTROLLER            – Gerenciamento de Controlador IDE.
+IRQ                      – Gerenciamento de IRQ.
+JOB                      – Fornece acesso aos trabalhos agendados usando o serviço de agendamento.
+LOADORDER                – Gerenciamento de serviço do sistema que definem dependências de execução.
+LOGICALDISK              – Gerenciamento de dispositivo de armazenamento local.
+LOGON                    – Sessões de LOGON.
+MEMCACHE                 – Gerenciamento de memória cache.
+MEMORYCHIP               – Informações de chip de memória.
+MEMPHYSICAL              – Gerenciamento de memória física do sistema de computador.
+NETCLIENT                – Gerenciamento de Cliente de Rede.
+NETLOGIN                 – Gerenciamento de informações  de logon na rede (em relação a um usuario específico).
+NETPROTOCOL              – Gerenciamento de protocolos (e suas características de rede).
+NETUSE                   – Gerenciamento de conexão de rede ativa.
+NIC                      – Gerenciamento do Controlador de Interface de Rede (NIC).
+NICCONFIG                – Gerenciamento de adaptadores de rede.
+NTDOMAIN                 – Gerenciamento de Dom¡nio NT.
+NTEVENT                  – Entradas no Log de Eventos do NT.
+NTEVENTLOG               – Gerenciamento de arquivo de log de eventos NT.
+ONBOARDDEVICE            – Gerenciamento de dispositivos de adaptador comuns internos da placa-mae(placa do sistema).
+OS                       – Gerenciamento de Sistemas Operacionais instalados.
+PAGEFILE                 – Gerenciamento de troca de arquivo da memória virtual.
+PAGEFILESET              – Gerenciamento de configurações de arquivo de paginação.
+PARTITION                – Gerenciamento de  reas particionadas de um disco físico.
+PORT                     – Gerenciamento de porta de E/S.
+PORTCONNECTOR            – Gerenciamento de portas de conexão física.
+PRINTER                  – Gerenciamento de dispositivos de impressora.
+PRINTERCONFIG            – Gerenciamento de configurações de dispositivo de impressora.
+PRINTJOB                 – Gerenciamento de trabalhos de impressão.
+PROCESS                  – Gerenciamento de processos.
+PRODUCT                  – Gerenciamento de tarefas de pacote de instalações.
+QFE                      – Quick Fix Engineering.
+QUOTASETTING             – Definindo informações  de cotas de disco em um volume.
+RDACCOUNT                – Gerenciamento de permissões de conexão da µárea de Trabalho Remota.
+RDNIC                    – Gerenciamento de conexão da µárea de Trabalho Remota em um adaptador de rede específico.
+RDPERMISSIONS            – Permissões  para uma conexão específica da µárea de Trabalho Remota.
+RDTOGGLE                 – Ativando ou desativando remotamente o ouvinte da µárea de Trabalho Remota.
+RECOVEROS                – Informações  que serão coletadas da memória quando o sistema operacional falhar.
+REGISTRY                 – Gerenciamento do Registro do sistema do computador.
+SCSICONTROLLER           – Gerenciamento de Controlador SCSI.
+SERVER                   – Gerenciamento de informações  de servidor.
+SERVICE                  – Gerenciamento de aplicativos de serviço.
+SHADOWCOPY               – Gerenciamento de cópia de sombra.
+SHADOWSTORAGE            – Gerenciamento de área de armazenamento de cópia de sombra.
+SHARE                    – Gerenciamento de recursos compartilhados.
+SOFTWAREELEMENT          – Gerenciamento dos elementos de um produto de software instalado em um sistema.
+SOFTWAREFEATURE          – Gerenciamento de subconjuntos de produtos de software de SoftwareElement.
+SOUNDDEV                 – Gerenciamento de Dispositivos de Som.
+STARTUP                  – Gerenciamento de comandos que são executados automaticamente quando os usuarios fazem logon no sistema de computador.
+SYSACCOUNT               – Gerenciamento de conta do sistema.
+SYSDRIVER                – Gerenciamento do driver do sistema para um serviço de base.
+SYSTEMENCLOSURE          – Gerenciamento de compartimento fisico do sistema.
+SYSTEMSLOT               – Gerenciamento de pontos de conexão fisicos, inclusive portas, slots e periféricos e de pontos de conexão patenteados.
+TAPEDRIVE                – Gerenciamento de unidade de fita.
+TEMPERATURE              – Gerenciamento de dados de um sensor de temperatura (termômetro eletrônico).
+TIMEZONE                 – Gerenciamento de dados de fuso horario.
+UPS                      – Gerenciamento de no-break.
+USERACCOUNT              – Gerenciamento de contas de usuario.
+VOLTAGE                  – Gerenciamento de dados de sensor de voltagem (voltímetro eletrônico).
+VOLUME                   – Gerenciamento de armazenamento de volume local.
+VOLUMEQUOTASETTING       – Associa a configurações de cota de disco a um volume de disco específico.
+VOLUMEUSERQUOTA          – Gerenciamento de cota de volume de armazenamento por usuário.
+WMISET                   – Gerenciamento de parâmetros operacionais do serviço WMI.

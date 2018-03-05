@@ -1,0 +1,17 @@
+
+Possível caminho para monitoração de instação de novos programas e erros do sistema:
+C:\Windows\Panther\UnattendGC
+setupact.log
+setuperr.log
+-------------------------------------------------------------------------------------
+Pois os mesmos foram alterados em datas em que houve instalação de novos programas
+e erros do sistema.  No Windows 10
+
+--------------------------------------------------------------------------------------
+
+C:\Windows\Logs\WindowsUpdate
+
+
+
+
+

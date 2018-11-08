@@ -97,6 +97,4 @@ public class Atendente
 	{
 		return fila.getTamanho();
 	}
-	
-	
 }

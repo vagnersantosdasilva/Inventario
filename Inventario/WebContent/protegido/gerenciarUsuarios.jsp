@@ -33,8 +33,8 @@
 </head>
 <body>
 	
-	<div id="container">
-	  
+	
+	<div class="navegacao"> 
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
        	 <div class="container">
@@ -74,8 +74,8 @@
             </ul>
           </div>  <!-- /.navbar-top-links -->
 		</nav>
-		
-	</div>
+	</div>	
+	
 	
 	<div class="container">
 	<br><br>
@@ -95,8 +95,8 @@
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <table width="99%" class="table table-striped table-bordered table-hover" id="dataTables">
-                              
+                            <!--  <table width="99%" class="table table-striped table-bordered table-hover" id="dataTables">-->
+                            <table  class="table table-bordered table-hover" >  
                                 <thead>
                                     <tr>
                                         <th>Nome de Usuário</th>
@@ -137,11 +137,12 @@
 	</div>
 	
 	<footer>
-			<p>&copy; Company 2017</p>
+			<center><p>&copy; Company 2017</p></center>
 			<br><br>
 	</footer>
 
 <!-- Modal Licenca-->
+	
 	<div id="myModalUsuarios" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 		    <!-- Modal content-->
@@ -201,15 +202,77 @@
 						  <div class="modal-body">
 						    Está seguro disso?
 						  </div>
+						  <input type="hidden" name="nome" class="form-control " id="rnome"  >
 						  <div class="modal-footer">
-						    <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete">Delete</button>
+						    <button type="button" data-dismiss="modal" class="btn btn-primary delete"  id="delete" >Delete</button>
 						    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
 						  </div>
 				 	</div>
 			 </div>
 		</div>
+		
+		
 	 
 <!-- ################################################################################################################################################ -->
+		 <div id="carregando" class="modal fade" role="dialog" >
+			 <div class="modal-dialog modal-sm">
+				 	<div class="modal-content">
+						  <div class="modal-header">
+								
+								<h4 class="modal-title">Processando...</h4>
+						  </div>
+						  <div class="modal-body">
+   								<center> <img src="/Inventario/suporte/images/spinner3.gif"/></center>
+						  </div>
+					  <div class="modal-footer">
+						   
+					  </div>	 
+						
+				 	</div>
+			 </div>
+		</div>
+		
+		<div id="erro" class="modal fade" role="dialog">
+			 <div class="modal-dialog">
+				 	<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" id="btn-fechar-x">&times;</button>
+							<h4 class="modal-title">Configuração de Usuários</h4>
+						</div>
+						  <div class="modal-body">
+						    <p>Um erro ocorreu ao tentar excluir o registro!</p>
+						  </div>
+						  <input type="hidden" name="nome" class="form-control " id="rnome"  >
+						  <div class="modal-footer">
+						    
+						    <button type="button" data-dismiss="modal" class="btn">Fechar</button>
+						  </div>
+				 	</div>
+			 </div>
+		</div>
+		<div id="mensagem" class="modal fade" role="dialog">
+			 <div class="modal-dialog">
+				 	<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" id="btn-fechar-x">&times;</button>
+							<h4 class="modal-title">Configuração de Usuários</h4>
+						</div>
+						  <div class="modal-body">
+						    <p>Registro foi excluido com sucesso!</p>
+						  </div>
+						  <input type="hidden" name="nome" class="form-control " id="rnome"  >
+						  <div class="modal-footer">
+						    
+						    <button type="button" data-dismiss="modal" class="btn">Fechar</button>
+						  </div>
+				 	</div>
+			 </div>
+		</div>
+		
+	
+	 
+<!-- ################################################################################################################################################ -->
+	    
 	
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
 	<!-- ><script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -222,42 +285,10 @@
     <script src="/Inventario/suporte/js/jquery.dataTables.min.js"></script>
     <script src="/Inventario/suporte/js/dataTables.bootstrap.js"></script>
     <script src="/Inventario/suporte/js/dataTables.responsive.js"></script>
-	<script src="/Inventario/suporte/js/dataTables.responsive.js"></script>
 	<script src="/Inventario/suporte/js/dataTables.buttons.min.js"></script>
+	<script src="/Inventario/suporte/js/tabelas.js"></script>
 	<!-- Os proximos scripts devem ser transferidos para arquivos .js -->
-	<script charset="UTF-8">
-    $(document).ready(function() {
-        $('#dataTables').DataTable({
-        	"oLanguage":{
-        	    "sEmptyTable": "Nenhum registro encontrado",
-        	    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-        	    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-        	    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-        	    "sInfoPostFix": "",
-        	    "sInfoThousands": ".",
-        	    "sLengthMenu": "_MENU_ resultados",
-        	    "sLoadingRecords": "Carregando...",
-        	    "sProcessing": "Processando...",
-        	    "sZeroRecords": "Nenhum registro encontrado",
-        	    "sSearch": "Pesquisar",
-        	    "oPaginate": {
-        	        "sNext": "Próximo",
-        	        "sPrevious": "Anterior",
-        	        "sFirst": "Primeiro",
-        	        "sLast": "Último"
-        	    },
-        	    "oAria": {
-        	        "sSortAscending": ": Ordenar colunas de forma ascendente",
-        	        "sSortDescending": ": Ordenar colunas de forma descendente"
-        	    }
-        	}
-            
-        });
-	  
-        
-    });
-    </script>
-   <!-- Reset modal caso seja fechado -->
+	
 	<script>
 	$(document).on("hidden.bs.modal", "#myModalUsuarios", function () {
 		
@@ -304,6 +335,8 @@
 	});
 	
 	
+		
+	
 	/*Envio do formulario para servlet*/
 	/* must apply only after HTML has loaded */
 	$(document).ready(function () {
@@ -312,34 +345,59 @@
 	        
 	    });
 	});
+	
+	
 		
 	</script>
 	
 	
 	<script>
 	(function($) {
-		  remove = function(item,contador) {
+		    remove = function(item,contador) {
+		    	var tr = $(item).closest('tr');
+				var contador=contador;
+				//var id = $(this).data('id');
+				var linha = $('#linha' + contador).children(); 
+				var nome = $(linha[0]).text();
+				$("#confirm").modal();
+				$(".delete").on('click', function(){
+					
+					$('#carregando').modal();
+		    		$.post('removerUsuario',{codigo_usuario:nome},function(responseText) {
+						if (responseText=="SUCESSO")
+						{
+								tr.fadeOut(400, function() {
+							      tr.remove();  
+							    });
+							
+								$('#carregando').modal('hide');
+								$('#mensagem').modal();
+								//$("#confirm").modal('hide');
+								//$("#confirm").close();
+						}
+						
+						else
+						{
+							$('#carregando').modal('hide');
+							$("#erro").modal();
+						}
+						
+		            });
+		    	});
+		    	
 			
-		    $("#confirm").modal();
-		    $("#confirm-delete")
-			$.get('removerUsuario',{codigo_usuario:contador},function(responseText) {
-				
-            	atert(responseText);
-                     	
-            });
-            var tr = $(item).closest('tr');
-		    var contador=contador;
-			tr.fadeOut(400, function() {
-		      tr.remove();  
-		    });
-
+			
+		    //$("#confirm").modal();
+		    //$("#confirm-delete");
+			
+           
 		    return false;
 		  }
 		})(jQuery);
 	</script>
 	  
-	
 	<script src="/Inventario/suporte/js/validator.js"></script>
+	
 </body>
 
 

@@ -126,7 +126,7 @@
 		<br><br>
 		<div class="row" align="center">
 	           <div class="col-md-4">
-                    <a href="encomendas.html" class="btn page-scroll">
+                    <a href="/Inventario/protegido/baseDeDados.jsp" class="btn page-scroll">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-square fa-stack-2x text-primary" ></i>
                         <i class="fa fa-database fa-stack-1x fa-inverse"></i>

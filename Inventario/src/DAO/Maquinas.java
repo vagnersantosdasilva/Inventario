@@ -220,14 +220,7 @@ public class Maquinas extends Thread
 		this.listaDeMaquinas.add(maquina);
 	}
 	
-	public List listarMaquinasComInventario(Connection conn)
-	{
-		return null;
-	}
-	public List listarMaquinasSemInventario(Connection conn)
-	{
-		return null;
-	}
+	
 	
 	public void setTotalMaquinas(Connection conn)
 	{

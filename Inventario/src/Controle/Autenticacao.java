@@ -9,8 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import DAO.PropriedadesJDBCDAO;
+import DAO.PropriedadesSGBDDAO;
 import DAO.ServicoDAO;
 import DAO.Usuarios;
+import Entidades.Propriedades;
+import Entidades.PropriedadesJDBC;
+import Entidades.PropriedadesSGBD;
 import Entidades.Usuario;
 
 @WebServlet("/autenticar")
@@ -18,21 +24,22 @@ public class Autenticacao extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException  
 	{
-		ServletContext context = request.getServletContext(); 
-		String path = context.getRealPath("/");
-		String arquivoPropriedades=path+"propriedades.txt";
-		String nomeUsuario= request.getParameter("nomeUsuario");
-		String acesso = request.getParameter("acesso");
-		
-		
-		if ((nomeUsuario=="") || (acesso==""))
-		{
-			response.sendRedirect("login.jsp");
-		}
 		try 
-		{
+		{	
+			ServletContext context = request.getServletContext(); 
+			String path = context.getRealPath("/");
+			Propriedades propriedades = obterPropriedades(path);
+			
+			String nomeUsuario= request.getParameter("nomeUsuario");
+			String acesso = request.getParameter("acesso");
+			
+			
+			if ((nomeUsuario=="") || (acesso==""))
+			{
+				response.sendRedirect("login.jsp");
+			}
 			HttpSession session = request.getSession();
-			ServicoDAO servico = ServicoDAO.getInstace(arquivoPropriedades);
+			ServicoDAO servico = ServicoDAO.getInstace(propriedades);
 			Connection conn = (Connection) servico.obterConexao();
 			Usuarios dao = new Usuarios();
 			Usuario usuario=dao.getUsuario(conn,nomeUsuario,acesso);
@@ -48,7 +55,7 @@ public class Autenticacao extends HttpServlet {
 				System.out.println("Teste de autenticacao teve sucesso");
 				session.setAttribute("usuario", usuario);
 				session.setAttribute("mensagem", "0");
-				response.sendRedirect("/Inventario/protegido/index.html");
+				response.sendRedirect("protegido\\index.html");
 				
 				//response.sendRedirect("/Inventario/protegido/index.html");
 				//request.getRequestDispatcher("protegido/dash/index.html").forward(request,response);
@@ -58,10 +65,22 @@ public class Autenticacao extends HttpServlet {
 		{
 			// TODO Auto-generated catch block
 			System.out.println("[Autenticar]:ClassNotFoundException:"+e.getMessage());
+			response.sendRedirect("login.jsp");
 		}
 		catch(SQLException e)
 		{
 			System.out.println("[Autenticar]:SQLException:"+e.getMessage());
 		}	
+	}
+	private Propriedades obterPropriedades(String path) 
+	{
+		String propriedades_banco =path+"WEB-INF\\propriedades\\bd.cfg";
+		String jdbc = path+"WEB-INF\\propriedades\\jdbc.cfg";
+		PropriedadesJDBCDAO jdbcdao = new PropriedadesJDBCDAO(jdbc);
+		PropriedadesSGBDDAO sgbddao = new PropriedadesSGBDDAO(propriedades_banco);
+		PropriedadesSGBD propsgbd = sgbddao.obterPropriedades();
+		PropriedadesJDBC propjdbc = jdbcdao.obterPropriedades(propsgbd.getSGBD());
+		Propriedades propriedades = new Propriedades(propsgbd,propjdbc);
+		return propriedades;
 	}
 }

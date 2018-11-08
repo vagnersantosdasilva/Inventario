@@ -1,5 +1,8 @@
 package DAO;
 
-public class PropriedadesDAO {
-
+public class PropriedadesDAO 
+{
+	
+	
+	
 }

@@ -1,13 +1,10 @@
 package App;
 
-
 import java.sql.Connection;
-
 import Controle.Atendente;
 import Controle.Servidor;
 import DAO.Maquinas;
 import DAO.ServicoDAO;
-
 
 public class Aplicacao 
 {
@@ -26,8 +23,6 @@ public class Aplicacao
 			Connection conn =dao.obterConexao();
 			Maquinas maquinas = Maquinas.getInstance();
 			Atendente atendente1 =Atendente.getInstance(conn);
-			
-			
 			
 			//Produtor
 			Servidor servidor1 = new Servidor(atendente1,porta);
@@ -51,28 +46,19 @@ public class Aplicacao
 			Servidor servidor7 = new Servidor(atendente1,1056);
 			servidor7.start();
 			
-			
-			
-			
-			
 			//consumidor		
 			maquinas.setAtendente(atendente1);
 			maquinas.start();
 			
 			System.out.println("Numero de Atendentes :"+atendente1.getIDAtendente());
-			
-					
 					
 		}
 		catch(Exception e)
 		{
 			System.out.println("Erro:Servidor:main"+e.getMessage());
 			e.printStackTrace();
-				
 		}
 		System.out.println("Aplicação chamou todos os Threads...");
-				
-				
 	}
 
 }

@@ -13,6 +13,7 @@ public class LicencasDAO
 	
 	public boolean incluirLista(Connection conn,List<Licenca> licencas) throws SQLException
 	{
+		
 		for(Licenca licenca :licencas)
 		{
 			if (existe(conn,licenca))

@@ -18,7 +18,7 @@
 	    <!-- DataTables CSS -->
     	<link href="/Inventario/suporte/css/dataTables.bootstrap.css" rel="stylesheet">
     	<link href="/Inventario/suporte/css/dataTables.responsive.css" rel="stylesheet">
-    	<link href="/Inventario/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    	<link href="/Inventario/suporte/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     	<link href="/Inventario/suporte/css/sb-admin-2.css" rel="stylesheet">
         <link href="/Inventario/suporte/css/bootstrap2.css" rel="stylesheet">
         <!-- Custom CSS -->
@@ -224,13 +224,13 @@
 								<div id="programas" class="panel-collapse collapse">
 									<div class="panel-body">
 										<!--  <table class="table">-->
-										<table width="99%" class="table table-striped table-bordered table-hover" id="dataTables1">
+										<table width="99%" class="table table-striped table-bordered table-hover" id="dataTables0">
 											<thead>				
 												<tr>
 													<th>Nome </th>
 													<th>Arquitetura </th>
 													<th>Data De Instalação</th>
-													<th>Licença</th>
+													
 												</tr>
 											</thead>
 											<tbody>
@@ -239,7 +239,7 @@
 													<td><c:out value="${software.nome}" default=" " /> </td>
 													<td><c:out value="${software.arquitetura}" default=" " /></td>
 													<td><c:out value="${software.dataInstalacao}" default=" " /></td>
-													<td align="center"><span class="glyphicon glyphicon-edit"> </span></td>
+													
 												</tr>
 												</c:forEach>
 											</tbody>						
@@ -390,22 +390,23 @@
 						    	</ul>
 					    </div>
 					    <br><br>
-						<div class="panel-group" id="accordion3">
+						<div class="panel-group" id="accordion10">
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									<h4 class="panel-title">
-										<a data-toggle="collapse" data-parent="#accordion3" href="#licenca">Licenças</a>
+										<a data-toggle="collapse" data-parent="#accordion10" href="#licenca">Licenças</a>
 									</h4>
 								</div>
 								<div id="licenca" class="panel-collapse collapse">
 									<div class="panel-body">
-										<table width="99%" class="table table-striped table-bordered table-hover" id="dataTables0">
+										<table width="99%" class="table table-striped table-bordered table-hover" >
 											<thead>
 												<tr>			
 													<th>Produto </th>
 													<th>Chave </th>
-													<th>Data</th>
+													<th>Validade</th>
 													<th align="center" ></th>
+													<th align="center"></th>
 													<th align="center"></th>
 												</tr>
 											</thead>
@@ -417,6 +418,7 @@
 													<td>${unidade.chave} </td>
 													<td>${unidade.dataExpiracao}</td>
 													<td align="center"><a href="#" class="btn btn-xs btn-info alterarlicenca" data-toggle="modal" data-id="${status.count}"> Alterar </a></td>
+													<td align="center"><a href="#" class="btn btn-xs btn-warning transferirlicenca" data-toggle="modal" data-id="${status.count}"> Transferir </a></td>
             										<!-- <td align="center"> <a href="remover?id_material=${status.count}" class="btn btn-xs btn-danger" > Remover </a></td>-->
             										<td align="center"> <button type="button" onclick="remove(this)" class="btn btn-xs btn-danger">Remover</button> </td>
 													<!--  <td align="center"><span class="glyphicon glyphicon-edit"> </span></td>
@@ -539,7 +541,7 @@
 				  		</div>
 						<div class="form-group">
 							<label for="mchave" class="control-label">*Chave :</label>
-							<input type="text" name="chave" class="form-control" id="mchave" placeholder="Informa a chave ou serial do software..." required data-error="Preencimento obrigatório">
+							<input type="text" name="chave" class="form-control" id="mchave" maxlength="35" placeholder="Informa a chave ou serial do software..." required data-error="Preencimento obrigatório">
 							<div class="help-block with-errors"></div>
 						</div>
 						<div class="form-group">
@@ -557,6 +559,55 @@
 		  	</div>
 		</div>
 <!-- ################################################################################################################################################ -->
+
+<!-- ################################################################################################################################################ -->
+<!-- Transferencia de licença-->
+		<div id="modalTransferirLicencas" class="modal fade" role="dialog">
+			<div class="modal-dialog">
+		    <!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Transferência de Licenças</h4>
+					</div>
+					<form  id="transferencia_form" Action="TransferirLicenca" Method="post" data-toggle="validator" role="form">	
+					<div class="modal-body">
+						<div class="form-group">
+							<input type="hidden" name="codigoMaquina" class="form-control" id="codigoMaquina" value="<c:out value="${maquina.codigoMaquina}" default=" "/>">
+							<input type="hidden" name="hostname" class="form-control" id="codigoMaquina" value="<c:out value="${maquina.hostname}" default=" "/>">
+							<input type="hidden" name="funcao" class="form-control" id="nfuncao" >
+						</div>
+						<div class="form-group">
+					    	<label for="mproduto" class="control-label">Nome do Software :</label>
+					   		<input name="produto" id="nproduto" readonly="true" class="form-control" placeholder="*Informe o nome completo do software..."  type="text" required data-error="Preencimento obrigatório">
+					   		<div class="help-block with-errors"></div>
+				  		</div>
+						<div class="form-group">
+							<label for="mchave" class="control-label">Chave :</label>
+							<input type="text" name="chave" readonly="true" class="form-control" id="nchave" maxlength="35" placeholder="Informa a chave ou serial do software..." required data-error="Preencimento obrigatório">
+							<div class="help-block with-errors"></div>
+						</div>
+						<div class="form-group" >
+							<label for="data">Data: </label>
+							<input type="text" name="data" readonly="true" class="form-control" id="ndata" placeholder="Informe a data de expiração da licença de uso...">
+						</div>
+						
+						<div class="form-group">
+							<label for="data">*Máquina Destinada:</label>
+							<input type="text" name="maquinadestino" class="form-control" id="nmaquina" placeholder="Informe o Hostname da máquina de destino" required data-error="Preencimento obrigatório">
+						</div>
+						
+					</div>
+		      		<div class="modal-footer">
+				      	<button type="submit" class="btn btn-primary" id="submitFormTransferencia" data-dismiss="modal">Transferir</button>
+		        		<button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+		      		</div>
+		     		</form>
+		    	</div>
+		  	</div>
+		</div>
+<!-- ################################################################################################################################################ -->
+	
 	
 	<script src="/Inventario/suporte/js/jquery.js"></script>
 	<script src="/Inventario/suporte/js/bootstrap.min.js"></script>
@@ -606,6 +657,24 @@
 	});
     
     </script>
+    <script>
+		$(".transferirlicenca").on('click', function(){
+			
+			 
+			var id = $(this).data('id');
+			var linha = $('#linha' + id).children(); 
+			
+			$("#nproduto").val($(linha[0]).text());
+			$("#nchave").val($(linha[1]).text());
+			$("#ndata").val($(linha[2]).text());
+		    $("#modalTransferirLicencas").modal();
+		    
+	
+		});
+    
+    </script>
+    
+    
     
     
     <script>
@@ -618,6 +687,11 @@
 		    $("#submitFormLicenca").on('click', function() {
 		    	
 		        $("#licencas_form").submit();
+		    });
+		    
+ 			$("#submitFormTransferencia").on('click', function() {
+		    	
+		        $("#transferencia_form").submit();
 		    });
 		});
 	</script>

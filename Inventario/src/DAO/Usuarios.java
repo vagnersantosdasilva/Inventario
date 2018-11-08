@@ -44,6 +44,39 @@ public class Usuarios
 		
 	}
 	
+	public Usuario getUsuario(Connection conn, String nomeUsuario) 
+	{
+		Usuario usuario = new Usuario();
+		try
+		{	PreparedStatement pstmt = conn.prepareStatement("select * from usuarios where nome_usuario = ?");	
+		    pstmt.setString(1, nomeUsuario);
+		    
+		    ResultSet rs = pstmt.executeQuery();
+			
+			if(rs.next())
+			{	 
+				do
+				{	
+					usuario.setNomeUsuario(rs.getString("nome_usuario"));
+					usuario.setChaveAcesso(rs.getString("acesso"));
+					usuario.setGrupoAcesso(rs.getString("grupo_acesso"));
+					usuario.setEmail(rs.getString("email"));
+					usuario.setTelefone(rs.getString("telefone"));
+				}
+				while(rs.next());
+			}
+			rs.close();
+			pstmt.close();
+			System.out.println(usuario.toString());
+		}	
+		catch (SQLException e)
+		{	e.printStackTrace();
+		System.out.println("Erro[Usuarios:getUsuarios]:"+e.getMessage());
+			
+		}
+		return usuario;
+	}
+	
 	@SuppressWarnings("rawtypes")
 	public void setListaDeUsuarios(Connection conn)
 	{
@@ -103,6 +136,33 @@ public class Usuarios
 		}
 		return admin;
 	}
+	public boolean existeUsuario(Connection conn,String nome) 
+	{
+		try
+		{
+			PreparedStatement pstmt = conn.prepareStatement("select * from usuarios where nome_usuario=? ");
+			pstmt.setString(1, nome);
+		    ResultSet rs = pstmt.executeQuery();
+		    int contador=0;
+			if(rs.next())
+			{	 
+				do
+				{	
+					contador =contador+1;
+				}
+				while(rs.next());
+			}
+			rs.close();
+			pstmt.close();
+			if (contador>0) return true;
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro[Usuarios:existeUsuario]:"+e.getMessage());
+		}
+		return false;
+	}
+	
 	public List getListaDeUsuarios()
 	{
 		return this.listaDeUsuarios;
@@ -174,6 +234,24 @@ public class Usuarios
 		{
 			System.out.println("Erro[Usuarios:incluir]:"+e.getMessage());
 		}
+		return false;
+	}
+
+	public boolean excluir(Connection conn, String nome) 
+	{
+		try {
+			PreparedStatement pstmt = conn.prepareStatement("delete from usuarios where nome_usuario=?");
+			pstmt.setString(1, nome);
+			
+			int n=pstmt.executeUpdate();
+			pstmt.close();
+			return n==1;
+			
+		} catch (SQLException e) {
+			System.out.println("Erro[Usuarios:excluir]"+e.getMessage());
+			e.printStackTrace();
+		}
+		
 		return false;
 	}
 	

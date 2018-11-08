@@ -10,8 +10,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import DAO.PropriedadesJDBCDAO;
+import DAO.PropriedadesSGBDDAO;
 import DAO.ServicoDAO;
 import DAO.Usuarios;
+import Entidades.Propriedades;
+import Entidades.PropriedadesJDBC;
+import Entidades.PropriedadesSGBD;
 import Entidades.Usuario;
 
 /**
@@ -41,8 +46,7 @@ public class SalvarUsuario extends HttpServlet {
 		}
 		ServletContext context = request.getServletContext(); 
 		String path = context.getRealPath("/");
-		String arquivoPropriedades=path+"propriedades.txt";
-		System.out.println(arquivoPropriedades);
+		Propriedades propriedades = obterPropriedades(path);
 		Usuario novoUsuario =new Usuario();
 		String contexto=request.getParameter("contexto");
 		novoUsuario.setNomeUsuario(request.getParameter("nome"));
@@ -59,7 +63,7 @@ public class SalvarUsuario extends HttpServlet {
 		{
 			try
 			{
-				ServicoDAO servico = ServicoDAO.getInstace(arquivoPropriedades);
+				ServicoDAO servico = ServicoDAO.getInstace(propriedades);
 				Connection conn= servico.obterConexao(); 
 				Usuarios dao = new Usuarios();
 				if (contexto.equals("editar"))
@@ -102,6 +106,18 @@ public class SalvarUsuario extends HttpServlet {
 				response.sendRedirect("/Inventario/listar");
 		}
 
- }
+	}
+	private Propriedades obterPropriedades(String path) 
+	{
+		String bd =path+"WEB-INF\\propriedades\\bd.cfg";
+		String jdbc = path+"WEB-INF\\propriedades\\jdbc.cfg";
+		PropriedadesJDBCDAO jdbcdao = new PropriedadesJDBCDAO(jdbc);
+		PropriedadesSGBDDAO sgbddao = new PropriedadesSGBDDAO(bd);
+		PropriedadesSGBD propsgbd = sgbddao.obterPropriedades();
+		PropriedadesJDBC propjdbc = jdbcdao.obterPropriedades(propsgbd.getSGBD());
+		Propriedades propriedades = new Propriedades(propsgbd,propjdbc);
+		
+		return propriedades;
+	}
    	
 }

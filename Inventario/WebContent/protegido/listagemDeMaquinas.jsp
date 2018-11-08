@@ -15,7 +15,7 @@
         
         
 		<script src="/Inventario/suporte/js/bootstrap.js"></script>
-        <link href="/Inventario/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/Inventario/suporte/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	    <link href="/Inventario/suporte/css/bootstrap2.css" rel="stylesheet">
 	    <link href="/Inventario/suporte/css/dataTables.bootstrap.css" rel="stylesheet">
       	<link href="/Inventario/suporte/css/dataTables.responsive.css" rel="stylesheet">
@@ -83,7 +83,7 @@
                                     <tr>
                                         <th>Código de Máquina</th>
                                         <th>Hostname</th>
-                                        <th>Responsável</th>
+                                        
                                         <th></th>
                                       
                                     </tr>
@@ -93,7 +93,7 @@
                                     <tr >
                                         <td ><c:out value="${objeto.codigoMaquina}"  /></td>
                                         <td ><c:out value="${objeto.hostname}" /></td>
-                                        <td ><c:out value="${objeto.inventario.responsavel}" default="Pendente"/></td>
+                                      
                                         <td align="center"><a href="buscar?procurar=${objeto.hostname}" class="btn btn-xs btn-info editar" data-toggle="modal" data-id="${status.count}">Editar Inventário</a></td>
             					
                                     </tr>

@@ -9,9 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import DAO.LicencasDAO;
+import DAO.PropriedadesJDBCDAO;
+import DAO.PropriedadesSGBDDAO;
 import DAO.ServicoDAO;
 import Entidades.Licenca;
+import Entidades.Propriedades;
+import Entidades.PropriedadesJDBC;
+import Entidades.PropriedadesSGBD;
 import Entidades.Usuario;
+
 @WebServlet("/SalvarLicenca")
 public class SalvarLicenca extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -42,14 +48,15 @@ public class SalvarLicenca extends HttpServlet {
 	   		
 	   		ServletContext context = request.getServletContext(); 
 			String path = context.getRealPath("/");
-			String arquivoPropriedades=path+"propriedades.txt";
-	   		if (licenca.equals(null))
+			Propriedades propriedades = obterPropriedades(path);
+	   		
+			if (licenca.equals(null))
 	   		{
 	   			response.sendRedirect("erro.jsp");
 			}
 			try
 			{
-				ServicoDAO servico = ServicoDAO.getInstace(arquivoPropriedades);
+				ServicoDAO servico = ServicoDAO.getInstace(propriedades);
 				Connection conn= servico.obterConexao();
 				LicencasDAO dao = new LicencasDAO();
 				if (contexto.equals("editar"))
@@ -91,6 +98,18 @@ public class SalvarLicenca extends HttpServlet {
 				e.printStackTrace();
 			}
 			response.sendRedirect("/Inventario/buscar?procurar="+hostname+"#sessao3");
+		}
+		private Propriedades obterPropriedades(String path) 
+		{
+			String bd =path+"WEB-INF\\propriedades\\bd.cfg";
+			String jdbc = path+"WEB-INF\\propriedades\\jdbc.cfg";
+			PropriedadesJDBCDAO jdbcdao = new PropriedadesJDBCDAO(jdbc);
+			PropriedadesSGBDDAO sgbddao = new PropriedadesSGBDDAO(bd);
+			PropriedadesSGBD propsgbd = sgbddao.obterPropriedades();
+			PropriedadesJDBC propjdbc = jdbcdao.obterPropriedades(propsgbd.getSGBD());
+			Propriedades propriedades = new Propriedades(propsgbd,propjdbc);
+			
+			return propriedades;
 		}
 
 }

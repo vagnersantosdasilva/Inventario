@@ -15,7 +15,7 @@
         
         
 		<script src="/Inventario/suporte/js/bootstrap.js"></script>
-        <link href="/Inventario/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/Inventario/suporte/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	    <link href="/Inventario/suporte/css/bootstrap2.css" rel="stylesheet">
 	    <link href="/Inventario/suporte/css/dataTables.bootstrap.css" rel="stylesheet">
       	<link href="/Inventario/suporte/css/dataTables.responsive.css" rel="stylesheet">

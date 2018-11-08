@@ -12,11 +12,11 @@
          <script src="/Inventario/suporte/js/bootstrap.js"></script>
 	    
 	    <!-- DataTables CSS -->
-    	<link href="/Inventario/suporte/css/dataTables.bootstrap.css" rel="stylesheet">
-    	<link href="/Inventario/suporte/css/dataTables.responsive.css" rel="stylesheet">
-    	<link href="/Inventario/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    	<link href="/Inventario/suporte/css/sb-admin-2.css" rel="stylesheet">
-        <link href="/Inventario/suporte/css/bootstrap2.css" rel="stylesheet">
+    	<link href="../suporte/css/dataTables.bootstrap.css" rel="stylesheet">
+    	<link href="../suporte/css/dataTables.responsive.css" rel="stylesheet">
+    	<link href="../suporte/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    	<link href="../suporte/css/sb-admin-2.css" rel="stylesheet">
+        <link href="../suporte/css/bootstrap2.css" rel="stylesheet">
 	
 	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -89,28 +89,30 @@
                     
                 </div>
                 <div class="col-md-4"  >
-                	<a href="dash/index.html" class="btn page-scroll">
+                	<a href="/Inventario/config/config.jsp" class="btn page-scroll">
                     <span class="fa-stack fa-4x" >
                         <i class="fa fa-square-o fa-stack-2x text-primary"  ></i>
-                        <i class="fa fa-dashboard fa-stack-1x text-primary" ></i>
+                        <i class="fa fa-cog fa-stack-1x text-primary" ></i>
+                       <!--   <i class="fa fa-dashboard fa-stack-1x text-primary" ></i>-->
                     </span></a>
-                    <h4  >Dashboard</h4>
+                    <h4  >Configurações de Ambiente</h4>
                    
                 </div>
                  <div class="col-md-4"  >
-                 	<a href="estatisticas.html" class="btn page-scroll">
+                 	<a href="/Inventario/config/smtp.jsp" class="btn page-scroll">
                     <span class="fa-stack fa-4x" >
                         <i class="fa fa-square-o fa-stack-2x text-primary"  ></i>
-                        <i class="fa fa fa-bar-chart fa-stack-1x text-primary" ></i>
+                        <i class="fa fa-envelope fa-stack-1x text-primary" ></i>
+                        <!-- <i class="fa fa fa-bar-chart fa-stack-1x text-primary" ></i>-->
                     </span></a>
-                    <h4  >Estatísticas</h4>
+                    <h4  >Configurações SMTP</h4>
                    
                 </div>
 		</div>
 		<br><br>
 		<div class="row" align="center">
 	           <div class="col-md-4">
-                    <a href="baseDados.html" class="btn page-scroll">
+                    <a href="/Inventario/listarInfoBanco" class="btn page-scroll">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-square-o fa-stack-2x text-primary" ></i>
                         <i class="fa fa-database fa-stack-1x text-primary"></i>
@@ -119,12 +121,12 @@
                     
                 </div>
                 <div class="col-md-4"  >
-                	<a href="monitorar.html" class="btn page-scroll">
+                	<a href="/Inventario/protegido/monitorar?filtro=problema" class="btn page-scroll">
                     <span class="fa-stack fa-4x" >
                         <i class="fa fa-square-o fa-stack-2x text-primary"  ></i>
                         <i class="fa fa-heartbeat fa-stack-1x text-primary" ></i>
                     </span></a>
-                    <h4 align="center">Monitorar Máquina</p>
+                    <h4 align="center">Monitorar Máquina</p></h4>
                    
                 </div>
                  <div class="col-md-4"  >

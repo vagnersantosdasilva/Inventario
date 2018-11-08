@@ -11,8 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import DAO.InventarioDAO;
+import DAO.PropriedadesJDBCDAO;
+import DAO.PropriedadesSGBDDAO;
 import DAO.ServicoDAO;
 import Entidades.InventarioCorporativo;
+import Entidades.Propriedades;
+import Entidades.PropriedadesJDBC;
+import Entidades.PropriedadesSGBD;
 import Entidades.Usuario;
 
 @WebServlet("/SalvarInventario")
@@ -36,8 +41,8 @@ public class SalvarInventario extends HttpServlet {
 		}
 		ServletContext context = request.getServletContext(); 
 		String path = context.getRealPath("/");
-		String arquivoPropriedades=path+"propriedades.txt";
-		System.out.println(arquivoPropriedades);
+		Propriedades propriedades = obterPropriedades(path);
+		
 		InventarioCorporativo inventario = new InventarioCorporativo();
    		
    		String contexto=request.getParameter("funcao");
@@ -65,7 +70,7 @@ public class SalvarInventario extends HttpServlet {
 		{
 			try
 			{
-				ServicoDAO servico = ServicoDAO.getInstace(arquivoPropriedades);
+				ServicoDAO servico = ServicoDAO.getInstace(propriedades);
 				Connection conn= servico.obterConexao();  //Provis√≥riamente at√© criar acesso via web.
 				InventarioDAO dao = new InventarioDAO();
 				if(dao.existe(conn,inventario.getCodigoMaquina(),inventario.getHostname()))
@@ -90,7 +95,7 @@ public class SalvarInventario extends HttpServlet {
 				
 				if (contexto.equals(null))
 				{
-					System.out.println("Erro [Fun√ßao n√£o definida]");
+					System.out.println("Erro [FunÁ„o n„o definida]");
 				}
 			
 				
@@ -101,7 +106,17 @@ public class SalvarInventario extends HttpServlet {
 			}
 				response.sendRedirect("/Inventario/buscar?procurar="+inventario.getHostname()+"#sessao0");
 		}
-
 	}
-
+	private Propriedades obterPropriedades(String path) 
+	{
+		String bd =path+"WEB-INF\\propriedades\\bd.cfg";
+		String jdbc = path+"WEB-INF\\propriedades\\jdbc.cfg";
+		PropriedadesJDBCDAO jdbcdao = new PropriedadesJDBCDAO(jdbc);
+		PropriedadesSGBDDAO sgbddao = new PropriedadesSGBDDAO(bd);
+		PropriedadesSGBD propsgbd = sgbddao.obterPropriedades();
+		PropriedadesJDBC propjdbc = jdbcdao.obterPropriedades(propsgbd.getSGBD());
+		Propriedades propriedades = new Propriedades(propsgbd,propjdbc);
+		
+		return propriedades;
+	}
 }

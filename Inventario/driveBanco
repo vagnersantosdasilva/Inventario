@@ -1,7 +1,7 @@
 mysql
 postgres =jdbc:postgresql://localhost:5432/nomedb", "user", "pwd");
 oracle = jdbc:oracle:thin:scott/usuario@servidor:1521:banco
-mssql
+
 
 
 #jdbc:mysql://127.0.0.1:3306/inventario
@@ -12,4 +12,4 @@ portaMySql=3306
 #jdbc:postgresql://127.0.0.1:5432/inventario
 driverPostgreSql=org.postgresql.Driver
 apiPostgreSql=jdbc:postgresql:
-portaPostgreSql=5432
+portaPostgreSql=5432/

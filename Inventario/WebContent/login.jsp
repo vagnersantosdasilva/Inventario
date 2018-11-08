@@ -30,6 +30,14 @@
 			margin:auto;
 			
 			}
+		.panel{
+			 	
+			 width:490px;
+			 margin:auto;
+		}
+		.panel-title
+		
+		
 	</style>
 
     </HEAD>
@@ -40,22 +48,62 @@
 	
 	
 	 <div class="container"><br><br><br><br><br>
+	 
+	 	 <div class="panel panel-default">
+				<div class="panel-heading">
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#" href="#so" ><Strong>Autenticação</Strong></a>
+						
+					</h4>
+				</div>
+				<div class="header clearfix">
+						   <nav>
+							  <ul class="nav nav-pills pull-right" width="50%" style="padding:4px">
+							      <!--<li role="presentation" ><a href="login.php">Login</a></li>-->
+								 <!--  <li role="presentation" ><a href="modificarSenha.jsp">Modificar Senha</a></li>-->
+								 <li role="presentation"><a href="recupera/recuperarSenha.jsp">Esqueceu Senha</a></li>
+							  </ul>
+						   </nav>
+						</div>	
+				
+				<div  class="panel-collapse collapse in">
+					<div class="panel-body">
+						<form class="form-signin" method="post" action="autenticar" > 
+							<label for="inputLogin" class=""></label>
+							<input name="nomeUsuario" type="text" id="inputLogin" class="form-control" placeholder="Login" required autofocus >
+							<label for="inputPassword" class="" ></label>
+							<input name="acesso" type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
+							<label><br>
+							<button class="btn btn-lg btn-primary" type="submit" style="width:458px;">Enviar</button>
+							
+							</label>
+		     				</form>
+		     			   <c:if test="${sessionScope.mensagem=='1' }">
+								<center>
+							       <div class="alert alert-danger">
+										<strong> ACESSO NÃO AUTORIZADO!!</strong>
+								   </div>
+								</center>
+							</c:if>    
+					</div>
+				</div>
+		</div>
+<!-- 
+         <div class="jumbotron" >
 
-             <div class="jumbotron" >
-
-		  <div class="header clearfix">
-			<nav>
-			  <ul class="nav nav-pills pull-right">
-			    <!--<li role="presentation" ><a href="login.php">Login</a></li>-->
-			    <li role="presentation" ><a href="recuperarSenha.php">Esqueci a senha</a></li>
-			    <li role="presentation"><a href="cadastro.php">Novo cadastro</a></li>
-			    
-			  </ul>
-			</nav>
-		<br>
-		<!--<h3 class="text-muted">Controle de Acesso</h3>-->
-	
-          </div>
+			  <div class="header clearfix">
+				<nav>
+				  <ul class="nav nav-pills pull-right" width="50%">
+				    <!--<li role="presentation" ><a href="login.php">Login</a></li>-->
+				<!--      <li role="presentation" ><a href="modificarSenha.jsp">Modificar Senha</a></li>
+				    <li role="presentation"><a href="resetSenha.jsp">Esqueceu Senha</a></li>
+				    
+				  </ul>
+				</nav>
+				<br>
+			<!--<h3 class="text-muted">Controle de Acesso</h3>
+		
+	          </div>
 
 				      
 			<form class="form-signin" method="post" action="autenticar" > 
@@ -70,20 +118,20 @@
 						<button class="btn btn-lg btn-primary btn-lg" type="submit">Enviar</button>
 					</label>
 		     </form>
-		     <c:if test="${sessionScope.mensagem=='1' }">
-		        <div class="ui-widget">
-		  			<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
-		  			<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-		  			<strong>Hey!</strong> Você não teve autorização</p>
-		  			
-		  		</div>
-		  	</div>
-		    </c:if>  
 		     
-		      
-		</div> <!-- /jumbotron -->    			 
+		     <c:if test="${sessionScope.mensagem=='1' }">
+		 		<center>
+			       <div class="alert alert-danger">
+	  					<strong> ACESSO NÃO AUTORIZADO!!</strong>
+				  </div>
+		  		</center>
+		 </c:if>    
+	      
+		</div> <!-- /jumbotron 
+	 -->	
+		 			 
                    
-         </div> <!-- /container -->
+   </div> <!-- /container -->
    
 		
 		 	

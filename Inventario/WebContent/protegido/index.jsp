@@ -12,10 +12,10 @@
 	    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 	    <!-- Bootstrap -->
         
-        <link href="/Inventario/suporte/css/bootstrap2.css" rel="stylesheet">
-        <link href="/Inventario/suporte/css/sb-admin-2.css" rel="stylesheet">
-        <link href="/Inventario/vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
-	    <link href="/Inventario/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="../suporte/css/bootstrap2.css" rel="stylesheet">
+        <link href="../suporte/css/sb-admin-2.css" rel="stylesheet">
+        <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+	    <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	
 	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -78,7 +78,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="/Inventario/login.jsp"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -113,7 +113,7 @@
                    
                 </div>
                  <div class="col-md-4"  >
-                 	<a href="contato.html" class="btn page-scroll">
+                 	<a href="/Inventario/protegido/estatisticas.jsp" class="btn page-scroll">
                     <span class="fa-stack fa-4x" >
                         <i class="fa fa-square fa-stack-2x text-primary"  ></i>
                         <i class="fa fa fa-bar-chart fa-stack-1x fa-inverse" ></i>
@@ -125,7 +125,7 @@
 		<br><br>
 		<div class="row" align="center">
 	           <div class="col-md-4">
-                    <a href="encomendas.html" class="btn page-scroll">
+                    <a href="/Inventario/protegido/baseDeDados.jsp" class="btn page-scroll">
                     <span class="fa-stack fa-4x">
                         <i class="fa fa-square fa-stack-2x text-primary" ></i>
                         <i class="fa fa-database fa-stack-1x fa-inverse"></i>
@@ -134,7 +134,7 @@
                     
                 </div>
                 <div class="col-md-4"  >
-                	<a href="kitfestas.html" class="btn page-scroll">
+                	<a href="/Inventario/protegido/monitorar.jsp" class="btn page-scroll">
                     <span class="fa-stack fa-4x" >
                         <i class="fa fa-square fa-stack-2x text-primary"  ></i>
                         <i class="fa fa-heartbeat fa-stack-1x fa-inverse" ></i>

@@ -11,8 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import DAO.InventarioDAO;
+import DAO.PropriedadesJDBCDAO;
+import DAO.PropriedadesSGBDDAO;
 import DAO.ServicoDAO;
 import Entidades.InventarioCorporativo;
+import Entidades.Propriedades;
+import Entidades.PropriedadesJDBC;
+import Entidades.PropriedadesSGBD;
 
 /**
  * Servlet implementation class EditarInventario
@@ -31,12 +36,11 @@ public class EditarInventario extends HttpServlet {
 			
 			ServletContext context = request.getServletContext(); 
 			String path = context.getRealPath("/");
-			String arquivoPropriedades=path+"propriedades.txt";
-			ServicoDAO dao= ServicoDAO.getInstace(arquivoPropriedades);
+			Propriedades propriedades = obterPropriedades(path);
+			ServicoDAO servico = ServicoDAO.getInstace(propriedades);
 			
 			//ObterConexao tem que ser fornecido por um controle de acesso.
-			
-			Connection conn=dao.obterConexao();
+			Connection conn=servico.obterConexao();
 			InventarioDAO inventarioDAO=new InventarioDAO();
 			/**************************************************/
 			String key=request.getParameter("maquina");
@@ -64,6 +68,17 @@ public class EditarInventario extends HttpServlet {
 		}
 		
 	}
-	
+	private Propriedades obterPropriedades(String path) 
+	{
+		String bd =path+"WEB-INF\\propriedades\\bd.cfg";
+		String jdbc = path+"WEB-INF\\propriedades\\jdbc.cfg";
+		PropriedadesJDBCDAO jdbcdao = new PropriedadesJDBCDAO(jdbc);
+		PropriedadesSGBDDAO sgbddao = new PropriedadesSGBDDAO(bd);
+		PropriedadesSGBD propsgbd = sgbddao.obterPropriedades();
+		PropriedadesJDBC propjdbc = jdbcdao.obterPropriedades(propsgbd.getSGBD());
+		Propriedades propriedades = new Propriedades(propsgbd,propjdbc);
+		
+		return propriedades;
+	}
 
 }

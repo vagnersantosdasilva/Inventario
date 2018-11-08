@@ -32,7 +32,7 @@ public class Servidor extends  Thread
 			while(true)
 			{
 			
-				System.out.println("Aguardando requisiÃ§Ã£o...");
+				System.out.println("Aguardando requisição...");
 				
 				Socket clienteSocket = serverSocket.accept();
 				InputStream socketIn = clienteSocket.getInputStream();

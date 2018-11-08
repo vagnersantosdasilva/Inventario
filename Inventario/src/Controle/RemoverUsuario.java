@@ -40,7 +40,6 @@ public class RemoverUsuario extends HttpServlet {
 				String path = context.getRealPath("/");
 				String localAplicacao=Propriedades.obterLocalAplicacao(path+"/"+"propriedades.txt");
 				String arquivoPropriedades=localAplicacao+"/"+"propriedades.txt";
-				
 				HttpSession session = request.getSession();
 				Usuario root = (Usuario) session.getAttribute("usuario");
 				if (root==null)
@@ -79,7 +78,7 @@ public class RemoverUsuario extends HttpServlet {
 							request.setAttribute("usuarios",usuarios);
 							response.setContentType("text/plain");
 							response.setCharacterEncoding("UTF-8");
-							response.getWriter().write("NÃO FOI POSSÍVEL CONFIRMAR A OPERAÇÃO DE EXCLUSÃO");
+							response.getWriter().write("NÃƒO FOI POSSÃ�VEL CONFIRMAR A OPERAÃ‡ÃƒO DE EXCLUSÃƒO");
 							
 						}
 						
@@ -91,12 +90,8 @@ public class RemoverUsuario extends HttpServlet {
 						request.setAttribute("usuarios",usuarios);
 						response.setContentType("text/plain");
 						response.setCharacterEncoding("UTF-8");
-						response.getWriter().write("USUÁRIO INIXISTENTE");
-						
+						response.getWriter().write("USUÃ�RIO INIXISTENTE");
 					}
-					
-					
-					
 				}
 			}
 			catch(Exception e)

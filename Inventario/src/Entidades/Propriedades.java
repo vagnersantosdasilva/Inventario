@@ -25,6 +25,10 @@ public class Propriedades
 		
 	}
 
+	public Propriedades() {
+		
+	}
+
 	public String getUsuario() {
 		return usuario;
 	}

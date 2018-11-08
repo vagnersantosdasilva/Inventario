@@ -11,7 +11,7 @@ public class Cripto
 	private int divisor5=13;
 	private int divisor6=17;
 	private int intervalo=1;
-	String letras_ ="!@#$%&*?Â¨_=+-{}[]0987654321'aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUwWvVxXyYzZ |\\,.;:/()Â¹Â²Â³Â£Â¢Â¬ÂºÂ§Â´`~^ÂªÂ°Ã¡ÃÃ©Ã‰Ã­ÃÃ³Ã“ÃºÃšÃ Ã€Ã¨ÃˆÃ¬ÃŒÃ²Ã’Ã¹Ã™Ã¢Ã‚ÃªÃŠÃ®ÃÃ´Ã”Ã»Ã›Ã£ÃƒÃµÃ•Ã§Ã‡<>Â»â€ â‚¬Âµâ€¡Å Â©Â®ï¿½"+'"';
+	String letras_ ="!@#$%&*?Â¨_=+-{}[]0987654321'aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUwWvVxXyYzZ |\\,.;:/()áÁãÃâÂàÀéÉêÊèÈíÍìÌîÎóÓõÕÔôúÚùÙüÜûÛ¹²³£¢¬°ºª"+'"';
 	
 	int divisores[] ={intervalo,divisor1,divisor2,divisor3,divisor4,divisor5,divisor6};
 	

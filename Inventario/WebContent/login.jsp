@@ -43,10 +43,6 @@
     </HEAD>
     
     <BODY>
-	
-	
-	
-	
 	 <div class="container"><br><br><br><br><br>
 	 
 	 	 <div class="panel panel-default">
@@ -84,7 +80,14 @@
 										<strong> ACESSO NÃO AUTORIZADO!!</strong>
 								   </div>
 								</center>
-							</c:if>    
+							</c:if> 
+							<c:if test="${sessionScope.mensagem=='2' }">
+								<center>
+							       <div class="alert alert-danger">
+										<strong> AMBIENTE NÃO CONFIGURADO!!</strong>
+								   </div>
+								</center>
+							</c:if>       
 					</div>
 				</div>
 		</div>

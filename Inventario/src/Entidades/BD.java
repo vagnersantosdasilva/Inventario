@@ -11,7 +11,19 @@ public class BD
 	private String formatoBackup;
 	private String dataBackup;
 	
+	public BD() {}
+	public BD(String nomeSGBD, String nomeBanco, String ipBanco, String portaBanco, String frequenciaBackup,
+			String modoBackup, String formatoBackup, String dataBackup) {
 	
+		this.nomeSGBD = nomeSGBD;
+		this.nomeBanco = nomeBanco;
+		this.ipBanco = ipBanco;
+		this.portaBanco = portaBanco;
+		this.frequenciaBackup = frequenciaBackup;
+		this.modoBackup = modoBackup;
+		this.formatoBackup = formatoBackup;
+		this.dataBackup = dataBackup;
+	}
 	public String getNomeSGBD() {
 		return nomeSGBD;
 	}

@@ -9,10 +9,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import com.google.gson.Gson;
 
 import Entidades.BD;
+import Entidades.PropriedadesJDBC;
+import Entidades.PropriedadesSGBD;
 import Entidades.Usuario;
 
 public class ConfigAmbienteDAO 
@@ -137,5 +140,35 @@ public class ConfigAmbienteDAO
 	{
 		return true;
 	}
+	public boolean gravarInfoBanco(Connection conn, PropriedadesSGBDDAO sgbddao, PropriedadesJDBCDAO jdbcdao) throws SQLException {
+		
+		PropriedadesSGBD sgbd = sgbddao.obterPropriedades();
+		PropriedadesJDBC jdbc = jdbcdao.obterPropriedades(sgbd.getSGBD());
+		
+		
+		BD bd = new BD(sgbd.getSGBD(),"inventario",sgbd.getHost(),jdbc.getPorta(),"mensalmente","automatico","txt","00-00-0000");
+		BD bd_ = new BD();
+		
+		BDDAO dao = new BDDAO() ;
+		if (dao.existeRegistro(conn)) 
+		{
+			bd_ = dao.buscar(conn);
+			if (!(bd_.getNomeSGBD().equals(bd.getNomeSGBD()))) 
+			{
+				dao.atualizar(conn, bd);
+				return true;
+			}
+			else 
+			{
+				bd.setDataBackup((bd_.getDataBackup()));
+				dao.atualizar(conn, bd);
+				return true;
+			}
+		}
+		
+		if (dao.incluir(conn, bd)) return true;
+		return false;
+	}
+	
 	
 }

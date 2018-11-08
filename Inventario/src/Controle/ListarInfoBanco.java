@@ -32,11 +32,7 @@ public class ListarInfoBanco extends HttpServlet {
 		{
 			ServletContext context = request.getServletContext(); 
 			String path = context.getRealPath("/");
-			
 			Propriedades propriedades = obterPropriedades(path);
-			
-			
-			
 			HttpSession session = request.getSession();
 			Usuario root = (Usuario) session.getAttribute("usuario");
 			if (root==null)

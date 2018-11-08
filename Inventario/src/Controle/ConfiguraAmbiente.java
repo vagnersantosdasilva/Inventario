@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import DAO.ConfigAmbienteDAO;
 import DAO.PropriedadesJDBCDAO;
 import DAO.PropriedadesSGBDDAO;
+import Entidades.BD;
 import Entidades.PropriedadesSGBD;
 import Util.Cripto;
 
@@ -44,9 +45,7 @@ public class ConfiguraAmbiente extends HttpServlet {
 			String email=request.getParameter("email");
 			String nomeUsuario = request.getParameter("nomeUsuario");
 			String senha=request.getParameter("acesso");
-			
 			String[] propriedades = {nomeBanco,nomeUsuario,senha,enderecoBanco};
-			
 			
 			/*Escreve o caminho da aplicação no arquivo locais.cfg*/
 			String localAplicacao = caminhoAplicacao+"\\WebContent\\WEB-INF\\propriedades\\locais.cfg";
@@ -87,17 +86,29 @@ public class ConfiguraAmbiente extends HttpServlet {
 						conn2.setAutoCommit(false);
 						if (dao.criarTabelas(conn2,script_estruturas)) 
 						{
-							
-							if (dao.criarRoot(conn2, email, "?")) System.out.println("[ESCOPO:ConfiguraAmbiente]:Criado usuario admin");
-							else System.out.println("[ESCOPO:ConfiguraAmbiente]:NÃ£o foi criado usuario admin nesse contexto");
-							conn2.commit();
 							System.out.println("[ESCOPO:ConfiguraAmbiente]:Tabelas criadas e gravadas em BD");
-							conn2.close();
+							if (dao.criarRoot(conn2, email, "?")) 
+							{ 
+								System.out.println("[ESCOPO:ConfiguraAmbiente]:Criado usuario admin");
+								
+								sgbddao.gravarPropriedades(listaSGBD(propriedades));
+								System.out.println("[ESCOPO:ConfiguraAmbiente]:Arquivo de bd.cfg gravado");
+								Util.Propriedades.escrevePropriedades("status", "ok", status);
+								
+							}
+							else 
+							{
+								System.out.println("[ESCOPO:ConfiguraAmbiente]:NÃ£o foi criado usuario admin nesse contexto");
+								Util.Propriedades.escrevePropriedades("status", "falha", status);
+							}
+							if (dao.gravarInfoBanco(conn2, sgbddao,jdbcdao))
+							{
+								System.out.println("[ESCOPO:ConfiguraAmbiente]:Informações do SGBD gravadas em tabela");
+							}
 							
-							sgbddao.gravarPropriedades(listaSGBD(propriedades));
-							System.out.println("[ESCOPO:ConfiguraAmbiente]:Arquivo de bd.cfg gravado");
+							conn2.commit();
+							conn2.close();
 							System.out.println("[ESCOPO:ConfiguraAmbiente]:Fim de processo de criação de estruturas");
-							Util.Propriedades.escrevePropriedades("status", "ok", status);
 							session.setAttribute("mensagem","5");
 							response.sendRedirect("/Inventario/config/config.jsp");
 						}
@@ -154,7 +165,6 @@ public class ConfiguraAmbiente extends HttpServlet {
 		lista.add("servidor=//"+propriedades[3]+":");
 		lista.add("codificacao=UTF-8");
 		lista.add("nomeDoBanco=/inventario");
-		
 		return lista;
 	}
 

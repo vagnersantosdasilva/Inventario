@@ -132,7 +132,7 @@ public class BDDAO
 			
 	}
 	
-	public boolean existe(Connection conn, CPU unidade) {
+	public boolean existeRegistro(Connection conn) {
 		try
 		{
 			PreparedStatement query = conn.prepareStatement("select * from infobanco");
@@ -175,5 +175,7 @@ public class BDDAO
 		return false;
 		
 	}
+
+	
 	
 }

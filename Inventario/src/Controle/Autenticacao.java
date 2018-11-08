@@ -25,40 +25,44 @@ public class Autenticacao extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException  
 	{
 		try 
-		{	
+		{
+			HttpSession session = request.getSession();
 			ServletContext context = request.getServletContext(); 
 			String path = context.getRealPath("/");
 			Propriedades propriedades = obterPropriedades(path);
-			
 			String nomeUsuario= request.getParameter("nomeUsuario");
 			String acesso = request.getParameter("acesso");
 			
-			
-			if ((nomeUsuario=="") || (acesso==""))
+			if (propriedades!=null) 
 			{
-				response.sendRedirect("login.jsp");
+				if ((nomeUsuario=="") || (acesso==""))
+				{
+					response.sendRedirect("login.jsp");
+				}
+				ServicoDAO servico = ServicoDAO.getInstace(propriedades);
+				Connection conn = (Connection) servico.obterConexao();
+				Usuarios dao = new Usuarios();
+				Usuario usuario=dao.getUsuario(conn,nomeUsuario,acesso);
+				System.out.println("Usuario obtido :"+usuario.getNomeUsuario());
+				if (usuario.getNomeUsuario()==null)
+				{
+					System.out.println("Teste de autenticacao falhou");
+					session.setAttribute("mensagem", "1");
+					response.sendRedirect("login.jsp");
+				}
+				else
+				{
+					System.out.println("Teste de autenticacao teve sucesso");
+					session.setAttribute("usuario", usuario);
+					session.setAttribute("mensagem", "0");
+					response.sendRedirect("protegido/index.html");
+				}
 			}
-			HttpSession session = request.getSession();
-			ServicoDAO servico = ServicoDAO.getInstace(propriedades);
-			Connection conn = (Connection) servico.obterConexao();
-			Usuarios dao = new Usuarios();
-			Usuario usuario=dao.getUsuario(conn,nomeUsuario,acesso);
-			System.out.println("Usuario obtido :"+usuario.getNomeUsuario());
-			if (usuario.getNomeUsuario()==null)
+			else 
 			{
-				System.out.println("Teste de autenticacao falhou");
-				session.setAttribute("mensagem", "1");
+				System.out.println("[Escopo:Autenticacao] : Proriedades não retornaram valores. Ambiente não configurado!");
+				session.setAttribute("mensagem", "2");
 				response.sendRedirect("login.jsp");
-			}
-			else
-			{
-				System.out.println("Teste de autenticacao teve sucesso");
-				session.setAttribute("usuario", usuario);
-				session.setAttribute("mensagem", "0");
-				response.sendRedirect("protegido\\index.html");
-				
-				//response.sendRedirect("/Inventario/protegido/index.html");
-				//request.getRequestDispatcher("protegido/dash/index.html").forward(request,response);
 			}
 		}
 		catch (ClassNotFoundException e) 
@@ -70,17 +74,25 @@ public class Autenticacao extends HttpServlet {
 		catch(SQLException e)
 		{
 			System.out.println("[Autenticar]:SQLException:"+e.getMessage());
-		}	
+		}
 	}
+	
 	private Propriedades obterPropriedades(String path) 
 	{
-		String propriedades_banco =path+"WEB-INF\\propriedades\\bd.cfg";
-		String jdbc = path+"WEB-INF\\propriedades\\jdbc.cfg";
-		PropriedadesJDBCDAO jdbcdao = new PropriedadesJDBCDAO(jdbc);
-		PropriedadesSGBDDAO sgbddao = new PropriedadesSGBDDAO(propriedades_banco);
-		PropriedadesSGBD propsgbd = sgbddao.obterPropriedades();
-		PropriedadesJDBC propjdbc = jdbcdao.obterPropriedades(propsgbd.getSGBD());
-		Propriedades propriedades = new Propriedades(propsgbd,propjdbc);
-		return propriedades;
+		try {
+			String propriedades_banco =path+"WEB-INF\\propriedades\\bd.cfg";
+			String jdbc = path+"WEB-INF\\propriedades\\jdbc.cfg";
+			PropriedadesJDBCDAO jdbcdao = new PropriedadesJDBCDAO(jdbc);
+			PropriedadesSGBDDAO sgbddao = new PropriedadesSGBDDAO(propriedades_banco);
+			PropriedadesSGBD propsgbd = sgbddao.obterPropriedades();
+			PropriedadesJDBC propjdbc = jdbcdao.obterPropriedades(propsgbd.getSGBD());
+			Propriedades propriedades = new Propriedades(propsgbd,propjdbc);
+			return propriedades;
+		}	
+		catch(NullPointerException e) 
+		{
+			System.out.println("Erro[Autenticacao:obterPropriedades]"+e.getMessage());	
+		}
+		return null;
 	}
 }

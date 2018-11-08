@@ -1,0 +1,7 @@
+driverMySql=com.mysql.jdbc.Driver
+apiMySql=jdbc:mysql:
+portaMySql=3306
+driverPostgreSql=org.postgresql.Driver
+apiPostgreSql=jdbc:postgresql:
+portaPostgreSql=5432
+usuario=abc123

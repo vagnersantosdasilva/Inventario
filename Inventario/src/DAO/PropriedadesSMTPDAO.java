@@ -2,24 +2,17 @@ package DAO;
 
 import java.io.IOException;
 import java.util.List;
-
 import Entidades.ParametrosEmail;
-import Entidades.PropriedadesSMTP;
-
 public class PropriedadesSMTPDAO 
 {
-	
 	private  String caminhoAbsoluto;
-	
 	public PropriedadesSMTPDAO(String arquivoPropriedades) {
 		this.caminhoAbsoluto=arquivoPropriedades;
 	}
-
 	public  void setCaminho(String arquivoPropriedades) 
 	{
 		caminhoAbsoluto = arquivoPropriedades;
 	}
-	
 	public  void gravarPropriedades(List lista) 
 	{
 		try {

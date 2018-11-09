@@ -32,14 +32,17 @@ public class ConfiguraSMTP extends HttpServlet
 		String servidor = request.getParameter("servidorSMTP");
 		String porta = request.getParameter("portaSMTP");
 		String emailOrigem = request.getParameter("emailOrigem");
+		String login = request.getParameter("login");
 		String senha = request.getParameter("acesso");
 		String ssl = request.getParameter("ssl");
+		
 		
 		Cripto cripto = new Cripto(31,13,17,7,2,3,1);
 		List<String> lista = new ArrayList<String>();
 		lista.add("servidorSMTP="+servidor);
 		lista.add("portaSMTP="+porta);
 		lista.add("emailOrigem="+emailOrigem);
+		lista.add("login="+login);
 		lista.add("senha="+cripto.cifrar(senha));
 		lista.add("ssl="+ssl);
 		
@@ -50,11 +53,11 @@ public class ConfiguraSMTP extends HttpServlet
 		{
 			System.out.println("Gravação de arquivo de smtp.cfg realizada com sucesso!");
 			session.setAttribute("mensagem", "1");
-			response.sendRedirect("/Inventario/config/config.jsp");
+			response.sendRedirect("/Inventario/config/smtp.jsp");
 		}else 
 		{
 			session.setAttribute("mensagem", "2");
-			response.sendRedirect("/Inventario/config/config.jsp");	
+			response.sendRedirect("/Inventario/config/smtp.jsp");	
 		}
 		
 	

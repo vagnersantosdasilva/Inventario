@@ -68,6 +68,12 @@
 							<input name="emailOrigem" type="text" id="email" class ="form-control" placeholder="ex : nome@empresa.com" type="email"  data-error="O formato de email está inválido" required>
 							<div class="help-block with-errors"></div>
 			    		</div>
+						
+						<div class="form-group">
+							<h4>Login :</h4>
+							<input name="login" type="text" id="login" class ="form-control" placeholder="ex : normalmenteo é o próprio endereço de email " type="text"  data-error="É necessário o preenchimento deste campo!" required>
+							<div class="help-block with-errors"></div>
+			    		</div>
 							
 						<div class="form-group">
 							<h4>Informe a senha :</h4>
@@ -97,9 +103,7 @@
 			        <div class="ui-widget">
 			  			<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
 			  			<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-			  			<strong>Tudo certo!</strong> " Dados foram gravados com sucesso"<br>
-			  			Uma mensagem do sistema foi enviada para seu email. </p>
-			  			
+			  			<strong>Tudo certo!</strong> "Todos os dados foram gravados com sucesso."</p>
 			  		</div>
 			  	</div>
 			    </c:if>

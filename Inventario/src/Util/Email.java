@@ -28,6 +28,7 @@ public class Email
 		this.mensagem = mensagem;
 		this.login = parametros.getLogin();
 		this.acesso = cripto.decifrar(parametros.getSenha());
+		
 	}
 	public Email(String smtpServidor, int smtpPorta, String emailDestino, String emailOrigem,String nome, String tituloMensagem,
 			String mensagem, String login, String acesso) 
@@ -56,32 +57,3 @@ public class Email
 		   email.send();
 	}
 }
-
-/*
-Configurações do servidor POP
-
- Quer acessar o Yahoo Mail de um programa de email como o Outlook ou Mac Mail? Aqui estão as configurações que você precisa.
-
- Servidor (POP) de entrada do Mail - Requer SSL
-
-     Servidor: pop.mail.yahoo.com.br
-     Porta: 995
-     Requer SSL: Sim
-
- Servidor (SMTP) de Mail - Requer TLS
-
-     Servidor: smtp.mail.yahoo.com.br
-     Porta: 465 ou 587
-     Requer SSL: Sim
-     Requer autenticação: Sim
-
- Se o seu cliente POP não oferece TLS, você ainda será capaz de usar SSL.
-
- Informação de login - Requer autenticação
-
-     Endereço de e-mail: Seu endereço de e-mail completo (nome@dominio.com.br)
-     Senha: Senha da sua conta.
-
- Para obter assistência adicional, ou instruções completas sobre a configuração de POP, reveja as páginas de ajuda para o seu cliente de e-mail ou dispositivo móvel.
-
-*/

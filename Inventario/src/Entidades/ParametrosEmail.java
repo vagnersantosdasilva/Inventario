@@ -30,8 +30,13 @@ public class ParametrosEmail
 	}
 	public void setPorta(String porta) 
 	{
-		if (porta!=null)this.porta=Integer.parseInt(porta.trim());
-		this.porta=465;//padrao
+		if (porta!=null) {
+			this.porta=Integer.parseInt(porta.trim());
+		}
+		else
+		{
+			this.porta=465;
+		}
 	}
 	public String getEmailOrigem() {
 		return emailOrigem;

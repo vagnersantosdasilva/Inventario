@@ -82,13 +82,15 @@ public class ResetDeSenha extends HttpServlet {
 		   			}
 		   			else 
 			   		{
+		   				System.out.println("[ESCOLO:RESETDESENHA]:N„o foi possÌvel atualizar senha no banco");
 			   			session.setAttribute("mensagem", "4");
 						response.sendRedirect("/Inventario/recupera/recuperarSenha.jsp");
 			   		}
 		   		}
 	   			else
 	   			{
-	   				//Condi√ß√£o chave n√£o pode ser atualizada;
+	   				//Email incorreto
+	   				System.out.println("[ESCOPO:RESETDESENHA]: Email informado n„o cadastrado.");
 	   				session.setAttribute("mensagem","2");
 	   				response.sendRedirect("/Inventario/recupera/recuperarSenha.jsp");
 	   			}

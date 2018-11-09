@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -13,9 +12,7 @@
             <link href="/Inventario/suporte/css/bootstrap.css" rel="stylesheet">
 
             <link href="/Inventario/suporte/css/jumbotron-narrow.css" rel="stylesheet">
-           
-	
-	    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+        <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
             <!--[if lt IE 9]>    
 
@@ -66,7 +63,7 @@
 			        <div class="ui-widget">
 			  			<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
 			  			<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-			  			<strong>Um erro ocorreu!</strong> " Houve falha ao tentar atualizar senha"</p>
+			  			<strong>Um erro ocorreu!</strong> " O email informado não está registrado"</p>
 			  			
 			  		</div>
 			  	</div>
@@ -85,7 +82,8 @@
 			        <div class="ui-widget">
 			  			<div class="ui-state-highlight ui-corner-all" style="margin-top: 20px; padding: 0 .7em;">
 			  			<p><span class="ui-icon ui-icon-info" style="float: left; margin-right: .3em;"></span>
-			  			<strong>Um erro ocorreu!</strong> " O email informado não está registrado."</p>
+			  			<strong>Um erro ocorreu!</strong> " Não foi possível atualizar a senha nesse momento."<br>
+			  			Se o problema persistir, entre em contato com o administrador do sistema.</p>
 			  			
 			  		</div>
 			  	</div>

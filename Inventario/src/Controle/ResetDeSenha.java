@@ -36,10 +36,11 @@ public class ResetDeSenha extends HttpServlet {
    	{
    		try 
    		{
-   			
    			HttpSession session = request.getSession();
 	   		String login = request.getParameter("nomeUsuario");
 	   		String email = request.getParameter("email");
+	   		String contexto = request.getParameter("contexto");
+	   		
 	   		System.out.println("Parametros recebidos"+login+" - "+email);
 	   		
 	   		ServletContext context = request.getServletContext(); 
@@ -49,6 +50,8 @@ public class ResetDeSenha extends HttpServlet {
 		
 			ServicoDAO servico = ServicoDAO.getInstace(propriedades);
 			Connection conn= servico.obterConexao();
+			
+			
 			Usuarios dao = new Usuarios();
 	   		if (dao.existeUsuario(conn, login))
 	   		{

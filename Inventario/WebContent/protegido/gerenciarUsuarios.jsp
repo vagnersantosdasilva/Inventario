@@ -105,7 +105,7 @@
                                         <th>Telefone</th>
                                         <th></th>
                                         <th></th>
-                                        <th></th>
+                                        
                                     </tr>
                                 </thead>
                                 
@@ -120,7 +120,7 @@
             							<!--<td align="center"><a href="remover?id_material=${status.count}"class="btn btn-xs btn-danger" > Remover </a></td>-->
             							<td align="center"> <button type="button" onclick="remove(this,${status.count})" value="${status.count}" class="btn btn-xs btn-danger">Remover</button> </td>
             							<!--  <td align="center"> <a href="#remover"  id="remover" value="${status.count}" class="btn btn-xs btn-danger">Remover</button> </td>-->
-            							<td align="center"><a href="reset?id_material=${status.count}"class="btn btn-xs btn-success" > Reset </a></td>
+            							
         
                                     </tr>
                                     
@@ -151,7 +151,7 @@
 						<button type="button" class="close" data-dismiss="modal" id="btn-fechar-x">&times;</button>
 						<h4 class="modal-title">Configuração de Usuários</h4>
 					</div>
-					<form  id="inventario_form"  Action="salvarusuario" Method="post" data-toggle="validator" role="form">	
+					<form  id="usuario_form"  Action="salvarusuario" Method="post" data-toggle="validator" role="form">	
 					<div class="modal-body">
 						<input type="hidden" name="contexto" class="form-control " id="mcontexto"  >
 						<div class="form-group">
@@ -179,12 +179,17 @@
 							<input type="text" name="telefone" class="form-control" id="mtelefone" placeholder="Telefone ou ramal do usuário para contato..." pattern="^[0-9]{1,}$" maxlength="15" data-error="Digite apenas números. Ex:1133334444">
 							<div class="help-block with-errors"></div>
 						</div>
+						
+						<div class="form-group">
+							<label class="checkbox-inline" for="mreset" >
+							<input type="checkbox" name="reset"  class="checkbox-inline" id ="check-reset"  value="reset"> Reset de senha:</label>
+						</div>
 					
 					</div>
 		      		<div class="modal-footer">
 				      	<!--  <button type="button" class="btn btn-primary" id="submitForm" >Salvar <span class="glyphicon glyphicon-thumbs-up"></span>
 				      	</button>-->
-				      	<button type="submit" class="btn btn-primary" id="btn-salvar">Salvar</button>
+				      	<button type="button" class="btn btn-primary" id="btn-salvar" onclick="salvar()">Salvar</button>
 		        		<button type="button" class="btn btn-default fechar" id="btn-fechar" data-dismiss="modal">Fechar</button>
 		      		</div>
 		     		</form>
@@ -210,6 +215,24 @@
 				 	</div>
 			 </div>
 		</div>
+		 <div id="confirm_reset" class="modal fade" role="dialog">
+			 <div class="modal-dialog">
+				 	<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" id="btn-fechar-x">&times;</button>
+							<h4 class="modal-title">Configuração de Usuários</h4>
+						</div>
+						  <div class="modal-body">
+						   Uma nova senha será criada e enviada para o email registrado pelo usuário. Está seguro disso?
+						  </div>
+						  <input type="hidden" name="nome" class="form-control " id="rnome"  >
+						  <div class="modal-footer">
+						    <button type="button" data-dismiss="modal" class="btn btn-primary reset"  id="reset" >Reset</button>
+						    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+						  </div>
+				 	</div>
+			 </div>
+		</div>
 		
 		
 	 
@@ -222,7 +245,7 @@
 								<h4 class="modal-title">Processando...</h4>
 						  </div>
 						  <div class="modal-body">
-   								<center> <img src="/Inventario/suporte/images/spinner3.gif"/></center>
+   								<center> <img src="/Inventario/suporte/images/spinner2.gif"/></center>
 						  </div>
 					  <div class="modal-footer">
 						   
@@ -250,6 +273,24 @@
 				 	</div>
 			 </div>
 		</div>
+		<div id="erro-alterar" class="modal fade" role="dialog">
+			 <div class="modal-dialog">
+				 	<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" id="btn-fechar-x">&times;</button>
+							<h4 class="modal-title">Configuração de Usuários</h4>
+						</div>
+						  <div class="modal-body">
+						    <p>Um erro ocorreu ao tentar salvar dados do usuário!</p>
+						  </div>
+						  <input type="hidden" name="nome" class="form-control " id="rnome"  >
+						  <div class="modal-footer">
+						    
+						    <button type="button" data-dismiss="modal" class="btn">Fechar</button>
+						  </div>
+				 	</div>
+			 </div>
+		</div>
 		<div id="mensagem" class="modal fade" role="dialog">
 			 <div class="modal-dialog">
 				 	<div class="modal-content">
@@ -258,7 +299,7 @@
 							<h4 class="modal-title">Configuração de Usuários</h4>
 						</div>
 						  <div class="modal-body">
-						    <p>Registro foi excluido com sucesso!</p>
+						    <p>Informações foram salvas com sucesso!</p>
 						  </div>
 						  <input type="hidden" name="nome" class="form-control " id="rnome"  >
 						  <div class="modal-footer">
@@ -299,15 +340,17 @@
 	<!-- Passagem de parametros entre tabela e modal -->
 	<script>
 	$(".novo").on('click', function(){
+		
 		var nome="";
 		var telefone="";
 		var email="";
 		var contexto="incluir";
+		
 	    $("#mcontexto").val(contexto);
 		$("#mnome").val(nome);
 		$("#memail").val(email);
 		$("#mtelefone").val(telefone);
-		
+		document.getElementById("check-reset").disabled = true;
 		$("#myModalUsuarios").modal()
 	});
 	
@@ -330,6 +373,7 @@
 	    $("#memail").val(email);
 	    var telefone = $(linha[3]).text();
 		$("#mtelefone").val(telefone);
+		document.getElementById("check-reset").disabled = false;
 		
 		$("#myModalUsuarios").modal();
 	});
@@ -341,7 +385,7 @@
 	/* must apply only after HTML has loaded */
 	$(document).ready(function () {
 	    $("#submitForm").on('click', function() {
-	    		 $("#inventario_form").submit();	 
+	    		 $("#usuarios_form").submit();	 
 	        
 	    });
 	});
@@ -349,8 +393,41 @@
 	
 		
 	</script>
-	
-	
+	<script>
+	(function($) {
+		    salvar = function() {
+		    		
+		    		var _nome=$('#mnome').val();
+		    		var seletor = document.getElementById('mgroup');
+		    		var _grupo= seletor.options[seletor.selectedIndex].value;
+		    		var _email=$('#memail').val();
+		    		var _contexto= $('#mcontexto').val();
+		    		var _telefone = $('#mtelefone').val();
+		    		var check = document.getElementsByName("check-reset");
+		    		if (check.checked==true){ var _reset="sim"}else{var _reset="nao"}
+		    		
+		    		$("#myModalUsuarios").modal('hide');
+		    		$('#carregando').modal();
+		    		$.post('salvarusuario',{nome:_nome,chave:"",email:_email,telefone:_telefone,grupo:_grupo,contexto:_contexto,reset:_reset},
+		    				function(responseText) {
+		    			
+		    			
+		    			if (responseText=="SUCESSO")
+						{
+							$('#carregando').modal('hide');
+							$('#mensagem').modal();
+							
+						}
+						else
+						{
+							$('#carregando').modal('hide');
+							$("#erro-alterar").modal();
+						}
+		    	});
+		    return false;
+		  }
+		})(jQuery);
+	</script>
 	<script>
 	(function($) {
 		    remove = function(item,contador) {
@@ -361,7 +438,6 @@
 				var nome = $(linha[0]).text();
 				$("#confirm").modal();
 				$(".delete").on('click', function(){
-					
 					$('#carregando').modal();
 		    		$.post('removerUsuario',{codigo_usuario:nome},function(responseText) {
 						if (responseText=="SUCESSO")
@@ -375,7 +451,6 @@
 								//$("#confirm").modal('hide');
 								//$("#confirm").close();
 						}
-						
 						else
 						{
 							$('#carregando').modal('hide');

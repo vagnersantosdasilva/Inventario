@@ -11,11 +11,6 @@ import Entidades.Propriedades;
 import Entidades.PropriedadesJDBC;
 import Util.Cripto;
 
-/* Essa classe provê acesso a manutenção de registros diversos que virão via socket das máquinas clientes. 
- * O controle de acesso a usuários web deverá ser feito de outra forma . 
- * 
- */
-
 public class ServicoDAO 
 {
 	
@@ -42,10 +37,18 @@ public class ServicoDAO
 		this.nomeDoBanco=propriedades.getNomeDoBanco();
 		this.sgbd=propriedades.getSgbd();
 		this.driver=propriedades.getDriver();
-		this.urlConexao=api+servidor+porta+nomeDoBanco;
+		this.urlConexao=obterUrLConexao();
 		System.out.println(this.urlConexao);
 	}
 	
+	private String obterUrLConexao() {
+		Cripto cripto = new Cripto(3,2,5,7,13,21,1);
+		if (sgbd.equals("mssql")) {
+			//"jdbc:sqlserver://"+enderecoBanco+":1433;databaseName=inventario;user="+nomeUsuario+";password="+senha
+			return api+servidor+porta+";databaseName="+nomeDoBanco+";user="+usuario+";password="+cripto.decifrar(senha);
+		}
+		return api+servidor+porta+"/"+nomeDoBanco+","+usuario+","+cripto.decifrar(senha);
+	}
 	private ServicoDAO(String caminho)
 	{
 		try
@@ -79,6 +82,12 @@ public class ServicoDAO
 				this.api=props.getProperty("apiPostgreSql");
 				this.driver = props.getProperty("driverPostgreSql");
 				this.urlConexao = api+servidor+porta+nomeDoBanco;
+			}
+			if(sgbd.equals("mssql")) {
+				this.porta=props.getProperty("portaMsSql");
+				this.api=props.getProperty("apiMsSql");
+				this.driver = props.getProperty("driverMsSql");
+				this.urlConexao = api+servidor+porta+";databaseName="+nomeDoBanco;
 			}
 			arquivoPropriedades.close();
 		}catch(Exception e)
@@ -120,71 +129,13 @@ public class ServicoDAO
 		}
 			return instancia;
 		}
-	//Provisório	
-	public void carregarPropriedadesBanco(String caminho) throws IOException
-	{
-		Properties props = new Properties();
-		FileInputStream arquivoPropriedades = new FileInputStream(caminho);
-		props.load(arquivoPropriedades);
-		this.usuario=props.getProperty("usuario");
-		this.senha=props.getProperty("senha");
-		this.sgbd=props.getProperty("sgbdescolhido");
-		this.servidor = props.getProperty("servidor");
-		this.nomeDoBanco = props.getProperty("nomeDoBanco");
-		if (sgbd.equals("mysql"))
-		{
-			 this.porta = props.getProperty("portaMySql");
-			 this.api = props.getProperty("apiMySql");
-			 this.driver = props.getProperty("driverMySql");
-			 this.urlConexao=api+servidor+porta+nomeDoBanco;
-			 System.out.println(this.urlConexao);
-		}
-		
-		if (sgbd.equals("postgresql"))
-		{	
-			this.porta=props.getProperty("portaPostgreSql");
-			this.api=props.getProperty("apiPostgreSql");
-			this.driver = props.getProperty("driverPostgreSql");
-			this.urlConexao = api+servidor+porta+nomeDoBanco;
-			System.out.println(this.urlConexao);
-		}
-		arquivoPropriedades.close();
-	}
-	//Provisório
-	public void carregarPropriedadesBanco() throws IOException
-	{
-		Properties props = new Properties();
-		FileInputStream arquivoPropriedades = new FileInputStream("propriedades.txt");
-		props.load(arquivoPropriedades);
-		this.usuario=props.getProperty("usuario");
-		this.senha=props.getProperty("senha");
-		this.sgbd=props.getProperty("sgbdescolhido");
-		this.servidor = props.getProperty("servidor");
-		this.nomeDoBanco = props.getProperty("nomeDoBanco");
-		if (sgbd.equals("mysql"))
-		{
-			 this.porta = props.getProperty("portaMySql");
-			 this.api = props.getProperty("apiMySql");
-			 this.driver = props.getProperty("driverMySql");
-			 this.urlConexao=api+servidor+porta+nomeDoBanco;
-			 System.out.println(this.urlConexao);
-		}
-		
-		if (sgbd.equals("postgresql"))
-		{	
-			this.porta=props.getProperty("portaPostgreSql");
-			this.api=props.getProperty("apiPostgreSql");
-			this.driver = props.getProperty("driverPostgreSql");
-			this.urlConexao = api+servidor+porta+nomeDoBanco;
-		}
-		arquivoPropriedades.close();
-	}
+	
 	
 	public Connection obterConexao() throws ClassNotFoundException, SQLException
 	{
-		Cripto cripto = new Cripto(3,2,5,7,13,21,1);
+		System.out.println("driver obtido : "+driver);
 		Class.forName(driver);
-		conn = DriverManager.getConnection(urlConexao,usuario,cripto.decifrar(senha));
+		conn = DriverManager.getConnection(urlConexao);
 		conn.setAutoCommit(false);
 		return conn;
 	}

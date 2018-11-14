@@ -39,7 +39,7 @@ public class TesteDePropriedades {
 	public void testarQuery() throws IOException, SQLException
 	{
 		ServicoDAO servico = ServicoDAO.getInstace("propriedades.txt");
-		servico.carregarPropriedadesBanco();
+		//servico.carregarPropriedadesBanco();
 		PlacaMaeDAO dao = new PlacaMaeDAO();
 		PlacaMae placa =new PlacaMae();
 		placa.setCodigoMaquina("1");

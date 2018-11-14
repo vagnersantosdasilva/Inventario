@@ -68,10 +68,12 @@ public class SalvarUsuario extends HttpServlet {
    		novoUsuario.setGrupoAcesso(request.getParameter("grupo"));
    		novoUsuario.setEmail(request.getParameter("email"));
    		novoUsuario.setTelefone(request.getParameter("telefone"));
-   		boolean reset = request.getParameter("reset").equals("sim")?true:false;
+   		boolean reset=false;
+   		if (request.getParameter("reset")!=null) { reset = request.getParameter("reset").equals("sim")?true:false;}
    		
    		if (novoUsuario.equals(null) ||novoUsuario.getNomeUsuario()=="")
    		{
+   			System.out.println("[SalvarUsuario:doPost] :Usuario não autenticado");
    			request.setAttribute("erro", "Usuário definido incorretamente!");
 			request.getRequestDispatcher("/retornoErro.jsp").forward(request, response);
 		}
@@ -82,52 +84,64 @@ public class SalvarUsuario extends HttpServlet {
 				ServicoDAO servico = ServicoDAO.getInstace(propriedades);
 				Connection conn= servico.obterConexao(); 
 				Usuarios dao = new Usuarios();
+				session.removeAttribute("resposta");
+				
 				if (contexto.equals("editar"))
 				{
 					if(reset){ 
 						if (reset(dao,conn,novoUsuario,path)) {
-							response.setContentType("text/plain");
-							response.setCharacterEncoding("UTF-8");
-							response.getWriter().write("SUCESSO");
+							System.out.println("Reset - Sucesso");
+							session.setAttribute("resposta", "SUCESSO");
+							response.sendRedirect("/Inventario/listar");
+							
 						}
 						else {
-							response.setContentType("text/plain");
-							response.setCharacterEncoding("UTF-8");
-							response.getWriter().write("FALHA");
+							System.out.println("[SalvarUsuario:doPost:reset()] :Não foi possível mudar senha");
+							System.out.println("Reset - Falha");
+							session.setAttribute("resposta", "FALHA");
+							response.sendRedirect("/Inventario/listar");
+							
 						}
 					}
 					
 					else {
 						if (atualizar(dao,conn,novoUsuario)) {
-							response.setContentType("text/plain");
-							response.setCharacterEncoding("UTF-8");
-							response.getWriter().write("SUCESSO");
+							System.out.println("Atualizar - Sucesso");
+							session.setAttribute("resposta", "SUCESSO");
+							response.sendRedirect("/Inventario/listar");
+							
+							
 						}else {
-							response.setContentType("text/plain");
-							response.setCharacterEncoding("UTF-8");
-							response.getWriter().write("FALHA");
+							System.out.println("[SalvarUsuario:doPost:atualizar()] :Não foi possível atualizar usuario");
+							System.out.println("Atualizar - Falha");
+							session.setAttribute("resposta", "FALHA");
+							response.sendRedirect("/Inventario/listar");
+							
 						}
 					}
 				}
 				if(contexto.equals("incluir"))
 				{
 					if (incluir(dao,conn,novoUsuario)) {
-						response.setContentType("text/plain");
-						response.setCharacterEncoding("UTF-8");
-						response.getWriter().write("SUCESSO");
+						System.out.println("Incluir - Sucesso");
+						session.setAttribute("resposta", "SUCESSO");
+						response.sendRedirect("/Inventario/listar");
+						
+						
 					}else {
-						response.setContentType("text/plain");
-						response.setCharacterEncoding("UTF-8");
-						response.getWriter().write("FALHA");
+						System.out.println("[SalvarUsuario:doPost:incluir()] :Não foi possível incluir usuario");
+						session.setAttribute("resposta", "FALHA");
+						response.sendRedirect("/Inventario/listar");
+						
 					}
 					
 				}
 				if (contexto==null)
 				{
 					System.out.println("Erro SalvarUsuario[Função não definida]");
-					response.setContentType("text/plain");
-					response.setCharacterEncoding("UTF-8");
-					response.getWriter().write("FALHA");
+					session.setAttribute("resposta", "FALHA");
+					response.sendRedirect("/Inventario/listar");
+					
 				}
 			}catch(EmailException e)
 			{
@@ -141,7 +155,7 @@ public class SalvarUsuario extends HttpServlet {
 			{
 				
 			}
-				response.sendRedirect("/Inventario/listar");
+				
 		}
    		
    		

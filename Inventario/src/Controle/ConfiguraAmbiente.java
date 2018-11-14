@@ -56,6 +56,7 @@ public class ConfiguraAmbiente extends HttpServlet {
 			String absoluto_jdbc = caminhoAplicacao+"\\WebContent\\WEB-INF\\propriedades\\jdbc.cfg";
 			String absoluto_sgbd = caminhoAplicacao+"\\WebContent\\WEB-INF\\propriedades\\bd.cfg";
 			String script_estruturas = caminhoAplicacao+"\\WebContent\\WEB-INF\\estruturas\\estruturas.scp";
+			if (nomeBanco.equals("mssql")) { script_estruturas = caminhoAplicacao+"\\WebContent\\WEB-INF\\estruturas\\estruturas_mssql.scp";}
 			String status = caminhoAplicacao+"\\WebContent\\WEB-INF\\propriedades\\status.cfg";
 			Util.Propriedades.escrevePropriedades("status", "parcial", status);
 			PropriedadesSGBDDAO sgbddao = new PropriedadesSGBDDAO(absoluto_sgbd);
@@ -82,7 +83,13 @@ public class ConfiguraAmbiente extends HttpServlet {
 						
 						//Nova conexÃ£o , dessa vez direto com a db criada 
 						Class.forName(driver);
-						Connection conn2 = DriverManager.getConnection(urlConexao+"/inventario",nomeUsuario,senha);
+						
+						//"jdbc:sqlserver://127.0.0.1:1433;databaseName=inventario;user=SA;password=P1a2c5h4"
+						Connection conn2;
+						if (nomeBanco.equals("mssql")) {
+							conn2=DriverManager.getConnection("jdbc:sqlserver://"+enderecoBanco+":1433;databaseName=inventario;user="+nomeUsuario+";password="+senha);
+						}
+						else conn2 = DriverManager.getConnection(urlConexao+"/inventario",nomeUsuario,senha);
 						conn2.setAutoCommit(false);
 						if (dao.criarTabelas(conn2,script_estruturas)) 
 						{
@@ -90,9 +97,6 @@ public class ConfiguraAmbiente extends HttpServlet {
 							if (dao.criarRoot(conn2, email, "?")) 
 							{ 
 								System.out.println("[ESCOPO:ConfiguraAmbiente]:Criado usuario admin");
-								
-								sgbddao.gravarPropriedades(listaSGBD(propriedades));
-								System.out.println("[ESCOPO:ConfiguraAmbiente]:Arquivo de bd.cfg gravado");
 								Util.Propriedades.escrevePropriedades("status", "ok", status);
 								
 							}
@@ -101,13 +105,16 @@ public class ConfiguraAmbiente extends HttpServlet {
 								System.out.println("[ESCOPO:ConfiguraAmbiente]:NÃ£o foi criado usuario admin nesse contexto");
 								Util.Propriedades.escrevePropriedades("status", "falha", status);
 							}
+							sgbddao.gravarPropriedades(listaSGBD(propriedades));
 							if (dao.gravarInfoBanco(conn2, sgbddao,jdbcdao))
 							{
 								System.out.println("[ESCOPO:ConfiguraAmbiente]:Informações do SGBD gravadas em tabela");
-							}
+							}else System.out.println("[ESCOPO:ConfiguraAmbiente]:Informações do SGBD não gravadas em tabela");
 							
 							conn2.commit();
 							conn2.close();
+							
+							System.out.println("[ESCOPO:ConfiguraAmbiente]:Arquivo de bd.cfg gravado");
 							System.out.println("[ESCOPO:ConfiguraAmbiente]:Fim de processo de criação de estruturas");
 							session.setAttribute("mensagem","5");
 							response.sendRedirect("/Inventario/config/config.jsp");
@@ -164,7 +171,7 @@ public class ConfiguraAmbiente extends HttpServlet {
 		lista.add("sgbdescolhido="+propriedades[0]);
 		lista.add("servidor=//"+propriedades[3]+":");
 		lista.add("codificacao=UTF-8");
-		lista.add("nomeDoBanco=/inventario");
+		lista.add("nomeDoBanco=inventario");
 		return lista;
 	}
 

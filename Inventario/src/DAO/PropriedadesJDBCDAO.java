@@ -40,72 +40,7 @@ public class PropriedadesJDBCDAO
 	}
 	
 	
-	public  PropriedadesJDBC obterDriverMysql() 
-	{
-		try 
-		{
-			PropriedadesJDBC propriedades = new PropriedadesJDBC();
-			propriedades.setDriver(Util.Propriedades.lePropriedades("driverMySql", caminhoAbsoluto));
-			propriedades.setApi(Util.Propriedades.lePropriedades("apiMySql", caminhoAbsoluto));
-			propriedades.setPorta(Util.Propriedades.lePropriedades("portaMySql", caminhoAbsoluto));
-			return propriedades;
-		}catch(IOException e) 
-		{
-			System.out.println("Erro[ProrpiedadesJDBCDAO:obterPropriedades]"+e.getMessage());
-			e.printStackTrace();
-		}
-		return new PropriedadesJDBC();
-	}
-	public  PropriedadesJDBC obterDriverMysql(String caminho) 
-	{
-		try 
-		{
-			PropriedadesJDBC propriedades = new PropriedadesJDBC();
-			propriedades.setDriver(Util.Propriedades.lePropriedades("driverMySql", caminho));
-			propriedades.setApi(Util.Propriedades.lePropriedades("apiMySql", caminho));
-			propriedades.setPorta(Util.Propriedades.lePropriedades("portaMySql", caminho));
-			return propriedades;
-		}catch(IOException e) 
-		{
-			System.out.println("Erro[ProrpiedadesJDBCDAO:obterPropriedades]"+e.getMessage());
-			e.printStackTrace();
-		}
-		return new PropriedadesJDBC();
-	}
 	
-	
-	public  PropriedadesJDBC obterDriverPostgreSQL() 
-	{
-		try 
-		{
-			PropriedadesJDBC propriedades = new PropriedadesJDBC();
-			propriedades.setDriver(Util.Propriedades.lePropriedades("drivePostgreSQL", caminhoAbsoluto));
-			propriedades.setApi(Util.Propriedades.lePropriedades("apiPostgreSQL", caminhoAbsoluto));
-			propriedades.setPorta(Util.Propriedades.lePropriedades("portaPostgreSQL", caminhoAbsoluto));
-			return propriedades;
-		}catch(IOException e) 
-		{
-			System.out.println("Erro[ProrpiedadesJDBCDAO:obterPropriedades]"+e.getMessage());
-			e.printStackTrace();
-		}
-		return new PropriedadesJDBC();
-	}
-	public  PropriedadesJDBC obterDriverPostgreSQL(String caminho) 
-	{
-		try 
-		{
-			PropriedadesJDBC propriedades = new PropriedadesJDBC();
-			propriedades.setDriver(Util.Propriedades.lePropriedades("drivePostgreSQL", caminho));
-			propriedades.setApi(Util.Propriedades.lePropriedades("apiPostgreSQL", caminho));
-			propriedades.setPorta(Util.Propriedades.lePropriedades("portaPostgreSQL", caminho));
-			return propriedades;
-		}catch(IOException e) 
-		{
-			System.out.println("Erro[ProrpiedadesJDBCDAO:obterPropriedades]"+e.getMessage());
-			e.printStackTrace();
-		}
-		return new PropriedadesJDBC();
-	}
 	public String obterURLConexao(String servidor,String sgbd) 
 	{
 		try 
@@ -129,6 +64,17 @@ public class PropriedadesJDBCDAO
 					return urlConexao;
 				
 			}
+			if (sgbd.equals("mssql"))
+			{
+				
+					String api=Util.Propriedades.lePropriedades("apiMsSql", caminhoAbsoluto);
+					String porta=Util.Propriedades.lePropriedades("portaMsSql",caminhoAbsoluto);
+					String urlConexao=api+"//"+servidor+":"+porta;
+					
+					return urlConexao;
+				
+			}
+			
 			return "[vazio]";
 	}	
 	catch(IOException e)
@@ -151,6 +97,12 @@ public class PropriedadesJDBCDAO
 			if(nomeBanco.equals("postgresql")) 
 			{
 				String driver = Util.Propriedades.lePropriedades("driverPostgreSql", caminhoAbsoluto);
+				return driver;
+			
+			}
+			if (nomeBanco.equals("mssql")) 
+			{
+				String driver = Util.Propriedades.lePropriedades("driverMsSql", caminhoAbsoluto);
 				return driver;
 			}
 		}catch(IOException e) 
@@ -175,11 +127,20 @@ public class PropriedadesJDBCDAO
 			if(sgbd.equals("postgresql")) 
 			{
 				PropriedadesJDBC propriedades = new PropriedadesJDBC();
-				propriedades.setDriver(Util.Propriedades.lePropriedades("drivePostgreSQL", caminhoAbsoluto));
+				propriedades.setDriver(Util.Propriedades.lePropriedades("driverPostgreSQL", caminhoAbsoluto));
 				propriedades.setApi(Util.Propriedades.lePropriedades("apiPostgreSQL", caminhoAbsoluto));
 				propriedades.setPorta(Util.Propriedades.lePropriedades("portaPostgreSQL", caminhoAbsoluto));
 				return propriedades;
 			}
+			if(sgbd.equals("mssql")) 
+			{
+				PropriedadesJDBC propriedades = new PropriedadesJDBC();
+				propriedades.setDriver(Util.Propriedades.lePropriedades("driverMsSql", caminhoAbsoluto));
+				propriedades.setApi(Util.Propriedades.lePropriedades("apiMsSql", caminhoAbsoluto));
+				propriedades.setPorta(Util.Propriedades.lePropriedades("portaMsSql", caminhoAbsoluto));
+				return propriedades;
+			}
+			
 			return new PropriedadesJDBC();
 		}catch(IOException e) 
 		{

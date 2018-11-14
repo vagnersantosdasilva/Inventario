@@ -172,7 +172,7 @@
 		      		<div class="modal-footer">
 				      	<!--  <button type="button" class="btn btn-primary" id="submitForm" >Salvar <span class="glyphicon glyphicon-thumbs-up"></span>
 				      	</button>-->
-				      	<button type="submit" class="btn btn-primary" id="btn-salvar">Salvar</button>
+				      	<button type="button" class="btn btn-primary" id="btn-salvar" onclick="salvar()">Salvar</button>
 		        		<button type="button" class="btn btn-default fechar" id="btn-fechar" data-dismiss="modal">Fechar</button>
 		      		</div>
 		     		</form>
@@ -198,7 +198,27 @@
 				 	</div>
 			 </div>
 		</div>
-		 
+		 <div id="confirm_reset" class="modal fade" role="dialog">
+			 <div class="modal-dialog">
+				 	<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" id="btn-fechar-x">&times;</button>
+							<h4 class="modal-title">Configuração de Usuários</h4>
+						</div>
+						  <div class="modal-body">
+						   Uma nova senha será criada e enviada para o email registrado pelo usuário. Está seguro disso?
+						  </div>
+						  <input type="hidden" name="nome" class="form-control " id="rnome"  >
+						  <div class="modal-footer">
+						    <button type="button" data-dismiss="modal" class="btn btn-primary reset"  id="reset" >Reset</button>
+						    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+						  </div>
+				 	</div>
+			 </div>
+		</div>
+		
+		
+	 
 <!-- ################################################################################################################################################ -->
 		 <div id="carregando" class="modal fade" role="dialog" >
 			 <div class="modal-dialog modal-sm">
@@ -272,25 +292,8 @@
 				 	</div>
 			 </div>
 		</div>
-		<div id="excluir-sucesso" class="modal fade" role="dialog">
-			 <div class="modal-dialog">
-				 	<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" id="btn-fechar-x">&times;</button>
-							<h4 class="modal-title">Configuração de Usuários</h4>
-						</div>
-						  <div class="modal-body">
-						    <p>Usuário excluído com sucesso!</p>
-						  </div>
-						  <input type="hidden" name="nome" class="form-control " id="rnome"  >
-						  <div class="modal-footer">
-						    
-						    <button type="button" data-dismiss="modal" class="btn">Fechar</button>
-						  </div>
-				 	</div>
-			 </div>
-		</div>
-	    
+		
+	
 	 
 <!-- ################################################################################################################################################ -->
 	    
@@ -309,6 +312,13 @@
 	<script src="/Inventario/suporte/js/dataTables.buttons.min.js"></script>
 	<script src="/Inventario/suporte/js/tabelas.js"></script>
 	<!-- Os proximos scripts devem ser transferidos para arquivos .js -->
+	
+	<script>
+	$(document).on("hidden.bs.modal", "#myModalUsuarios", function () {
+		
+		$('#inventario_form')[0].reset();
+	});
+	</script>
 	
 	<!-- Passagem de parametros entre tabela e modal -->
 	<script>
@@ -351,15 +361,55 @@
 		$("#myModalUsuarios").modal();
 	});
 	
+	
+		
+	
 	/*Envio do formulario para servlet*/
 	/* must apply only after HTML has loaded */
 	$(document).ready(function () {
 	    $("#submitForm").on('click', function() {
-	    		 $("#usuario_form").submit();	 
+	    		 $("#usuarios_form").submit();	 
 	        
 	    });
 	});
+	
+	
 		
+	</script>
+	<script>
+	(function($) {
+		    salvar = function() {
+		    		
+		    		var _nome=$('#mnome').val();
+		    		var seletor = document.getElementById('mgroup');
+		    		var _grupo= seletor.options[seletor.selectedIndex].value;
+		    		var _email=$('#memail').val();
+		    		var _contexto= $('#mcontexto').val();
+		    		var _telefone = $('#mtelefone').val();
+		    		var check = document.getElementsByName("check-reset");
+		    		if (check.checked==true){ var _reset="sim"}else{var _reset="nao"}
+		    		
+		    		$("#myModalUsuarios").modal('hide');
+		    		$('#carregando').modal();
+		    		$.post('salvarusuario',{nome:_nome,chave:"",email:_email,telefone:_telefone,grupo:_grupo,contexto:_contexto,reset:_reset},
+		    				function(responseText) {
+		    			
+		    			
+		    			if (responseText=="SUCESSO")
+						{
+							$('#carregando').modal('hide');
+							$('#mensagem').modal();
+							
+						}
+						else
+						{
+							$('#carregando').modal('hide');
+							$("#erro-alterar").modal();
+						}
+		    	});
+		    return false;
+		  }
+		})(jQuery);
 	</script>
 	<script>
 	(function($) {
@@ -380,7 +430,7 @@
 							    });
 							
 								$('#carregando').modal('hide');
-								$('#excluir-sucesso').modal();
+								$('#mensagem').modal();
 								//$("#confirm").modal('hide');
 								//$("#confirm").close();
 						}
@@ -403,27 +453,9 @@
 		  }
 		})(jQuery);
 	</script>
+	  
 	<script src="/Inventario/suporte/js/validator.js"></script>
-	<c:if test="${sessionScope.resposta=='SUCESSO' }">
-	    <c:remove var="resposta" scope="session" />
-			<SCRIPT>
-			$(document).ready(function() {
-				
-				$('#mensagem').modal('show');
-			});
-				
-			</SCRIPT>
-		</c:if>
-		<c:if test="${sessionScope.resposta=='FALHA' }">
-		<c:remove var="resposta" scope="session" />
-			<SCRIPT>
-			$(document).ready(function() {
-				
-				$('#erro-alterar').modal('show');
-			});
-				
-			</SCRIPT>
-		</c:if>
+	
 </body>
 
 

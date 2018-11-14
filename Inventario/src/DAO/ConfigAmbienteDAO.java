@@ -47,9 +47,41 @@ public class ConfigAmbienteDAO
 			System.out.println("Base Inventario criada com sucesso[MySQL:inventario]");
 			return true;
 		}
+		if(nomeDoSGBD.equals("mssql")) 
+		{
+			if (!existeBaseMsSQL(conn,nomeDaBase)) {
+				Statement criador =conn.createStatement();
+				criador.executeUpdate("CREATE DATABASE inventario");
+				criador.close();
+				System.out.println("Base Inventario criada com sucesso[MSSQL:inventario]");
+				
+			}return true;	
+			
+		}
+		
 		return false;
 		
 	}
+	private boolean existeBaseMsSQL(Connection conn, String nomeDaBase) throws SQLException {
+		PreparedStatement query = conn.prepareStatement("select name from sys.databases where name=?");
+		query.setString(1, nomeDaBase);
+		ResultSet rs = query.executeQuery();
+		int contador=0;
+		if (rs.next())
+		{
+			do
+			{
+				contador =rs.getRow();
+			}
+			while(rs.next());
+		}
+		rs.close();
+		query.close();
+		if (contador>0) return true;
+		
+		return false;
+	}
+	
 	private boolean existeBasePostgreSQL(Connection conn,String nomeDaBase) throws SQLException
 	{
 		PreparedStatement query = conn.prepareStatement("select * from pg_database where datname=?");

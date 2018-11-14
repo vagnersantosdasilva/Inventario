@@ -58,6 +58,7 @@
 						<select name ="db" id="db" class="form-control">
 							<option  value="mysql">MySQL</option>
 							<option  value="postgresql">PostgreSQL</option>
+							<option  value="mssql">MSSQL Server</option>
 						</select>
 						<!--<input name="db" type="text" id="db" class ="form-control" placeholder="Informe o Banco de dados. Ex: mysql" >-->
 						<div class="form-group">                					

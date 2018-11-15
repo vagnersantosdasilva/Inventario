@@ -25,6 +25,7 @@ public class ListarPerfilUsuario extends HttpServlet {
 			response.sendRedirect("/Inventario/login.jsp");
 		}
 		else {
+			
 			request.setAttribute("usuario", usuario);
 			response.sendRedirect("/Inventario/protegido/usuario/usuario.jsp");
 		}

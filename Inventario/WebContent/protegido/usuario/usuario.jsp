@@ -61,7 +61,7 @@
 							<ul class="nav nav-pills navbar-left">
 							
 								<li  role="presentation" class="active">
-									<a href="#myModal" class="alterar" data-toggle="modal" data-target="#myModal">
+									<a href="#configurar_perfil" class="alterar" data-toggle="modal" data-target="#configurar_perfil">
 										<span class="glyphicon glyphicon-edit">
 									</a>
 								</li>
@@ -87,19 +87,19 @@
 									<div class="panel-body">
 										<table class="table">
 											<tr>
-												<th>Login	:</th> <td ><c:out value="${usuario.nomeUsuario}" default=" " /></td>
+												<th>Login	:</th> <td id="usuario" ><c:out value="${usuario.nomeUsuario}" default=" " /></td>
 											</tr>
 											<tr>    
-												<th>Nível de Acesso  :</th> <td><c:out value="${usuario.grupoAcesso}" default=" "/></td>
+												<th>Nível de Acesso  :</th> <td id="grupo"><c:out value="${usuario.grupoAcesso}" default=" "/></td>
 											</tr>
 											<tr>	
-												<th>Email	:</th> <td><c:out value="${usuario.email}" default=" "/></td>
+												<th>Email	:</th> <td id="email"><c:out value="${usuario.email}" default=" "/></td>
 											</tr>
 											<tr>	
-												<th>Telefone	:</th> <td><c:out value="${usuario.telefone}" default=" "/></td>
+												<th>Telefone	:</th> <td id="telefone"><c:out value="${usuario.telefone}" default=" "/></td>
 											</tr>
 											<tr>
-												<th>Senha	:</th> <td >******</td>	
+												<th>Senha	:</th> <td id="senha">******</td>	
 												<!--  <th>Senha	:</th> <td ><c:out value="${usuario.chaveAcesso}" default=" "/></td>-->
 											</tr>
 									</table>
@@ -116,7 +116,7 @@
 			
 			<p align="center">&copy; Company 2017</p>
 		</footer>
-		<div id="myModal" class="modal fade" role="dialog">
+		<div id="configurar_perfil" class="modal fade" role="dialog">
 			<div class="modal-dialog">
 		    <!-- Modal content-->
 				<div class="modal-content">
@@ -124,7 +124,7 @@
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="modal-title">Configuração de Perfil</h4>
 					</div>
-					<form  id="config_usuario_form" Action="" Method="post" data-toggle="validator" role="form">	
+					<form  id="config_perfil_form" Action="/Inventario/alterarPerfil" Method="post" data-toggle="validator" role="form">	
 					<div class="modal-body">
 						<div class="form-group">
 							<input type="hidden" name="nome" class="form-control" id="mnomeSGBD" value="<c:out value="${usuario.nomeUsuario}" default=" " />">
@@ -163,7 +163,7 @@
 						</div>
 						<div class="form-group">
 							<label class="checkbox-inline" for="mreset" >
-							<input type="checkbox" name="reset"  class="checkbox-inline" id ="check-reset"  value="reset" onchange="javascript:habilitarSenha()"> Renovar Senha:</label>
+							<input type="checkbox" name="renovarSenha"  class="checkbox-inline" id ="check-reset"  value="sim" onchange="javascript:habilitarSenha()"> Renovar Senha:</label>
 						</div>
 						
 					</div>
@@ -175,7 +175,49 @@
 		    	</div>
 		  	</div>
 		</div>
+		<div id="erro-alterar" class="modal fade" role="dialog">
+			 <div class="modal-dialog">
+				 	<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" id="btn-fechar-x">&times;</button>
+							<h4 class="modal-title">Configuração de Usuários</h4>
+						</div>
+						  <div class="modal-body">
+						  <div class="alert alert-danger">
+							   <strong>UM ERRO OCORREU!</strong> <p id="erro-texto"> Ao tentar salvar dados do usuário!</p>
+						  </div>
+						   
+						  </div>
+						  <div class="modal-footer">
+						    
+						    <button type="button" data-dismiss="modal" class="btn">Fechar</button>
+						  </div>
+				 	</div>
+			 </div>
+		</div>
 		
+		<div id="mensagem" class="modal fade" role="dialog">
+			 <div class="modal-dialog">
+				 	<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" id="btn-fechar-x">&times;</button>
+							<h4 class="modal-title">Configuração de Usuários</h4>
+						</div>
+						  <div class="modal-body">
+						  
+						  	<div class="alert alert-success">
+  								<strong>Tudo Certo!</strong> <p id="mensagem-texto">Informações foram salvas com sucesso!</p>
+							</div>
+						    
+						  </div>
+						  <input type="hidden" name="nome" class="form-control " id="rnome"  >
+						  <div class="modal-footer">
+						    
+						    <button type="button" data-dismiss="modal" class="btn">Fechar</button>
+						  </div>
+				 	</div>
+			 </div>
+		</div>
 <!-- ################################################################################################################################################ -->
                                        	
 		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -201,7 +243,49 @@
 		        }
 		    }
 		</script>
-		
+		<script>
+		/* must apply only after HTML has loaded */
+		$(document).ready(function () {
+		    $("#submitForm").on('click', function() {
+		    		 $("#config_perfil_form").submit();	 
+		        
+		    });
+		});
+		</script>
+		<c:if test="${sessionScope.resposta=='SUCESSO' }">
+	    <c:remove var="resposta" scope="session" />
+			<SCRIPT>
+			$(document).ready(function() {
+				
+				$('#mensagem').modal('show');
+			});
+				
+			</SCRIPT>
+		</c:if>
+		<c:if test="${sessionScope.resposta=='ERRO' }">
+		<c:remove var="sql" scope="session" />
+			<SCRIPT>
+			$(document).ready(function() {
+				
+				//$('#erro-texto').css("color", "red");
+				$('#erro-texto').text('Ao tentar se comunicar com o Banco de Dados');
+				$('#erro-alterar').modal('show');
+			});
+				
+			</SCRIPT>
+		</c:if>
+		<c:if test="${sessionScope.classe=='ERRO' }">
+		<c:remove var="classe" scope="session" />
+			<SCRIPT>
+			$(document).ready(function() {
+				
+				//$('#erro-texto').css("color", "red");
+				$('#erro-texto').text('Um erro inesperado ocorreu. Se o problema persistir , entre em contato com o administrador do sistema.');
+				$('#erro-alterar').modal('show');
+			});
+				
+			</SCRIPT>
+		</c:if>
 		
 	</body>
 </html>

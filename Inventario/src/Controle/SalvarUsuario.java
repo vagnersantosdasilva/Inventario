@@ -64,13 +64,12 @@ public class SalvarUsuario extends HttpServlet {
 		Usuario novoUsuario =new Usuario();
 		String contexto=request.getParameter("contexto");
 		novoUsuario.setNomeUsuario(request.getParameter("nome"));
-   		novoUsuario.setChaveAcesso(request.getParameter("chave"));
    		novoUsuario.setGrupoAcesso(request.getParameter("grupo"));
    		novoUsuario.setEmail(request.getParameter("email"));
    		novoUsuario.setTelefone(request.getParameter("telefone"));
    		boolean reset=false;
+   		boolean renovarSenha=false;
    		if (request.getParameter("reset")!=null) { reset = request.getParameter("reset").equals("sim")?true:false;}
-   		
    		if (novoUsuario.equals(null) ||novoUsuario.getNomeUsuario()=="")
    		{
    			System.out.println("[SalvarUsuario:doPost] :Usuario não autenticado");
@@ -90,7 +89,7 @@ public class SalvarUsuario extends HttpServlet {
 				{
 					if(reset){ 
 						if (reset(dao,conn,novoUsuario,path)) {
-							System.out.println("Reset - Sucesso");
+							System.out.println("Reset teve êxito!");
 							session.setAttribute("resposta", "SUCESSO");
 							response.sendRedirect("/Inventario/listar");
 							
@@ -103,80 +102,63 @@ public class SalvarUsuario extends HttpServlet {
 							
 						}
 					}
-					
 					else {
 						if (atualizar(dao,conn,novoUsuario)) {
-							System.out.println("Atualizar - Sucesso");
+							System.out.println("Atualizar teve êxito!");
 							session.setAttribute("resposta", "SUCESSO");
 							response.sendRedirect("/Inventario/listar");
-							
-							
-						}else {
+						}
+						else {
 							System.out.println("[SalvarUsuario:doPost:atualizar()] :Não foi possível atualizar usuario");
 							System.out.println("Atualizar - Falha");
 							session.setAttribute("resposta", "FALHA");
 							response.sendRedirect("/Inventario/listar");
-							
 						}
 					}
 				}
 				if(contexto.equals("incluir"))
 				{
 					if (incluir(dao,conn,novoUsuario)) {
-						System.out.println("Incluir - Sucesso");
+						System.out.println("Incluir teve êxito!");
 						session.setAttribute("resposta", "SUCESSO");
 						response.sendRedirect("/Inventario/listar");
 						
 						
 					}else {
-						System.out.println("[SalvarUsuario:doPost:incluir()] :Não foi possível incluir usuario");
+						System.out.println("[SalvarUsuario:doPost:incluir()] :Não foi possível incluir usuário");
 						session.setAttribute("resposta", "FALHA");
 						response.sendRedirect("/Inventario/listar");
 						
 					}
-					
 				}
 				if (contexto==null)
 				{
 					System.out.println("Erro SalvarUsuario[Função não definida]");
 					session.setAttribute("resposta", "FALHA");
 					response.sendRedirect("/Inventario/listar");
-					
 				}
 			}catch(EmailException e)
 			{
+				session.setAttribute("smtp", "ERRO");
 				System.out.println("Erro[SalvarUsuario["+e.getMessage()+"]");
 				e.printStackTrace();
+				response.sendRedirect("/Inventario/listar");
 			}catch(SQLException e) 
 			{
+				session.setAttribute("sql", "ERRO");
 				System.out.println("Erro[SalvarUsuario:doPost]"+e.getMessage());
+				e.printStackTrace();
+				response.sendRedirect("/Inventario/listar");
 			}
 			catch(ClassNotFoundException e) 
 			{
-				
+				System.out.println("Erro[SalvarUsuario:doPost]"+e.getMessage());
+				e.printStackTrace();
+				response.sendRedirect("/Inventario/listar");
 			}
 				
 		}
    		
-   		
-		
-		 /*
-   		 HttpSession session = request.getSession();
-		System.out.println(request.getParameter("nome"));
-		//System.out.println(request.getParameter("chave"));
-		System.out.println(request.getParameter("email"));
-		System.out.println(request.getParameter("telefone"));
-		System.out.println(request.getParameter("reset"));
-		System.out.println(request.getParameter("contexto"));
-		System.out.println(request.getParameter("grupo"));
-		
-			response.setContentType("text/plain");
-			response.setCharacterEncoding("UTF-8");
-		
-			response.getWriter().write("FALHA");
-			//response.sendRedirect("/Inventario/listar");
-   		*/ 
-
 	}
 	private void enviarEmail(Usuario usuario, String path) throws EmailException {
 		String smtp =path+"WEB-INF\\propriedades\\smtp.cfg";
@@ -204,9 +186,10 @@ public class SalvarUsuario extends HttpServlet {
 		{
 			conn.commit();
 			conn.close();
+			System.out.println("Incluir ["+usuario.getNomeUsuario()+"] teve êxito!");
 			return true;
 		}
-		System.out.println("Não foi possível incluir o registro de usuario. ");
+		System.out.println("Incluir ["+usuario.getNomeUsuario()+"] NÃO teve êxito!");
 		conn.rollback();
 		conn.close();
 		return false;
@@ -218,10 +201,11 @@ public class SalvarUsuario extends HttpServlet {
 		{
 			conn.commit();
 			conn.close();
+			System.out.println("Atualizar ["+usuario.getNomeUsuario()+"] teve êxito!");
 			return true;
 		}
 		
-		System.out.println("Não foi possível atualizar o registro. ");
+		System.out.println("Atualizar ["+usuario.getNomeUsuario()+"] NÂO teve êxito!");
 		conn.rollback();
 		conn.close();
 		return  false;
@@ -230,11 +214,14 @@ public class SalvarUsuario extends HttpServlet {
 	{
 		String novaSenha = Util.GeradorDeSenhas.gerarSenha(6);
 		usuario.setChaveAcesso(novaSenha);
-		if (atualizar(dao,conn,usuario)) {
-			System.out.println("Atualizar com reset de senha");
+		if (dao.atualizarChaveAcesso(conn, usuario, novaSenha)) {
+			System.out.println("Reset ["+usuario.getNomeUsuario()+"] teve êxito!");
+			atualizar(dao,conn,usuario);
 			enviarEmail(usuario,path);
+			System.out.println("Envio de Email para ["+usuario.getEmail()+"] teve êxito!");
 			return true;
 		}
+		System.out.println("Reset ["+usuario.getNomeUsuario()+"] NÂO teve êxito!");
 		return false;
 	}
 	

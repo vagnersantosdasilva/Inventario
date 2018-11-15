@@ -165,14 +165,14 @@
 						
 						<div class="form-group">
 							<label class="checkbox-inline" for="mreset" >
-							<input type="checkbox" name="reset"  class="checkbox-inline" id ="check-reset"  value="reset"> Reset de senha:</label>
+							<input type="checkbox" name="reset"  class="checkbox-inline" id ="check-reset"  value="sim"> Reset de senha:</label>
 						</div>
 					
 					</div>
 		      		<div class="modal-footer">
 				      	<!--  <button type="button" class="btn btn-primary" id="submitForm" >Salvar <span class="glyphicon glyphicon-thumbs-up"></span>
 				      	</button>-->
-				      	<button type="submit" class="btn btn-primary" id="btn-salvar">Salvar</button>
+				      	<button type="button" class="btn btn-primary salvar" id="btn-salvar">Salvar</button>
 		        		<button type="button" class="btn btn-default fechar" id="btn-fechar" data-dismiss="modal">Fechar</button>
 		      		</div>
 		     		</form>
@@ -200,12 +200,12 @@
 		</div>
 		 
 <!-- ################################################################################################################################################ -->
-		 <div id="carregando" class="modal fade" role="dialog" >
+		 <div id="carregando" class="modal fade" role="dialog" data-backdrop="static" >
 			 <div class="modal-dialog modal-sm">
 				 	<div class="modal-content">
 						  <div class="modal-header">
 								
-								<h4 class="modal-title">Processando...</h4>
+								<h4 class="modal-title">Aguarde...</h4>
 						  </div>
 						  <div class="modal-body">
    								<center> <img src="/Inventario/suporte/images/spinner2.gif"/></center>
@@ -244,7 +244,10 @@
 							<h4 class="modal-title">Configuração de Usuários</h4>
 						</div>
 						  <div class="modal-body">
-						    <p>Um erro ocorreu ao tentar salvar dados do usuário!</p>
+						  <div class="alert alert-danger">
+							   <strong>UM ERRO OCORREU!</strong> <p id="erro-texto"> Ao tentar salvar dados do usuário!</p>
+						  </div>
+						   
 						  </div>
 						  <input type="hidden" name="nome" class="form-control " id="rnome"  >
 						  <div class="modal-footer">
@@ -262,7 +265,9 @@
 							<h4 class="modal-title">Configuração de Usuários</h4>
 						</div>
 						  <div class="modal-body">
-						    <p>Informações foram salvas com sucesso!</p>
+						   	<div class="alert alert-success">
+  								<strong>Tudo Certo!</strong> <p id="mensagem-texto">Informações foram salvas com sucesso!</p>
+							</div>
 						  </div>
 						  <input type="hidden" name="nome" class="form-control " id="rnome"  >
 						  <div class="modal-footer">
@@ -280,7 +285,9 @@
 							<h4 class="modal-title">Configuração de Usuários</h4>
 						</div>
 						  <div class="modal-body">
-						    <p>Usuário excluído com sucesso!</p>
+						    <div class="alert alert-success">
+  								<strong>Tudo Certo!</strong> <p>Usuário excluído com sucesso!</p>
+							</div>
 						  </div>
 						  <input type="hidden" name="nome" class="form-control " id="rnome"  >
 						  <div class="modal-footer">
@@ -356,11 +363,20 @@
 	$(document).ready(function () {
 	    $("#submitForm").on('click', function() {
 	    		 $("#usuario_form").submit();	 
-	        
 	    });
 	});
 		
 	</script>
+	<SCRIPT>
+			$(".salvar").on('click', function(){
+				$("#myModalUsuarios").modal('hide'); 
+				$("#carregando").modal();
+				$("#usuario_form").submit();
+			});
+				
+	</SCRIPT>
+	
+	
 	<script>
 	(function($) {
 		    remove = function(item,contador) {
@@ -389,16 +405,8 @@
 							$('#carregando').modal('hide');
 							$("#erro").modal();
 						}
-						
 		            });
 		    	});
-		    	
-			
-			
-		    //$("#confirm").modal();
-		    //$("#confirm-delete");
-			
-           
 		    return false;
 		  }
 		})(jQuery);
@@ -408,23 +416,37 @@
 	    <c:remove var="resposta" scope="session" />
 			<SCRIPT>
 			$(document).ready(function() {
-				
 				$('#mensagem').modal('show');
 			});
-				
 			</SCRIPT>
-		</c:if>
-		<c:if test="${sessionScope.resposta=='FALHA' }">
+	</c:if>
+	<c:if test="${sessionScope.resposta=='FALHA' }">
 		<c:remove var="resposta" scope="session" />
 			<SCRIPT>
 			$(document).ready(function() {
-				
 				$('#erro-alterar').modal('show');
 			});
-				
 			</SCRIPT>
-		</c:if>
+	</c:if>
+	<c:if test="${sessionScope.sql=='ERRO' }">
+	    <c:remove var="sql" scope="session" />
+			<SCRIPT>
+			$(document).ready(function() {
+				$('#erro-texto').css("color", "red");
+				$('#erro-texto').text('Ao tentar se comunicar com o Banco de Dados');
+				$('#erro-alterar').modal();
+			});
+			</SCRIPT>
+	</c:if>
+	<c:if test="${sessionScope.smtp=='ERRO' }">
+	    <c:remove var="smtp" scope="session" />
+			<SCRIPT>
+			$(document).ready(function() {
+				$('#erro-texto').css("color", "red");
+				$('#erro-texto').text('Ao tentar enviar um email contendo a nova senha do usuário para o endereço cadastrado.\nVerifique se as configurações do servidor de SMTP estão corretas.');
+				$('#erro-alterar').modal('show');
+			});
+			</SCRIPT>
+	</c:if>
 </body>
-
-
 </html>

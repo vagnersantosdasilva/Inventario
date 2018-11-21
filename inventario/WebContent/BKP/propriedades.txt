@@ -1,0 +1,24 @@
+#
+#Tue Jun 14 15:06:53 BRT 2016
+
+servidor=//127.0.0.1:
+nomeDoBanco=/inventario
+sgbd_escolhido=mysql
+usuario=root
+senha=abc@123
+
+codificacao=UTF-8
+
+#jdbc:mysql://127.0.0.1:3306/inventario
+driverMySql=com.mysql.jdbc.Driver
+apiMySql=jdbc:mysql:
+portaMySql=3306
+
+#jdbc:postgresql://127.0.0.1:5432/inventario
+driverPostgreSql=org.postgresql.Driver
+apiPostgreSql=jdbc:postgresql:
+portaPostgreSql=5432
+
+portaFireBird=
+portaSqlServer=
+portaOracle=

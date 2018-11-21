@@ -1,0 +1,42 @@
+
+- Objetivo do projeto
+---------------------
+
+	Manter informações de máquinas do tipo desktop,notebooks,tablets,servidores referentes a programas instalados, hardware instalado,  	    localização e responsável, licensas, informações de patrimônio .
+
+-Escopos do Projeto 
+---------------------
+
+	Servidor :
+	------------------------------------------------------------------------------------------------------------------------------------
+	
+	- Receber e armazenar em banco de dados objetos provindos do programa cliente.
+	- Manter informações de equipamentos em banco de dados.
+	- Manter informações sobre licensas de software em banco de dados.
+	- Exibir informações de equipamentos em browser quando solicitado. 
+	- Criar relatórios de equipamentos quando solicitado.
+	- Administrar fluxo de dados recebidos de diversos clientes.
+         
+
+	Cliente
+	------------------------------------------------------------------------------------------------------------------------------------
+
+	- Obter lista de programas instalados em máquina cliente
+	- Obter informações referentes ao sistema operacional
+	- Obter informações referentes ao hardware (placa mãe, 
+	  memória RAM , unidades de armazenamento, processadores).
+ 	- Monitorar mudanças em programas instalados no equipamento.
+	- Monitorar mudanças em hardware instalado no equipamento.
+	- Monitorar alarmes de problemas de software ou hardware em equipamento(Em versões futuras)
+
+
+- Etapas do projeto
+-------------------
+	
+	Servidor :
+	-------------------------------------------------------------------------------------------------------------------------------------
+	
+	- 
+
+	 
+	

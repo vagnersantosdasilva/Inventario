@@ -1,0 +1,9 @@
+#Conjunto de drives MySQL;
+driverMySql=com.mysql.jdbc.Driver
+apiMySql=jdbc:mysql:
+portaMySql=3306
+
+#Conjunto de drives PostgreSQL;
+driverPostgreSql=org.postgresql.Driver
+apiPostgreSql=jdbc:postgresql:
+portaPostgreSql=5432

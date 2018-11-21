@@ -1,0 +1,45 @@
+Algumas referencias da linguagem SQL
+
+Criação de chave primaria Simples
+
+
+create table cidades(
+	 cidade varchar(100) primary key,
+	 estado varchar(10),
+	 populacao int
+)
+
+Criação de chave primaria composta
+
+create table cidades(
+	 cidade varchar(100),
+	 estado varchar(10),
+	 populacao int,
+	 CONSTRAINT pk_CE primary key(cidade,estado)
+)
+
+Chave Estrangeira 
+
+Diz respeito ao relacionamento entre tabelas.
+
+Propriedades :
+1 - Pode ser nula
+2 - É um campo em uma tabela que faz referência a uma chave primária de outra tabela
+3 - É possível ter mais de uma (ou nenhuma ) em uma tabela.
+
+Ex 
+
+Create Table Carro
+(
+	ID_Carro integer PRIMARY KEY AUTOINCREMENT,
+	Nome varchar(255),
+	Marca varchar(255),
+	ID_Pessoa integer,
+	CONSTRAINT fk_PesCarro FOREIGN KEY (ID_Pessoa) REFERENCES Pessoa (ID_Pessoa)
+);
+
+Para adicioar uma chave estrangeira a uma tabela já criada previamente sem a mesma
+
+ALTER TABLE Carro
+ADD CONSTRAINT fk_PesCarro FOREIGN KEY (ID_Pessoa) REFERENCES Pessoa(ID_Pessoa);
+

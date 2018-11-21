@@ -8,11 +8,11 @@
  	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <script src="/Inventario/suporte/js/bootstrap.js"></script>
-        
-	     <link href="/Inventario/suporte/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	     <link href="/Inventario/suporte/css/bootstrap2.css" rel="stylesheet">
-	     <link href="/Inventario/suporte/css/dataTables.bootstrap.css" rel="stylesheet">
-      	 <link href="/Inventario/suporte/css/dataTables.responsive.css" rel="stylesheet">
+        <!-- <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">-->
+	    <link href="/Inventario/suporte/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	    <link href="/Inventario/suporte/css/bootstrap2.css" rel="stylesheet">
+	    <link href="/Inventario/suporte/css/dataTables.bootstrap.css" rel="stylesheet">
+      	<link href="/Inventario/suporte/css/dataTables.responsive.css" rel="stylesheet">
     	<title>Gerenciamento de Usuários</title>
 </head>
 <body>
@@ -48,7 +48,7 @@
                         <li><a href="/Inventario/listarPerfil"><i class="fa fa-gear fa-fw"></i> Configurações</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="/Inventario/login.jsp"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="/Inventario/keepout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -62,15 +62,23 @@
 	
 	<div class="container">
 	<br><br>
-	
+	<!-- *******************************************************************SUBMENU******************************************************* -->
 	 	<div class="submenu">
 			<ul class="nav nav-pills navbar-left">
-				<li role="presentation" class="active"><a href="#" class="novo" data-toggle="modal" data-id="0"><span class="glyphicon glyphicon-plus"></span></a></li>
-				
-				<li role="presentation" class="active"><a href="#"><span class="glyphicon glyphicon-download"></a></li>
+				<li role="presentation" class="active">
+					<a href="#" class="novo" data-toggle="modal" data-id="0">
+						<span class="fas fa  fa-user-plus"></span>
+					</a>
+				</li>
+				<li role="presentation" class="active">
+					<a href="#">
+						<span class="glyphicon glyphicon-download">
+					</a>
+				</li>
 			</ul>
 		</div>
-		 <div class="row">
+	<!-- *******************************************************************FIM - SUBMENU ************************************************* -->	
+		<div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">

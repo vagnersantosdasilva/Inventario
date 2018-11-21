@@ -42,7 +42,6 @@ public class SalvarInventario extends HttpServlet {
 		ServletContext context = request.getServletContext(); 
 		String path = context.getRealPath("/");
 		Propriedades propriedades = obterPropriedades(path);
-		
 		InventarioCorporativo inventario = new InventarioCorporativo();
    		
    		String contexto=request.getParameter("funcao");
@@ -79,7 +78,6 @@ public class SalvarInventario extends HttpServlet {
 					{
 						System.out.println("Executado :atualizarRegistro[SalvarInventario]");
 						conn.commit();
-						
 						conn.close();
 					}
 				}

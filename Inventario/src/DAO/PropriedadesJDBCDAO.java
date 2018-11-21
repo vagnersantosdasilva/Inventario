@@ -38,9 +38,6 @@ public class PropriedadesJDBCDAO
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
 	public String obterURLConexao(String servidor,String sgbd) 
 	{
 		try 
@@ -50,7 +47,7 @@ public class PropriedadesJDBCDAO
 				
 					String api=Util.Propriedades.lePropriedades("apiMySql", caminhoAbsoluto);
 					String porta=Util.Propriedades.lePropriedades("portaMySql",caminhoAbsoluto);
-					String urlConexao=api+"//"+servidor+":"+porta;
+					String urlConexao=api+servidor+":"+porta;
 					
 					return urlConexao;
 			}
@@ -59,20 +56,24 @@ public class PropriedadesJDBCDAO
 				
 					String api=Util.Propriedades.lePropriedades("apiPostgreSql", caminhoAbsoluto);
 					String porta=Util.Propriedades.lePropriedades("portaPostgreSql",caminhoAbsoluto);
-					String urlConexao=api+"//"+servidor+":"+porta;
+					String urlConexao=api+servidor+":"+porta;
 					
 					return urlConexao;
 				
 			}
 			if (sgbd.equals("mssql"))
 			{
-				
 					String api=Util.Propriedades.lePropriedades("apiMsSql", caminhoAbsoluto);
 					String porta=Util.Propriedades.lePropriedades("portaMsSql",caminhoAbsoluto);
-					String urlConexao=api+"//"+servidor+":"+porta;
-					
+					String urlConexao=api+servidor+":"+porta;
 					return urlConexao;
-				
+			}
+			if (sgbd.equals("oracle"))
+			{
+					String api=Util.Propriedades.lePropriedades("apiOracle", caminhoAbsoluto);
+					String porta=Util.Propriedades.lePropriedades("portaOracle",caminhoAbsoluto);
+					String urlConexao=api+servidor+":"+porta;
+					return urlConexao;
 			}
 			
 			return "[vazio]";
@@ -83,7 +84,6 @@ public class PropriedadesJDBCDAO
 			e.printStackTrace();
 	}
 	return "[vazio]";	
-		
 	}
 
 	public String obterDriver(String nomeBanco) {
@@ -105,6 +105,12 @@ public class PropriedadesJDBCDAO
 				String driver = Util.Propriedades.lePropriedades("driverMsSql", caminhoAbsoluto);
 				return driver;
 			}
+			if (nomeBanco.equals("oracle")) 
+			{
+				String driver = Util.Propriedades.lePropriedades("driverOracle", caminhoAbsoluto);
+				return driver;
+			}
+			
 		}catch(IOException e) 
 		{
 			System.out.println("Erro[PropriedadesJDBCDAO:obterDriver]"+e.getMessage());
@@ -138,6 +144,14 @@ public class PropriedadesJDBCDAO
 				propriedades.setDriver(Util.Propriedades.lePropriedades("driverMsSql", caminhoAbsoluto));
 				propriedades.setApi(Util.Propriedades.lePropriedades("apiMsSql", caminhoAbsoluto));
 				propriedades.setPorta(Util.Propriedades.lePropriedades("portaMsSql", caminhoAbsoluto));
+				return propriedades;
+			}
+			if(sgbd.equals("mssql")) 
+			{
+				PropriedadesJDBC propriedades = new PropriedadesJDBC();
+				propriedades.setDriver(Util.Propriedades.lePropriedades("driverOracle", caminhoAbsoluto));
+				propriedades.setApi(Util.Propriedades.lePropriedades("apiOracle", caminhoAbsoluto));
+				propriedades.setPorta(Util.Propriedades.lePropriedades("portaOracle", caminhoAbsoluto));
 				return propriedades;
 			}
 			

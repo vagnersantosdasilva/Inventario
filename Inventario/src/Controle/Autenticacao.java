@@ -24,9 +24,9 @@ public class Autenticacao extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException  
 	{
+		HttpSession session = request.getSession();
 		try 
 		{
-			HttpSession session = request.getSession();
 			ServletContext context = request.getServletContext(); 
 			String path = context.getRealPath("/");
 			Propriedades propriedades = obterPropriedades(path);
@@ -74,6 +74,8 @@ public class Autenticacao extends HttpServlet {
 		catch(SQLException e)
 		{
 			System.out.println("[Autenticar]:SQLException:"+e.getMessage());
+			session.setAttribute("mensagem",3);
+			response.sendRedirect("login.jsp");
 		}
 	}
 	

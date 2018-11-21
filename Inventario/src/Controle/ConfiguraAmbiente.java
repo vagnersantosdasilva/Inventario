@@ -169,7 +169,7 @@ public class ConfiguraAmbiente extends HttpServlet {
 		lista.add("usuario="+propriedades[1]);
 		lista.add("senha="+cripto.cifrar(propriedades[2]));
 		lista.add("sgbdescolhido="+propriedades[0]);
-		lista.add("servidor=//"+propriedades[3]+":");
+		lista.add("servidor="+propriedades[3]+":");
 		lista.add("codificacao=UTF-8");
 		lista.add("nomeDoBanco=inventario");
 		return lista;

@@ -87,65 +87,22 @@
 										<strong> AMBIENTE NÃO CONFIGURADO!!</strong>
 								   </div>
 								</center>
-							</c:if>       
+							</c:if>
+							<c:if test="${sessionScope.mensagem=='3' }">
+								<center>
+							       <div class="alert alert-danger">
+										<strong> NÃO FOI POSSÍVEL CONECTAR AO BANCO DE DADOS!!</strong>
+								   </div>
+								</center>
+							</c:if>             
 					</div>
 				</div>
 		</div>
-<!-- 
-         <div class="jumbotron" >
-
-			  <div class="header clearfix">
-				<nav>
-				  <ul class="nav nav-pills pull-right" width="50%">
-				    <!--<li role="presentation" ><a href="login.php">Login</a></li>-->
-				<!--      <li role="presentation" ><a href="modificarSenha.jsp">Modificar Senha</a></li>
-				    <li role="presentation"><a href="resetSenha.jsp">Esqueceu Senha</a></li>
-				    
-				  </ul>
-				</nav>
-				<br>
-			<!--<h3 class="text-muted">Controle de Acesso</h3>
-		
-	          </div>
-
-				      
-			<form class="form-signin" method="post" action="autenticar" > 
-				<h2 class="form-signin-heading">Identifique-se</h2>
-                                    					
-					<label for="inputLogin" class="sr-only">login</label>
-					<input name="nomeUsuario" type="text" id="inputLogin" class="form-control" placeholder="Login" required autofocus >
-					<label for="inputPassword" class="sr-only" >senha</label>
-					<input name="acesso" type="password" id="inputPassword" class="form-control" placeholder="Senha" required>
-		    
-					<label><br>
-						<button class="btn btn-lg btn-primary btn-lg" type="submit">Enviar</button>
-					</label>
-		     </form>
-		     
-		     <c:if test="${sessionScope.mensagem=='1' }">
-		 		<center>
-			       <div class="alert alert-danger">
-	  					<strong> ACESSO NÃO AUTORIZADO!!</strong>
-				  </div>
-		  		</center>
-		 </c:if>    
-	      
-		</div> <!-- /jumbotron 
-	 -->	
-		 			 
-                   
    </div> <!-- /container -->
-   
-		
-		 	
-			
-			
-    
-
-		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-		<!-- Include all compiled plugins (below), or include individual files as needed -->
-		<script src="suporte/js/bootstrap.min.js"></script>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="suporte/js/bootstrap.min.js"></script>
         
    </BODY>
 </HTML>

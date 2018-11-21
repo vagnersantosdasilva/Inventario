@@ -17,10 +17,11 @@ import DAO.PropriedadesJDBCDAO;
 import DAO.PropriedadesSGBDDAO;
 import DAO.ServicoDAO;
 import DAO.Usuarios;
+import Entidades.Propriedades;
 import Entidades.PropriedadesJDBC;
 import Entidades.PropriedadesSGBD;
 import Entidades.Usuario;
-import Util.Propriedades;
+
 
 
 @WebServlet("/removerUsuario")

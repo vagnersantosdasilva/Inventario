@@ -4,22 +4,22 @@ import java.sql.Connection;
 import Controle.Atendente;
 import Controle.Servidor;
 import DAO.Maquinas;
+import DAO.PropriedadesJDBCDAO;
+import DAO.PropriedadesSGBDDAO;
 import DAO.ServicoDAO;
+import Entidades.Propriedades;
+import Entidades.PropriedadesJDBC;
+import Entidades.PropriedadesSGBD;
 
 public class Aplicacao 
 {
 	public static void main(String[] args)
 	{
-		
 		try 
 		{
-					
-			String usuario = Util.Propriedades.lePropriedades("usuario");
-			String senha = Util.Propriedades.lePropriedades("senha");
-			String banco = Util.Propriedades.lePropriedades("sgbd_escolhido");
-			//int porta = Integer.parseInt(Util.Propriedades.lePropriedades("porta"));
 			int porta = 1050;
-			ServicoDAO dao =ServicoDAO.getInstace("propriedades.txt");
+			Propriedades propriedades = obterPropriedades("locais.cfg");
+			ServicoDAO dao =ServicoDAO.getInstace(propriedades);
 			Connection conn =dao.obterConexao();
 			Maquinas maquinas = Maquinas.getInstance();
 			Atendente atendente1 =Atendente.getInstance(conn);
@@ -59,6 +59,18 @@ public class Aplicacao
 			e.printStackTrace();
 		}
 		System.out.println("Aplicação chamou todos os Threads...");
+	}
+	private static Propriedades obterPropriedades(String path) 
+	{
+		String bd =path+"WEB-INF\\propriedades\\bd.cfg";
+		String jdbc = path+"WEB-INF\\propriedades\\jdbc.cfg";
+		PropriedadesJDBCDAO jdbcdao = new PropriedadesJDBCDAO(jdbc);
+		PropriedadesSGBDDAO sgbddao = new PropriedadesSGBDDAO(bd);
+		PropriedadesSGBD propsgbd = sgbddao.obterPropriedades();
+		PropriedadesJDBC propjdbc = jdbcdao.obterPropriedades(propsgbd.getSGBD());
+		Propriedades propriedades = new Propriedades(propsgbd,propjdbc);
+		
+		return propriedades;
 	}
 
 }

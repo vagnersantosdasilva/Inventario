@@ -12,7 +12,7 @@ import DAO.ServicoDAO;
 import Entidades.BD;
 
 public class TesteInfoBanco {
-
+/*
 	@Test
 	public void incluirInfoBanco() {
 		BD banco =new BD();
@@ -47,5 +47,5 @@ public class TesteInfoBanco {
 		
 		
 	}
-
+*/
 }

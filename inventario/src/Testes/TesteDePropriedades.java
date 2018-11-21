@@ -22,7 +22,7 @@ public class TesteDePropriedades {
 	@Test
 	public void testeDeUrlBanco() throws IOException, SQLException {
 		
-		ServicoDAO dao = ServicoDAO.getInstace("propriedades.txt");
+		//ServicoDAO dao = ServicoDAO.getInstace("propriedades.txt");
 		//assertEquals(dao.obterPropriedadesBanco("mysql"),"jdbc:mysql://127.0.0.1:3306/inventario");
 		//assertEquals(dao.obterPropriedadesBanco("postgresql"),"jdbc:postgresql://127.0.0.1:5432/inventario");
 		String codificado = Util.Propriedades.codificarMD5("abc@123");
@@ -38,24 +38,24 @@ public class TesteDePropriedades {
 	@Test
 	public void testarQuery() throws IOException, SQLException
 	{
-		ServicoDAO servico = ServicoDAO.getInstace("propriedades.txt");
+		//ServicoDAO servico = ServicoDAO.getInstace("propriedades.txt");
 		//servico.carregarPropriedadesBanco();
 		PlacaMaeDAO dao = new PlacaMaeDAO();
 		PlacaMae placa =new PlacaMae();
 		placa.setCodigoMaquina("1");
 		placa.setFabricante("Teste");
 		placa.setModelo("Teste");
-		try 
-		{
-			Connection conn=servico.obterConexao();
-			assertEquals(true,dao.incluir(conn, placa));
-		} catch (ClassNotFoundException e) {
+		//try 
+		//{
+			//Connection conn=servico.obterConexao();
+			//assertEquals(true,dao.incluir(conn, placa));
+		//} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		} catch (SQLException e) {
+		//	System.out.println(e.getMessage());
+		//} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
-		}
+		//	System.out.println(e.getMessage());
+		//}
 	}
 	
 	/*servidor=//127.0.0.1:

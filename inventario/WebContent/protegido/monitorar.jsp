@@ -91,7 +91,7 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <b>Listagem de Usuários</b>
+                            <b>Listagem de Máquinas</b>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -99,8 +99,8 @@
                               
                                 <thead>
                                     <tr>
-                                        <th>Nome de Usuário</th>
-                                        <th>Grupo de Acesso</th>
+                                        <th>Nome da Máquina</th>
+                                        <th>Mensagem</th>
                                         <th>Email</th>
                                         <th>Telefone</th>
                                         <th></th>

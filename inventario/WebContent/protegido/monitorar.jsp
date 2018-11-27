@@ -53,7 +53,7 @@
            
            		<ul class="nav navbar-nav navbar-right">
            		
-	           	<li><a href="protegido/index.html"><i class="fa fa-home fa-fw"></i> Início</a> </li>	
+	           	<li><a href="/Inventario/protegido/index.html"><i class="fa fa-home fa-fw"></i> Início</a> </li>	
                 
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">

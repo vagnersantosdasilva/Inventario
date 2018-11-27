@@ -1,0 +1,42 @@
+- Objetivos do projeto
+-------------------------
+
+ Manter informações de máquinas do tipo desktop ,notebooks, tablets, servidores, referentes a programas instalados, hardware instalado, localização e responsável, licenças, informações de patrimônio .
+
+-Escopos do Projeto 
+------------------------
+
+ Servidor  :
+ ---------------------------------------------------------------------------------------------------------------------
+ - Receber e armazenar em banco de dados objetos provindos do programa cliente.
+ - Manter informações de equipamentos em banco de dados.
+ - Manter informações sobre licenças de software em banco de dados.
+ - Exibir informações de equipamentos em navegador quando solicitado. 
+ - Criar relatórios de equipamentos quando solicitado.
+ - Administrar fluxo de dados recebidos de diversos clientes.
+
+O servidor é composto de duas aplicações :
+	Uma aplicação é Web, e recebe requisições enviadas pelo navegador. 
+	A Outra, escuta as requisições das máquinas clientes via socket.
+
+ Cliente :
+ ---------------------------------------------------------------------------------------------------------------------
+O programa cliente obtém todas as informações necessárias sobre a máquina e envia para o servidor
+via socket.
+
+ - Obtém lista de programas instalados em máquina cliente
+ - Obtém informações referentes ao sistema operacional
+ - Obtém informações referentes ao hardware :
+	Placa mãe, 
+	memória RAM , 
+	unidades de armazenamento, 
+	processadores,
+	drives de vídeo e som
+	adaptadores de redes,
+	etc.
+- Monitora mudanças em programas instalados no equipamento.
+- Monitora mudanças em hardware instalado no equipamento.
+- Monitora alarmes de problemas de software ou hardware em equipamento(Em versões futuras)
+- Monitora existência de processos referentes a Antivírus (Em versões futuras)
+	 
+	

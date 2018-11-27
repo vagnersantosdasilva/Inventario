@@ -49,14 +49,14 @@
                     <span class="icon-bar"></span>
                 </button>
                 
-                <a class="navbar-brand" href="protegido/index.html"><c:out value="${maquina.hostname}" default="SAI v0.7"/></a>
+                <a class="navbar-brand" href="/Inventario/protegido/index.html"><c:out value="${maquina.hostname}" default="SAI v0.7"/></a>
             </div>
             <!-- /.navbar-header -->
 
            
            		<ul class="nav navbar-nav navbar-right">
            		
-	           	<li><a href="protegido/index.html"><i class="fa fa-home fa-fw"></i> Início</a> </li>	
+	           	<li><a href="/Inventario/protegido/index.html"><i class="fa fa-home fa-fw"></i> Início</a> </li>	
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-search fa-fw"></i> <i class="fa fa-caret-down"></i>
@@ -441,7 +441,7 @@
    
 		<footer>
 			
-			<p>&copy; Company 2017</p>
+			<center><p>&copy; Company 2017</p></center>
 		</footer>
 		
 <!-- ################################################################################################################################################ -->		

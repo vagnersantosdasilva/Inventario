@@ -234,7 +234,7 @@
 												</tr>
 											</thead>
 											<tbody>
-												<c:forEach items="${maquina.listaSoftwares}" var="software">						
+												<c:forEach items="${maquina.listaDeSoftwares}" var="software">						
 												<tr>
 													<td><c:out value="${software.nome}" default=" " /> </td>
 													<td><c:out value="${software.arquitetura}" default=" " /></td>
@@ -303,7 +303,7 @@
 												<th>Tipo</th>
 												<th>Status</th>
 											</tr>
-											<c:forEach items="${maquina.hardware.listaMemorias}" var="memoria">
+											<c:forEach items="${maquina.hardware.listaDeMemorias}" var="memoria">
 											<tr>
 												<td><c:out value="${memoria.fabricante}" default="?"  /></td>
 												<td><c:out value="${memoria.capacidade}" default="?"  /></td>
@@ -358,7 +358,7 @@
 												<th>Tipo de Interface</th>
 												<th>Status</th>
 											</tr>	
-											<c:forEach items="${maquina.hardware.listaUnidadesArmazenamento}" var="unidade" >
+											<c:forEach items="${maquina.hardware.listaDeUnidadesDeArmazenamento}" var="unidade" >
 											<tr>
 												<td><c:out value="${unidade.nome}" default="?"/></td>
 												<td><c:out value="${unidade.tamanho}" default="?"/></td>
@@ -412,7 +412,7 @@
 											</thead>
 												
 											<tbody >
-											<c:forEach items="${maquina.listaLicencas}" var="unidade" varStatus="status">				
+											<c:forEach items="${maquina.listaDeLicencas}" var="unidade" varStatus="status">				
 												<tr id="linha${status.count}">
 													<td>${unidade.nomeSoftware}</td>
 													<td>${unidade.chave} </td>

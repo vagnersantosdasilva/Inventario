@@ -20,12 +20,7 @@ public class ArmazenamentoDAO
 		{
 			for(UnidadeArmazenamento unidade:listaDeUnidades)
 			{
-				if(existe(conn,unidade))
-				{
-					atualizarRegistros(conn, unidade);
-				}
-				else
-					incluir(conn,unidade);
+				incluir(conn,unidade);
 			}
 			return true;
 		}
@@ -37,29 +32,32 @@ public class ArmazenamentoDAO
 		return false;
 	}
 	
-	
-	
 	public boolean incluir(Connection conn ,UnidadeArmazenamento unidade) 
 	{
-		
 		try
 		{
-			PreparedStatement pstmt = conn.prepareStatement("insert into unidadeArmazenamento "
-					+ "(codigo_maquina,codigo_hd,nome,tamanho,tipo_de_interface,tipo_de_midea,status_drive)"	
-					+ "values (?,?,?,?,?,?,?)");
+			if (existe(conn,unidade)) {atualizarRegistros(conn, unidade);}
+			else 
+			{
 		
-			pstmt.setString(1,unidade.getCodigoMaquina());
-			pstmt.setInt(2, unidade.getCodigoDrive());
-			pstmt.setString(3,unidade.getNome());
-			pstmt.setString(4, unidade.getTamanho());
-			pstmt.setString(5, unidade.getTipoDeInterface());
-			pstmt.setString(6, unidade.getTipoDeMidea());
-			pstmt.setString(7,unidade.getStatus());
+				PreparedStatement pstmt = conn.prepareStatement("insert into unidadeArmazenamento "
+						+ "(codigo_maquina,codigo_hd,nome,tamanho,tipo_de_interface,tipo_de_midea,status_drive)"	
+						+ "values (?,?,?,?,?,?,?)");
 			
-			int n=pstmt.executeUpdate();
-			pstmt.close();
-			return n==1;
-		}
+				pstmt.setString(1,unidade.getCodigoMaquina());
+				pstmt.setInt(2, unidade.getCodigoDrive());
+				pstmt.setString(3,unidade.getNome());
+				pstmt.setString(4, unidade.getTamanho());
+				pstmt.setString(5, unidade.getTipoDeInterface());
+				pstmt.setString(6, unidade.getTipoDeMidea());
+				pstmt.setString(7,unidade.getStatus());
+				
+				int n=pstmt.executeUpdate();
+				pstmt.close();
+				return n==1;
+			}
+		return false;
+		}	
 		catch(SQLException e)
 		{
 			System.out.println("Erro[UnidadeArmazenamentoDAO:incluir]"+e.getMessage());

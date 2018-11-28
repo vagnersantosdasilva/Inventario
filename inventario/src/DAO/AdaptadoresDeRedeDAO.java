@@ -21,14 +21,7 @@ public class AdaptadoresDeRedeDAO
 		{
 			for(AdaptadorDeRede adaptador :adaptadores)
 			{
-				if (existe(conn,adaptador))
-				{ 
-					atualizarRegistro(conn,adaptador);
-				}
-				else
-				{
-					incluir(conn,adaptador);
-				}
+				incluir(conn,adaptador);
 			}
 			return true;
 		}	
@@ -68,42 +61,48 @@ public class AdaptadoresDeRedeDAO
 	{
 		try
 		{
-			PreparedStatement pstmt = conn.prepareStatement
-					(
-							"insert into adaptadoresDeRede("
-							+ "codigo_maquina,"
-							+ "nome,"
-							+ "mac_address,"
-							+ "indice,"
-							+ "ultimo_boot,"
-							+ "velocidade,"
-							+ "estatus,"
-							+ "fabricante,"
-							+ "descricacao "
-							+ "values(?,?,?,?,?,?,?,?,?) "
+			if(existe(conn,adaptador)) {atualizarRegistro(conn, adaptador);}
+			else 
+			{
+				
+					PreparedStatement pstmt = conn.prepareStatement
+							(
+									"insert into adaptadoresDeRede("
+									+ "codigo_maquina,"
+									+ "nome,"
+									+ "mac_address,"
+									+ "indice,"
+									+ "ultimo_boot,"
+									+ "velocidade,"
+									+ "estatus,"
+									+ "fabricante,"
+									+ "descricacao "
+									+ "values(?,?,?,?,?,?,?,?,?) "
+									
+							);
+							pstmt.setString(1, adaptador.getCodigoMaquina());
+							pstmt.setString(2, adaptador.getNome());
+							pstmt.setString(3, adaptador.getMacAdress() );
+							pstmt.setString(4, adaptador.getIndice());
+							pstmt.setString(5, adaptador.getUltimoReset());
+							pstmt.setString(6,adaptador.getVelocidade());
+							pstmt.setString(7,adaptador.getStatus());
+							pstmt.setString(8,adaptador.getFabricante());
+							pstmt.setString(9,adaptador.getDescricao());
 							
-					);
-					pstmt.setString(1, adaptador.getCodigoMaquina());
-					pstmt.setString(2, adaptador.getNome());
-					pstmt.setString(3, adaptador.getMacAddress());
-					pstmt.setString(4, adaptador.getIndice());
-					pstmt.setString(5, adaptador.getUltimoReset());
-					pstmt.setString(6,adaptador.getVelocidade());
-					pstmt.setString(7,adaptador.getStatus());
-					pstmt.setString(8,adaptador.getFabricante());
-					pstmt.setString(9,adaptador.getDescricao());
-					
-					int n=pstmt.executeUpdate();
-					pstmt.close();
-					return n==1;
-		}
-		catch(SQLException e)
-		{
-			System.out.println("Erro:[AdaptadoresDeRedeDAO:inclur]"+e.getMessage());
-		}
+							int n=pstmt.executeUpdate();
+							pstmt.close();
+							return n==1;
+				}
+			return false;
+			}
+			catch(SQLException e)
+			{
+				System.out.println("Erro:[AdaptadoresDeRedeDAO:inclur]"+e.getMessage());
+			}
 		return false;	
-		
 	}
+	
 	public boolean atualizarRegistro(Connection conn,AdaptadorDeRede adaptador)
 	{
 		try
@@ -121,7 +120,7 @@ public class AdaptadoresDeRedeDAO
 					+ "where codigo_maquina=? and indice=? "
 				);
 				pstmt.setString(1,adaptador.getNome());
-				pstmt.setString(2, adaptador.getMacAddress());
+				pstmt.setString(2, adaptador.getMacAdress());
 				pstmt.setString(3, adaptador.getUltimoReset());
 				pstmt.setString(4,adaptador.getVelocidade());
 				pstmt.setString(5, adaptador.getStatus());
@@ -200,7 +199,7 @@ public class AdaptadoresDeRedeDAO
 					AdaptadorDeRede adaptador = new AdaptadorDeRede();
 					adaptador.setCodigoMaquina(rs.getString("codigo_maquina"));
 					adaptador.setNome(rs.getString("nome"));
-					adaptador.setMacAddress(rs.getString("mac_address"));
+					adaptador.setMacAdress(rs.getString("mac_address"));
 					adaptador.setUltimoReset(rs.getString("ultimo_boot"));
 					adaptador.setDescricao(rs.getString("descricao"));
 					adaptador.setFabricante(rs.getString("fabricante"));

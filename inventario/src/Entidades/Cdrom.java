@@ -1,6 +1,9 @@
 package Entidades;
 
-public class Cdrom {
+import java.io.Serializable;
+
+@SuppressWarnings("serial")
+public class Cdrom implements Serializable{
 	private String codigoMaquina;
 	private String nome;
 	private String tipoDeMidea;
@@ -8,16 +11,11 @@ public class Cdrom {
 	private String fabricante;
 	private String drive;
 	private String status;
+	private String comando;
 	private int indice;
 	
 	
-
-	public int getIndice() {
-		return indice;
-	}
-	public void setIndice(int indice) {
-		this.indice = indice;
-	}
+	
 	public String getCodigoMaquina() {
 		return codigoMaquina;
 	}
@@ -60,7 +58,29 @@ public class Cdrom {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	public String getComando() {
+		return comando;
+	}
+	public void setComando(String comando) {
+		this.comando = comando;
+	}
 	
-	
+	public int getIndice() {
+		return indice;
+	}
+	public void setIndice(int indice) {
+		this.indice = indice;
+	}
+	public boolean equals(Cdrom cd)
+	{
+		if ((cd.getCodigoMaquina().equals(this.codigoMaquina)) && 
+				(cd.getDataInstalacao().equals(this.dataInstalacao)) && 
+				(cd.getDrive().equals(this.drive)) && 
+				(cd.getFabricante().equals(this.fabricante)) && 
+				(cd.getNome().equals(this.nome)) &&
+				(cd.getTipoDeMidea().equals(this.tipoDeMidea))&&
+				(cd.getStatus().equals(this.status))) return true;
+		return false;
+	}
 	
 }

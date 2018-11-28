@@ -100,12 +100,12 @@ public class MockPersistencia {
  		    maquina1.setCodigoMaquina("1");
  		    maquina1.setHostname(host1);
  		    maquina1.setInventario(inventario0);
- 		    maquina1.setListaLicencas(listaLicencas);;
+ 		    maquina1.setListaDeLicencas(listaLicencas);;
  		    
  		    maquina2.setCodigoMaquina("2");
  		    maquina2.setHostname(host2);
  		    maquina2.setInventario(inventario2);
- 		    maquina2.setListaLicencas(listaLicencas2);
+ 		    maquina2.setListaDeLicencas(listaLicencas2);
  		    
  		    maquina3.setCodigoMaquina("3");
  		    
@@ -295,11 +295,11 @@ public class MockPersistencia {
  			software5.setDataInstalacao("01/07/2014");
  			lista4.add(software5);
  			
- 			maquina1.setListaSoftwares(lista);
- 			maquina2.setListaSoftwares(lista1);
- 			maquina3.setListaSoftwares(lista2);
- 			maquina4.setListaSoftwares(lista3);
- 			maquina5.setListaSoftwares(lista4);
+ 			maquina1.setListaDeSoftwares(lista);
+ 			maquina2.setListaDeSoftwares(lista1);
+ 			maquina3.setListaDeSoftwares(lista2);
+ 			maquina4.setListaDeSoftwares(lista3);
+ 			maquina5.setListaDeSoftwares(lista4);
  			
  			repositorio.add(maquina1);
  			repositorio.add(maquina2);

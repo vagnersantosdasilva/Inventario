@@ -16,6 +16,14 @@ public class Video implements Serializable{
 	private String driverDate;
 	private String driverVersion;
 	private String status;
+	private String comando;
+	
+	public String getComando() {
+		return comando;
+	}
+	public void setComando(String comando) {
+		this.comando = comando;
+	}
 	
 	
 	public String getCodigoMaquina() {
@@ -84,5 +92,23 @@ public class Video implements Serializable{
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+	public boolean equals(Video video)
+	{
+		if (this.codigoMaquina.equals(video.getCodigoMaquina()) 
+				&&(this.nome.equals(video.getNome()))
+				&&(this.currentHorizontalResolution.equals(video.getCurrentHorizontalResolution()))
+				&&(this.currentVerticalResolution.equals(video.currentVerticalResolution))
+				&&(this.adapterDACType.equals(video.adapterDACType))
+				&&(this.adapterRAM.equals(video.getAdapterRAM()))
+				&&(this.currentNumberOfColors.equals(video.getCurrentNumberOfColors()))
+				&&(this.installedDisplayDrivers.equals(video.getInstalledDisplayDrivers()))
+				&&(this.driverDate.equals(video.getDriverDate()))
+				&&(this.driverVersion.equals(video.getDriverVersion()))
+				&&(this.status.equals(video.getStatus()))) return true;
+	
+		return false;
+	}
+	
 	
 }

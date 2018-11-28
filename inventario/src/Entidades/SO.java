@@ -2,6 +2,16 @@ package Entidades;
 
 import java.io.Serializable;
 
+/*
+Nome : Microsoft Windows 7 Ultimate 
+Atualizacao : Service Pack 1
+HostName : NAV-WIN-01
+DataInstalacao : 20170216000836.000000-120
+UltimoBoot : 20171115193740.125600-120
+Serial : 00426-OEM-8992662-00006
+Status : OK
+Versao : 6.1.7601*/
+
 @SuppressWarnings("serial")
 public class SO implements Serializable{
 	private String codigoMaquina;
@@ -10,18 +20,24 @@ public class SO implements Serializable{
 	private String versao;
 	private String atualizacao;
 	private String hostname;
-	private String ultimoBoot;
 	private String dataInstalacao;
+	private String ultimoBoot;
+	private String comando;
 	
-	public SO(String codigoMaquina,String hostname,String nome,String arquitetura,String versao,String atualizacao,String ultimoBoot,String dataInstalacao){
+	public String getComando() {
+		return comando;
+	}
+	public void setComando(String comando) {
+		this.comando = comando;
+	}
+	
+	public SO(String codigoMaquina,String nome,String arquitetura,String versao,String atualizacao,String dataInstalacao){
 		
 		this.codigoMaquina=codigoMaquina;
-		this.hostname=hostname;
 		this.nome=nome;
 		this.arquitetura=arquitetura;
 		this.versao=versao;
 		this.atualizacao=atualizacao;
-		this.ultimoBoot=ultimoBoot;
 		this.dataInstalacao=dataInstalacao;
 	}
 	public SO(){}
@@ -33,7 +49,7 @@ public class SO implements Serializable{
 	public void setCodigoMaquina(String codigoMaquina){
 		this.codigoMaquina=codigoMaquina;
 	}
-	
+		
 	public String getNome() {
 		return nome;
 	}
@@ -59,17 +75,10 @@ public class SO implements Serializable{
 		this.atualizacao = atualizacao;
 	}
 	public String getHostname() {
-		// TODO Auto-generated method stub
 		return hostname;
 	}
 	public void setHostname(String hostname) {
 		this.hostname = hostname;
-	}
-	public String getUltimoBoot() {
-		return ultimoBoot;
-	}
-	public void setUltimoBoot(String ultimoBoot) {
-		this.ultimoBoot = ultimoBoot;
 	}
 	public String getDataInstalacao() {
 		return dataInstalacao;
@@ -77,4 +86,23 @@ public class SO implements Serializable{
 	public void setDataInstalacao(String dataInstalacao) {
 		this.dataInstalacao = dataInstalacao;
 	}
+	public String getUltimoBoot() {
+		return ultimoBoot;
+	}
+	public void setUltimoBoot(String ultimoBoot) {
+		this.ultimoBoot = ultimoBoot;
+	}
+	public boolean equals(SO so)
+	{
+		if((this.codigoMaquina.equals(so.getCodigoMaquina())) && 
+				(this.arquitetura.equals(so.getArquitetura())) &&
+				(this.atualizacao.equals(so.getAtualizacao())) &&
+				(this.dataInstalacao.equals(so.getDataInstalacao())) &&
+				(this.hostname.equals(so.getHostname()))&&
+				(this.nome.equals(so.getNome()))&&
+				(this.versao.equals(so.getVersao()))&&
+				(this.ultimoBoot.equals(so.getUltimoBoot()))) return true;
+		return false;
+	}
+	
 }

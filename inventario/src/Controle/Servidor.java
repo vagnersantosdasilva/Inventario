@@ -1,11 +1,17 @@
 package Controle;
 
 
+import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.List;
+
+import Entidades.Hardware;
 import Entidades.Maquina;
+import Entidades.Memoria;
 
 public class Servidor extends  Thread 
 {
@@ -40,6 +46,12 @@ public class Servidor extends  Thread
 				Maquina maquina = (Maquina)objetoEntrada.readObject();
 				atendente.adicionar(maquina);
 				System.out.print("Usou porta :"+porta);
+				
+				//Enviando resposta 
+				OutputStream socketOut = clienteSocket.getOutputStream();
+				DataOutputStream dout = new DataOutputStream(socketOut);
+				dout.writeInt(1);
+				System.out.println("Enviada resposta para "+maquina.getCodigoMaquina());
 				
 			} 
 		}

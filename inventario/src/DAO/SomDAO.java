@@ -27,7 +27,7 @@ public class SomDAO
 			pstmt.setString(2, som.getNome());
 			pstmt.setString(3, som.getFabricante());
 			pstmt.setString(4, som.getDatainstalacao());
-			pstmt.setString(5, som.getStatus());
+			pstmt.setString(5, som.getSatus());
 			int n=pstmt.executeUpdate();
 			pstmt.close();
 			return n==1;
@@ -55,7 +55,7 @@ public class SomDAO
 			pstmt.setString(1, som.getNome());
 			pstmt.setString(2, som.getFabricante());
 			pstmt.setString(3, som.getDatainstalacao());
-			pstmt.setString(4, som.getStatus());
+			pstmt.setString(4, som.getSatus());
 			pstmt.setString(5, som.getCodigoMaquina());
 			int n=pstmt.executeUpdate();
 			pstmt.close();

@@ -8,10 +8,15 @@ import java.util.List;
 
 import Controle.Atendente;
 import Entidades.Maquina;
+import Entidades.Memoria;
+import Entidades.PlacaMae;
 import Entidades.SO;
 import Entidades.Software;
+import Entidades.UnidadeArmazenamento;
 import Entidades.CPU;
+import Entidades.Cdrom;
 import Entidades.Hardware;
+import Entidades.HotFixWindows;
 import Entidades.InventarioCorporativo;
 
 
@@ -33,6 +38,7 @@ public class Maquinas extends Thread
 	private List<Maquina> listaDeMaquinas =new ArrayList<Maquina>();
 	private List<Maquina> listaDeMaquinasSemInventario = new ArrayList<Maquina>();
 	private List<Maquina> listaDeMaquinasComInventario= new ArrayList<Maquina>();
+	private List<Maquina> listaDeMaquinasComPendencias=new ArrayList<Maquina>();
 	private ArmazenamentoDAO armazenamentoDAO = new ArmazenamentoDAO();
 	private CPUDAO cpuDAO = new CPUDAO();
 	private MemoriasDAO memoriasDAO = new MemoriasDAO();
@@ -41,8 +47,10 @@ public class Maquinas extends Thread
 	private InventarioDAO inventarioDAO = new InventarioDAO();
 	private LicencasDAO licencasDAO = new LicencasDAO();
 	private SODAO soDAO = new SODAO();
+	private CdromDAO cdDAO = new CdromDAO();
+	// private HotFixDAO hotDAO = new HotFixDAO();
 	private int totalMaquinas,maquinasComInventario,maquinasSemInventario,maquinasComPendencias=-1;
-	private List<Maquina> listaDeMaquinasComPendencias=new ArrayList<Maquina>();
+	
 	private static Maquinas instance;
 	private Atendente atendente;
 	
@@ -72,26 +80,42 @@ public class Maquinas extends Thread
 	{
 		try
 		{
-			armazenamentoDAO.incluir(conn, unidade.getHardware().getListaUnidadesArmazenamento());
-			
-			if(cpuDAO.existe(conn, unidade.getHardware().getCpu()))cpuDAO.atualizarRegistros(conn, unidade.getHardware().getCpu());
-			else cpuDAO.incluir(conn,unidade.getHardware().getCpu());
-			
-			
-			memoriasDAO.incluir(conn,unidade.getHardware().getListaMemorias());
-			
-			if(placaDAO.existe(conn,unidade.getHardware().getPlacamae().getCodigoMaquina()))
-				placaDAO.atualizarRegistro(conn, unidade.getHardware().getPlacamae());
-			else placaDAO.incluir(conn, unidade.getHardware().getPlacamae());
-			
-			
-			softwareDAO.incluir(conn, unidade.getListaSoftwares());
-			
-			if(soDAO.existe(conn, unidade.getSistemaOperacional().getCodigoMaquina())) 
-				soDAO.atualizarRegistro(conn, unidade.getSistemaOperacional());
-			else soDAO.incluir(conn, unidade.getSistemaOperacional());
-			
-		return true;
+			if (unidade!=null) {
+				
+				Hardware hard = unidade.getHardware();
+				List listaDeMemorias = hard.getListaDeMemorias();
+				List listaHD = hard.getListaDeUnidadesDeArmazenamento();
+				List listaCD  = hard.getListaDeUnidadesDeCDDVD();
+				List listaDeSoftware = unidade.getListaDeSoftwares();
+				List listaDeAtualizacoes = unidade.getListaDeAtualizacoes();
+				List listaDeLogs = unidade.getListaDeLogsDeErro();
+				SO so = unidade.getSistemaOperacional();
+				CPU processador = hard.getCpu();
+				PlacaMae placa = hard.getPlacamae();
+				
+				if (!(listaDeMemorias.isEmpty())) executarComandosMemoria(conn,listaDeMemorias);
+				if(!(listaHD.isEmpty())) executarComandosUnidadeArmazenamento(conn,listaHD);
+				if (!(listaCD.isEmpty())) executarComandosCDDVD(conn,listaCD);
+				if (!(listaDeSoftware.isEmpty())) executarComandosSoftware(conn,listaDeSoftware);
+				if (!(listaDeAtualizacoes.isEmpty())) executarComandosAtualizacoes(conn,listaDeAtualizacoes);
+				//if (listaDeLogs.size()>0) executarComandosLogs(listaDelogs);
+				if (so!=null) { 
+					if(soDAO.existe(conn, so.getCodigoMaquina())) 
+						soDAO.atualizarRegistro(conn, so);
+					else soDAO.incluir(conn, so);
+				}	
+				if (processador!=null) {
+					if(cpuDAO.existe(conn, processador)) {cpuDAO.atualizarRegistros(conn, processador);}
+					else {cpuDAO.incluir(conn,processador);}
+				}
+				
+				if (placa!=null) {
+					if (placaDAO.existe(conn, unidade.getCodigoMaquina())) {placaDAO.atualizarRegistro(conn, placa);}
+					else {placaDAO.incluir(conn, placa);}
+				}
+				return true;
+		}	
+		System.out.println("Tentativa de inclusão falhou - Objeto Nulo");
 		}
 		catch(Exception e)
 		{
@@ -102,6 +126,52 @@ public class Maquinas extends Thread
 		return false;
 		
 	}
+	
+	private void executarComandosAtualizacoes(Connection conn,List<HotFixWindows> listaDeAtualizacoes) throws SQLException {
+		List<HotFixWindows> lista = listaDeAtualizacoes;
+		for(HotFixWindows hot:lista) {
+			if (hot.getComando().equals("incluir")) {}
+			if (hot.getComando().equals("excluir")) {}
+		}
+	}
+
+	private void executarComandosSoftware(Connection conn, List<Software> listaDeSoftware) throws SQLException {
+		List<Software> lista = listaDeSoftware;
+		for(Software soft:lista) {
+			if (soft.getComando().equals("incluir")) {softwareDAO.incluir(conn, soft);}
+			if (soft.getComando().equals("excluir")) {softwareDAO.excluirUm(conn, soft.getCodigoMaquina(), soft.getNome());}
+		}
+	}
+
+	private void executarComandosCDDVD(Connection conn, List<Cdrom> listaCD) throws SQLException {
+		List<Cdrom> lista =listaCD;
+		for(Cdrom cd :lista) {
+			if (cd.getComando().equals("incluir")) {cdDAO.incluir(conn, cd);}
+			if (cd.getComando().equals("excluir")) {cdDAO.excluir(conn, cd);}
+		}
+	}
+
+	private void executarComandosUnidadeArmazenamento(Connection conn, List<UnidadeArmazenamento> listaHD) throws SQLException {
+		List<UnidadeArmazenamento> lista = listaHD;
+		for(UnidadeArmazenamento hd :lista) {
+			if(hd.getComando().equals("incluir")) {armazenamentoDAO.incluir(conn, hd);}
+			if(hd.getComando().equals("excluir")) {armazenamentoDAO.excluir(conn, hd.getCodigoMaquina(), hd.getCodigoDrive());}
+			
+		}
+	}
+
+	private void executarComandosMemoria(Connection conn,List<Memoria> listaDeMemorias) {
+	
+		List<Memoria> lista =listaDeMemorias;
+		for (Memoria mem:lista) {
+			if (mem.getComando().equals("incluir")) {memoriasDAO.incluir(conn,mem);}
+			if (mem.getComando().equals("excluir")) {memoriasDAO.excluir(conn,mem.getCodigoMaquina(),mem.getCodigoSlot());}
+			
+		}
+	}
+	
+	
+
 	public boolean incluirLista(Connection conn,List<Maquina> lista)
 	{
 		try
@@ -131,9 +201,8 @@ public class Maquinas extends Thread
 		{
 			so = soDAO.obterSistema(conn, codigoMaquina);
 			List <Software>listaSoftwares = softwareDAO.listarSoftwares(conn, codigoMaquina);
-			maquina.setListaSoftwares(listaSoftwares);
-			
-			hardware.setListaUnidadeArmazenamento(armazenamentoDAO.buscarUnidades(conn, codigoMaquina));
+			maquina.setListaDeSoftwares(listaSoftwares);
+			hardware.setListaDeUnidadesDeArmazenamento(armazenamentoDAO.buscarUnidades(conn, codigoMaquina));
 			hardware.setCpu((CPU)cpuDAO.buscarProcessador(conn, codigoMaquina));
 			hardware.setListaDeMemorias(memoriasDAO.buscarUnidades(conn, codigoMaquina));
 			hardware.setPlacamae(placaDAO.obterPlacaMae(conn, codigoMaquina));
@@ -146,7 +215,7 @@ public class Maquinas extends Thread
 			List listaDeLicencas = licencasDAO.obterListaLicencas(conn,codigoMaquina);
 			
 			maquina.setInventario(inventario);
-			maquina.setListaLicencas(listaDeLicencas);
+			maquina.setListaDeLicencas(listaDeLicencas);
 			
 			System.out.println(maquina.getHostname());
 			

@@ -44,7 +44,7 @@ public class MockCliente implements Serializable
 		maquina.setHostname("NAV-WIN"+codigo);
 		maquina.setSistemaOperacional(new SO(codigoMaquina,"NAV-WIN"+codigo,"Windows 7","64 bits","6.1","SP1","201711122050","201711171856"));
 		maquina.setHardware(hardware);
-		maquina.setListaSoftwares(listaDeSoftwares);
+		maquina.setListaDeSoftwares(listaDeSoftwares);
 		
 	}
 	

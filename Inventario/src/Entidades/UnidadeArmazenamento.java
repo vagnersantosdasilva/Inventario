@@ -12,7 +12,16 @@ public class UnidadeArmazenamento implements Serializable{
 	private String tipoDeInterface;
 	private String tipoDeMidea;
 	private String status;
+	private String comando;
+	
+	public String getComando() {
+		return comando;
+	}
+	public void setComando(String comando) {
+		this.comando = comando;
+	}
 
+	public UnidadeArmazenamento(){}
 	public UnidadeArmazenamento(String codigoMaquina, int codigoDrive, String nome, String tamanho, String tipoDeInterface, String tipoDeMidea,
 			String status) {
 		this.codigoMaquina=codigoMaquina;
@@ -22,9 +31,6 @@ public class UnidadeArmazenamento implements Serializable{
 		this.tipoDeInterface=tipoDeInterface;
 		this.tipoDeMidea=tipoDeMidea;
 		this.status=status;
-	}
-	public UnidadeArmazenamento() {
-		// TODO Auto-generated constructor stub
 	}
 	public String getCodigoMaquina() {
 		return codigoMaquina;
@@ -70,5 +76,17 @@ public class UnidadeArmazenamento implements Serializable{
 		this.codigoDrive = codigoDrive;
 	}
 	
+	public boolean equals(UnidadeArmazenamento unidade)
+	{
+		
+		if  ((this.codigoMaquina.equals(unidade.getCodigoMaquina())) && 
+				(this.codigoDrive==unidade.getCodigoDrive())&& 
+				(this.nome.equals(unidade.getNome()))&&
+				(this.tamanho.equals(unidade.getTamanho()))&&
+				(this.tipoDeInterface.equals(unidade.getTipoDeInterface()))&&
+				(this.tipoDeMidea.equals(unidade.getTipoDeMidea()))&&
+				(this.status.equals(unidade.getStatus()))) return true;
+		return false;
+	}
 	
 }

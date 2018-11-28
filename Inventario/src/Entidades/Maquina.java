@@ -1,8 +1,6 @@
 package Entidades;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 @SuppressWarnings("serial")
@@ -12,18 +10,31 @@ public class Maquina implements Serializable,Comparable<Maquina> {
 	private String hostname;
 	private Hardware hardware;
 	private SO sistemaOperacional;
+	private List listaDeSoftwares;
+	private List listaDeAtualizacoes;
+	private List listaDeLogsDeErro;
+	private List listaDeLicencas;
 	private InventarioCorporativo inventario;
-	private List<Software> listaSoftwares = new ArrayList<Software>();
-	private List<Licenca>listaLicencas = new ArrayList<Licenca>();
-
+	
+	
 	public InventarioCorporativo getInventario() {
 		return inventario;
 	}
 
-	public void setInventario(InventarioCorporativo inventario) {  //não será usado
+	public void setInventario(InventarioCorporativo inventario) {
 		this.inventario = inventario;
 	}
 
+	public List getListaDeLicencas() {
+		return listaDeLicencas;
+	}
+
+	public void setListaDeLicencas(List listaDeLicencas) {
+		this.listaDeLicencas = listaDeLicencas;
+	}
+
+	private List ListaDeLicencas;
+	
 	public String getCodigoMaquina() {
 		return codigoMaquina;
 	}
@@ -54,30 +65,38 @@ public class Maquina implements Serializable,Comparable<Maquina> {
 	public void setSistemaOperacional(SO sistemaOperacional) {
 		this.sistemaOperacional = sistemaOperacional;
 	}
-
-	public List<Software> getListaSoftwares() {
-		return listaSoftwares;
+	public List getListaDeSoftwares() {
+		return listaDeSoftwares;
 	}
 
-	public void setListaSoftwares(List<Software> listaSoftwares) {
-		this.listaSoftwares = listaSoftwares;
+	public void setListaDeSoftwares(List listaDeProgramas) {
+		this.listaDeSoftwares = listaDeProgramas;
+	}
+	
+	public List getListaDeAtualizacoes() {
+		return listaDeAtualizacoes;
 	}
 
-	public List<Licenca> getListaLicencas() {
-		return listaLicencas;
+	public void setListaDeAtualizacoes(List listaDeAtualizacoes) {
+		this.listaDeAtualizacoes = listaDeAtualizacoes;
 	}
-
-	public void setListaLicencas(List<Licenca> listaLicencas) {
-		this.listaLicencas = listaLicencas;
+	public List getListaDeLogsDeErro() {
+		return listaDeLogsDeErro;
+	}
+	public void setListaDeLogsDeErro(List listaDeLogs) {
+		this.listaDeLogsDeErro =listaDeLogs;
+		
 	}
 
 	@Override
-	public int compareTo(Maquina o) {
+	public int compareTo(Maquina m) {
 		
-		if (o.getListaSoftwares().size()==this.listaSoftwares.size()) return 1;
-		if (o.getListaSoftwares().size()<=this.listaSoftwares.size()) return 1;
-		if (o.getListaSoftwares().size()>this.listaSoftwares.size()) return 0;
-		return -1;
+		if(m.getListaDeSoftwares().size()<=this.listaDeSoftwares.size()) return 1;
+		if(m.getListaDeSoftwares().size()==this.listaDeSoftwares.size()) return 1;
+		if(m.getListaDeSoftwares().size()>this.listaDeSoftwares.size()) return -1;
+		return 0;
 	}
+
 	
+
 }

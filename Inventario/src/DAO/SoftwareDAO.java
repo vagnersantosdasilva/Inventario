@@ -15,24 +15,29 @@ public class SoftwareDAO
 {
 	public boolean incluir(Connection conn ,Software unidade) throws SQLException
 	{
-		PreparedStatement pstmt = conn.prepareStatement
-		(
-			"insert into software "
-			+ "(codigo_maquina,"
-			+ "nome,"
-			+ "arquitetura,"
-			+ "data_instalacao)"
-			+ " values(?,?,?,?)"
-		);
-		
-		pstmt.setString(1,unidade.getCodigoMaquina());
-		
-		pstmt.setString(2,unidade.getNome());
-		pstmt.setString(3, unidade.getArquitetura());
-		pstmt.setString(4, unidade.getDataInstalacao());
-		int n=pstmt.executeUpdate();
-		pstmt.close();
-		return n==1;
+		if (existe(conn,unidade)) {atualizarUmSoftware(conn,unidade);}
+		else 
+		{
+			PreparedStatement pstmt = conn.prepareStatement
+			(
+				"insert into software "
+				+ "(codigo_maquina,"
+				+ "nome,"
+				+ "arquitetura,"
+				+ "data_instalacao)"
+				+ " values(?,?,?,?)"
+			);
+			
+			pstmt.setString(1,unidade.getCodigoMaquina());
+			
+			pstmt.setString(2,unidade.getNome());
+			pstmt.setString(3, unidade.getArquitetura());
+			pstmt.setString(4, unidade.getDataInstalacao());
+			int n=pstmt.executeUpdate();
+			pstmt.close();
+			return n==1;
+		}
+		return false;
 	}
 	
 	public boolean excluirTodos(Connection conn,String codigoMaquina) throws SQLException
@@ -128,6 +133,8 @@ public class SoftwareDAO
 		catch(Exception e)
 		{
 			System.out.println("Erro[SoftwareDAO:incluir]"+e.getMessage());
+			e.printStackTrace();
+					
 		}
 		return false;
 	}

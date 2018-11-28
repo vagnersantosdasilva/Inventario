@@ -13,25 +13,7 @@ public class CPU implements Serializable{
 	private String fabricante;
 	private String arquitetura;
 	private String status;
-	
-	
-	public CPU()
-	{
-		
-	}
-	
-	public CPU(String codigoMaquina,String nome, String numeroNucleos,String frequenciaMaxima,String numeroProcessadoresLogicos,String fabricante,String arquitetura,String status)
-	{
-		this.codigoMaquina=codigoMaquina;
-		this.nome=nome;
-		this.numeroNucleos=numeroNucleos;
-		this.frequenciaMaxima=frequenciaMaxima;
-		this.numeroProcessadoresLogicos=numeroProcessadoresLogicos;
-		this.fabricante=fabricante;
-		this.arquitetura=arquitetura;
-		this.status=status;
-		
-	}
+	private String comando;
 	
 	public String getCodigoMaquina() {
 		return codigoMaquina;
@@ -91,6 +73,24 @@ public class CPU implements Serializable{
 	public void setNumeroNucleos(String numeroNucleos) {
 		this.numeroNucleos = numeroNucleos;
 	}
+	public String getComando() {
+		return comando;
+	}
+
+	public void setComando(String comando) {
+		this.comando = comando;
+	}
+	public boolean equals(CPU cpu)
+	{
+		if ((this.codigoMaquina.equals(cpu.getCodigoMaquina())) &&(this.fabricante.equals(cpu.getFabricante())) &&
+				(this.frequenciaMaxima.equals(cpu.getFrequenciaMaxima())) &&
+				(this.nome.equals(cpu.getNome())) &&
+				(this.numeroNucleos.equals(cpu.getNumeroNucleos()))&&
+				(this.numeroProcessadoresLogicos.equals(cpu.getNumeroProcessadoresLogicos()))&&
+				(this.status.equals(cpu.getStatus()))) return true;
+		return false;
+	}
+
 	
 
 }

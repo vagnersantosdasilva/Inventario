@@ -8,14 +8,12 @@ import java.util.List;
 public class Hardware implements Serializable{
 	
 	private CPU cpu;
-	private List <Memoria>listaMemorias =new ArrayList<Memoria>();
-	private List <UnidadeArmazenamento>listaUnidadesArmazenamento = new ArrayList<UnidadeArmazenamento>();
-	
+	private List listaDeMemorias =new ArrayList();
+	private List listaDeUnidadesDeArmazenamento = new ArrayList();
+	private List listaDeUnidadesDeCDDVD = new ArrayList();
 	private PlacaMae placamae;
 	private Som som;
 	private Video video;
-	
-	
 	
 	public CPU getCpu() {
 		return cpu;
@@ -23,11 +21,23 @@ public class Hardware implements Serializable{
 	public void setCpu(CPU cpu) {
 		this.cpu = cpu;
 	}
-	public List<Memoria> getListaMemorias() {
-		return listaMemorias;
+	public List getListaDeMemorias() {
+		return listaDeMemorias;
 	}
-	public void adicionarMemoria(Memoria memoria) {
-		listaMemorias.add(memoria);
+	public void setListaDeMemorias(List listaDeMemorias) {
+		this.listaDeMemorias = listaDeMemorias;
+	}
+	public List getListaDeUnidadesDeArmazenamento() {
+		return listaDeUnidadesDeArmazenamento;
+	}
+	public void setListaDeUnidadesDeArmazenamento(List listaDeUnidadesDeArmazenamento) {
+		this.listaDeUnidadesDeArmazenamento = listaDeUnidadesDeArmazenamento;
+	}
+	public List getListaDeUnidadesDeCDDVD() {
+		return listaDeUnidadesDeCDDVD;
+	}
+	public void setListaDeUnidadesDeCDDVD(List listaDeUnidadesDeCDDVD) {
+		this.listaDeUnidadesDeCDDVD = listaDeUnidadesDeCDDVD;
 	}
 	public PlacaMae getPlacamae() {
 		return placamae;
@@ -48,26 +58,9 @@ public class Hardware implements Serializable{
 		this.video = video;
 	}
 	
-	public void adicionarUnidadeArmazenamento(UnidadeArmazenamento unidadeArmazenamento) {
-		listaUnidadesArmazenamento.add(unidadeArmazenamento);
-	}
-	
-	public void setListaUnidadeArmazenamento(List listaUnidadesArmazenamento)
-	{
-		this.listaUnidadesArmazenamento=listaUnidadesArmazenamento;
-	}
-	public void setListaDeMemorias(List listaMemorias)
-	{
-		this.listaMemorias=listaMemorias;
-	}
-	
-	public List<UnidadeArmazenamento> getListaUnidadesArmazenamento()
-	{
-		return listaUnidadesArmazenamento;
-	}
 	
 	
 	
 	
-
+	
 }

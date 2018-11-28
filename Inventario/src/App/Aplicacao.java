@@ -1,5 +1,6 @@
 package App;
 
+import java.io.IOException;
 import java.sql.Connection;
 import Controle.Atendente;
 import Controle.Servidor;
@@ -60,10 +61,11 @@ public class Aplicacao
 		}
 		System.out.println("Aplicação chamou todos os Threads...");
 	}
-	private static Propriedades obterPropriedades(String path) 
+	private static Propriedades obterPropriedades(String path) throws IOException 
 	{
-		String bd =path+"WEB-INF\\propriedades\\bd.cfg";
-		String jdbc = path+"WEB-INF\\propriedades\\jdbc.cfg";
+		String path_=(String)Util.Propriedades.lePropriedades("localAplicacao", path);
+		String bd =path_+"\\WebContent\\WEB-INF\\propriedades\\bd.cfg";
+		String jdbc = path_+"\\WebContent\\WEB-INF\\propriedades\\jdbc.cfg";
 		PropriedadesJDBCDAO jdbcdao = new PropriedadesJDBCDAO(jdbc);
 		PropriedadesSGBDDAO sgbddao = new PropriedadesSGBDDAO(bd);
 		PropriedadesSGBD propsgbd = sgbddao.obterPropriedades();

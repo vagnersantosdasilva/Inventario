@@ -14,30 +14,34 @@ public class MemoriasDAO
 		{
 			try
 			{
-					PreparedStatement pstmt = conn.prepareStatement
-						("insert into memorias "
-							+ "(codigo_maquina,"
-							+ "codigo_slot,"
-							+ "capacidade,"
-							+ "fabricante,"
-							+ "velocidade,"
-							+ "tipo,"
-							+ "status_drive) "	
-							+ " values(?,?,?,?,?,?,?)");
-					
-					pstmt.setString(1,unidade.getCodigoMaquina());
-					pstmt.setInt(2, unidade.getCodigoSlot());
-					pstmt.setString(3,unidade.getCapacidade());
-					pstmt.setString(4, unidade.getFabricante());
-					pstmt.setString(5, unidade.getVelocidade());
-					pstmt.setString(6, unidade.getTipo());
-					pstmt.setString(7, unidade.getStatus());
-					
-					
-					int n=pstmt.executeUpdate();
-					pstmt.close();
-					return n==1;
-				 
+				if (existe(conn,unidade)) {atualizarRegistro(conn,unidade);}	
+				else 
+				{	
+						PreparedStatement pstmt = conn.prepareStatement
+							("insert into memorias "
+								+ "(codigo_maquina,"
+								+ "codigo_slot,"
+								+ "capacidade,"
+								+ "fabricante,"
+								+ "velocidade,"
+								+ "tipo,"
+								+ "status_drive) "	
+								+ " values(?,?,?,?,?,?,?)");
+						
+						pstmt.setString(1,unidade.getCodigoMaquina());
+						pstmt.setInt(2, unidade.getCodigoSlot());
+						pstmt.setString(3,unidade.getCapacidade());
+						pstmt.setString(4, unidade.getFabricante());
+						pstmt.setString(5, unidade.getVelocidade());
+						pstmt.setString(6, unidade.getTipo());
+						pstmt.setString(7, unidade.getStatus());
+						
+						
+						int n=pstmt.executeUpdate();
+						pstmt.close();
+						return n==1;
+				}
+				return false;
 			}
 			catch(SQLException e)
 			{
@@ -45,6 +49,30 @@ public class MemoriasDAO
 			}
 			return false;
 		}
+		
+		public  boolean excluir (Connection conn , String codigoMaquina, int codigoSlot) 
+		{
+			try
+			{
+				PreparedStatement pstmt = conn.prepareStatement
+						(
+								"delete from memorias "
+								+ "where codigo_maquina = ? and codigo_slot= ?"
+						);
+				pstmt.setString(1, codigoMaquina);
+				pstmt.setInt(2, codigoSlot);
+				//pstmt.setInt(2, codigoSlot);
+				int n = pstmt.executeUpdate();
+				pstmt.close();
+				return n==1;
+			}
+			catch(SQLException e)
+			{
+				System.out.println("Erro[MemoriasDAO:excluir]"+e.getMessage());
+			}
+			return false;
+		}
+
 		
 		public  boolean excluir (Connection conn , String codigoMaquina) 
 		{
@@ -151,11 +179,13 @@ public class MemoriasDAO
 				{
 					if(existe(conn,memoria))
 					{
+						System.out.println(memoria.getCodigoSlot());
 						atualizarRegistro(conn,memoria);
 						
 					}
 					else
 					{
+						System.out.println(memoria.getCodigoSlot());
 						incluir(conn,memoria);
 					}
 				}

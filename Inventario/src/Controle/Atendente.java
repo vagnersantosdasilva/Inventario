@@ -1,8 +1,13 @@
 package Controle;
 
 import java.sql.Connection;
+import java.util.List;
+
 import DAO.Maquinas;
+import Entidades.Hardware;
 import Entidades.Maquina;
+import Entidades.Memoria;
+import Entidades.UnidadeArmazenamento;
 import Estruturas.Fila;
 
 public class Atendente 
@@ -42,6 +47,19 @@ public class Atendente
 	{
 		try 
 		{
+			if (maquina!=null) {
+				System.out.println("Máquina Código "+maquina.getCodigoMaquina() +" inserido em fila...");
+				Hardware hard = maquina.getHardware();
+				List <Memoria> lista = hard.getListaDeMemorias();
+				List <UnidadeArmazenamento> lista_ = hard.getListaDeUnidadesDeArmazenamento();
+				System.out.println("Teste de obtençao de memórias");
+				for (Memoria mem :lista) {
+					System.out.println("Capacidade Mem:"+mem.getCapacidade());
+					System.out.println("Comando       :"+mem.getComando());
+					System.out.println("Slot       :"+mem.getCodigoSlot());
+				}
+				
+			}
 			if(!(fila.estaCheia()))
 			{
 				fila.inserirNaFila(maquina);

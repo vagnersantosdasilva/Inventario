@@ -10,13 +10,15 @@ public class PlacaMae implements Serializable{
 	private String fabricante;
 	private String serial;
 	private String status;
+	private String comando;
 	
-	
-	
-	
+	public String getComando() {
+		return comando;
+	}
+	public void setComando(String comando) {
+		this.comando = comando;
+	}
 	public PlacaMae(){}
-	
-	
 	
 	public PlacaMae(String codigoMaquina, String modelo,String fabricante,String serial,String status)
 	{
@@ -83,6 +85,15 @@ public class PlacaMae implements Serializable{
 	public void setFabricante(String fabricante) {
 		this.fabricante = fabricante;
 	}
-
-
+	
+	public boolean equals(PlacaMae placa)
+	{
+		if((this.codigoMaquina.equals(placa.getCodigoMaquina()))&&
+				(this.fabricante.equals(placa.getFabricante())&&
+				(this.modelo.equals(placa.getModelo())))&&
+				(this.serial.equals(placa.getSerial()))&&
+				(this.status.equals(placa.getStatus()))) return true;
+		return false;
+	}
+	
 }

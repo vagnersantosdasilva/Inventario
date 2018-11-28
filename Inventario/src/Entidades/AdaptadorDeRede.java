@@ -4,16 +4,23 @@ public class AdaptadorDeRede
 {
 	private String codigoMaquina;
 	private String nome;
-	private String macAddress;
+	private String macAdress;
 	private String indice;
 	private String ultimoReset;
 	private String velocidade;
 	private String status;
 	private String fabricante;
 	private String descricao;
+	private String comando;
 	
 	
 	
+	public String getComando() {
+		return comando;
+	}
+	public void setComando(String comando) {
+		this.comando = comando;
+	}
 	public String getCodigoMaquina() {
 		return codigoMaquina;
 	}
@@ -26,11 +33,11 @@ public class AdaptadorDeRede
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public String getMacAddress() {
-		return macAddress;
+	public String getMacAdress() {
+		return macAdress;
 	}
-	public void setMacAddress(String macAddress) {
-		this.macAddress = macAddress;
+	public void setMacAdress(String macAdress) {
+		this.macAdress = macAdress;
 	}
 	public String getIndice() {
 		return indice;
@@ -69,7 +76,18 @@ public class AdaptadorDeRede
 		this.descricao = descricao;
 	}
 	
-	
+	public boolean equals(AdaptadorDeRede adaptador)
+	{
+		if ((adaptador.getCodigoMaquina().equals(this.codigoMaquina))&&
+				(adaptador.getDescricao().equals(this.descricao))&& 
+				(adaptador.getFabricante().equals(this.fabricante))&&
+				(adaptador.getIndice().equals(this.indice))&&
+				(adaptador.getMacAdress().equals(this.macAdress))&&
+				(adaptador.getNome().equals(this.nome))&&
+				(adaptador.getVelocidade().equals(this.velocidade))&&
+				(adaptador.getStatus().equals(this.status))) return true;
+		return false;
+	}
 	
 	
 }

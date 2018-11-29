@@ -85,8 +85,8 @@ public class CdromDAO
 					+ "data_instalacao=?,"
 					+ "fabricante=?,"
 					+ "drive_letra=?,"
-					+ "status_drive=?,"
-					+ "where codigo_maquina=? "
+					+ "status_drive=? "
+					+ " where codigo_maquina=? "
 					+ "and indice=?");
 			pstmt.setString(1, cdrom.getNome());
 			pstmt.setString(2, cdrom.getTipoDeMidea());

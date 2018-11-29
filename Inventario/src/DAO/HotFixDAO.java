@@ -33,7 +33,7 @@ public class HotFixDAO
 					+ "nome,"
 					+ "service_pack_in_effect,"
 					+ "status) "
-					+ " values(?,?,?,?,?,?,?,?,?,?,?)"
+					+ " values(?,?,?,?,?,?,?,?,?,?,?,?)"
 				);
 				
 				pstmt.setString(1,unidade.getCodigoMaquina());
@@ -138,8 +138,7 @@ public class HotFixDAO
 		return false;
 	}
 	
-	@SuppressWarnings("unused")
-	private boolean excluir(Connection conn,HotFixWindows unidade) 
+	public boolean excluir(Connection conn,HotFixWindows unidade) 
 	{
 		try 
 		{

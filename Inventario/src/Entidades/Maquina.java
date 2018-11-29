@@ -5,7 +5,7 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class Maquina implements Serializable,Comparable<Maquina> {
-	
+	private static final long serialVersionUID = 1L;
 	private String codigoMaquina;
 	private String hostname;
 	private Hardware hardware;
@@ -88,7 +88,7 @@ public class Maquina implements Serializable,Comparable<Maquina> {
 		
 	}
 
-	@Override
+
 	public int compareTo(Maquina m) {
 		
 		if(m.getListaDeSoftwares().size()<=this.listaDeSoftwares.size()) return 1;

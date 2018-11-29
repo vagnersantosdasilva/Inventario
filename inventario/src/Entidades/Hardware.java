@@ -6,7 +6,7 @@ import java.util.List;
 
 @SuppressWarnings("serial")
 public class Hardware implements Serializable{
-	
+	private static final long serialVersionUID = 1L;
 	private CPU cpu;
 	private List listaDeMemorias =new ArrayList();
 	private List listaDeUnidadesDeArmazenamento = new ArrayList();

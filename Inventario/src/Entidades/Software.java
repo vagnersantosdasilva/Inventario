@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Software implements Serializable{
-	
+	private static final long serialVersionUID = 1L;
 	private String codigoMaquina;
 	private int codigoSoftware;
 	private String nome;

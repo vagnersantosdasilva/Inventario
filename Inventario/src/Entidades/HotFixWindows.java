@@ -5,6 +5,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class HotFixWindows implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private String codigoMaquina;
 	private String caption;
 	private String csName;

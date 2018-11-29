@@ -2,18 +2,10 @@ package Entidades;
 
 import java.io.Serializable;
 
-/*
-Nome : Microsoft Windows 7 Ultimate 
-Atualizacao : Service Pack 1
-HostName : NAV-WIN-01
-DataInstalacao : 20170216000836.000000-120
-UltimoBoot : 20171115193740.125600-120
-Serial : 00426-OEM-8992662-00006
-Status : OK
-Versao : 6.1.7601*/
 
 @SuppressWarnings("serial")
 public class SO implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private String codigoMaquina;
 	private String nome;
 	private String arquitetura;

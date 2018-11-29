@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class PlacaMae implements Serializable{
-	
+	private static final long serialVersionUID = 1L;
 	private String codigoMaquina;
 	private String modelo;
 	private String fabricante;

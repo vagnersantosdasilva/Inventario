@@ -5,6 +5,7 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class LogErro implements Serializable
 {
+	private static final long serialVersionUID = 1L;
 	private String codigoMaquina;
 	private String category;
 	private String categoryString;

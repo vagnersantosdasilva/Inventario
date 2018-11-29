@@ -1,10 +1,10 @@
-- Objetivos do projeto
+﻿- Objetivos do projeto
 -------------------------
 
  Manter informações de máquinas do tipo desktop ,notebooks, tablets, servidores, referentes a programas instalados, hardware instalado, localização e responsável, licenças, informações de patrimônio .
 
 -Escopos do Projeto 
-------------------------
+-----------------------
 
  Servidor  :
  ---------------------------------------------------------------------------------------------------------------------

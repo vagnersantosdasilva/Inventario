@@ -16,18 +16,16 @@ public class SomDAO
 			PreparedStatement  pstmt =conn.prepareStatement
 			("insert into som("
 					+ "codigo_maquina,"
-					+ "nome,"
 					+ "fabricante,"
 					+ "data_instalacao,"
-					+ "status_drive) "
-					+ "values(?,?,?,?,?)"
+					+ "status) "
+					+ "values(?,?,?,?)"
 			);
 			
 			pstmt.setString(1, som.getCodigoMaquina());
-			pstmt.setString(2, som.getNome());
-			pstmt.setString(3, som.getFabricante());
-			pstmt.setString(4, som.getDatainstalacao());
-			pstmt.setString(5, som.getSatus());
+			pstmt.setString(2, som.getFabricante());
+			pstmt.setString(3, som.getDatainstalacao());
+			pstmt.setString(4, som.getStatus());
 			int n=pstmt.executeUpdate();
 			pstmt.close();
 			return n==1;
@@ -46,17 +44,16 @@ public class SomDAO
 		try
 		{
 			PreparedStatement pstmt=conn.prepareStatement
-					("update som set"
-							+ "nome=?,"
-							+ "fabricante=?"
+					("update som set "
+							+ "fabricante=? ,"
 							+ "data_instalacao=?,"
-							+ "status_drive=?,"
+							+ "status=? "
 							+ "where codigo_maquina=?");
-			pstmt.setString(1, som.getNome());
-			pstmt.setString(2, som.getFabricante());
-			pstmt.setString(3, som.getDatainstalacao());
-			pstmt.setString(4, som.getSatus());
-			pstmt.setString(5, som.getCodigoMaquina());
+		
+			pstmt.setString(1, som.getFabricante());
+			pstmt.setString(2, som.getDatainstalacao());
+			pstmt.setString(3, som.getStatus());
+			pstmt.setString(4, som.getCodigoMaquina());
 			int n=pstmt.executeUpdate();
 			pstmt.close();
 			return n==1;
@@ -97,10 +94,10 @@ public class SomDAO
 			{
 				
 				som.setCodigoMaquina(rs.getString("codigo_maquina"));
-				som.setNome(rs.getString("nome"));
+				
 				som.setFabricante(rs.getString("fabricante"));
 				som.setDatainstalacao(rs.getString("data_instalacao"));
-				som.setStatus(rs.getString("status_drive"));
+				som.setStatus(rs.getString("status"));
 			}
 			rs.close();
 			pstmt.close();
@@ -113,6 +110,36 @@ public class SomDAO
 		}
 		
 		return (new Som());
+	}
+
+	public boolean existe(Connection conn, String codigoMaquina) {
+		
+		try
+		{
+			PreparedStatement pstmt = conn.prepareStatement("select * from som where codigo_maquina=?");
+			pstmt.setString(1, codigoMaquina);
+			ResultSet rs = pstmt.executeQuery();
+			int cont=0;
+			if (rs.next())
+			{
+				do
+				{
+					cont=rs.getRow();
+				}
+				while(rs.next());
+				rs.close();
+				pstmt.close();
+			}
+			if(cont>0)return true;
+			return false;
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro[SomDAO:existe]"+e.getMessage());
+			e.printStackTrace();
+		}
+		return false;
+	
 	}
 	
 

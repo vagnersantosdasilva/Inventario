@@ -158,38 +158,49 @@ public class HotFixDAO
 	}
 	
 	@SuppressWarnings("unused")
-	private List<HotFixWindows> obterListaDeHotFix(Connection conn,String codigoMaquina)
+	public List<HotFixWindows> obterListaDeHotFix(Connection conn,String codigoMaquina)
 	{
+		List<HotFixWindows> lista = new ArrayList<HotFixWindows>();
 		try
 		{
 			PreparedStatement pstmt = conn.prepareStatement("select * from hotfix where codigo_maquina=?");
 			pstmt.setString(1, codigoMaquina);
 			ResultSet rs = pstmt.executeQuery();
-			List<HotFixWindows> lista = new ArrayList<HotFixWindows>();
+			
 			if (rs.next())
 			{
-				HotFixWindows hot=new HotFixWindows();
-				hot.setCodigoMaquina(rs.getString("codigoMaquina"));
-				hot.setCaption(rs.getString("caption"));
-				hot.setCsName(rs.getString("cs_name"));
-				hot.setDescription(rs.getString("description"));
-				hot.setFixComments(rs.getString("fix_comments"));
-				hot.setHotFixID(rs.getString("hotfix_id"));
-				hot.setInstallDate(rs.getString("install_date"));
-				hot.setInstalledBy(rs.getString("installed_by"));
-				hot.setInstalledOn(rs.getString("installed_on"));
-				hot.setName(rs.getString("nome"));
-				hot.setServicePackInEffect(rs.getString("service_pack_in_effect"));
-				hot.setStatus(rs.getString("status"));
-				lista.add(hot);
+				do
+				{
+					HotFixWindows hot=new HotFixWindows();
+					hot.setCodigoMaquina(rs.getString("codigo_maquina"));
+					hot.setCaption(rs.getString("caption"));
+					hot.setCsName(rs.getString("cs_name"));
+					hot.setDescription(rs.getString("description"));
+					hot.setFixComments(rs.getString("fix_comments"));
+					hot.setHotFixID(rs.getString("hotfix_id"));
+					hot.setInstallDate(rs.getString("install_date"));
+					hot.setInstalledBy(rs.getString("installed_by"));
+					hot.setInstalledOn(rs.getString("installed_on"));
+					hot.setName(rs.getString("nome"));
+					hot.setServicePackInEffect(rs.getString("service_pack_in_effect"));
+					hot.setStatus(rs.getString("status"));
+					lista.add(hot);
+				}	
+				while(rs.next());
+				rs.close();
+				pstmt.close();
 			}
-		return lista;	
+			System.out.println("TamanhoDeListaDeHoTFix :"+lista.size());
+			return lista;
+		
 		}catch(SQLException e) 
 		{
 			System.out.println("Erro[HotFixDAO:obterListaDeHotFix]"+e.getMessage());
 			e.printStackTrace();
 		}	
-		return new ArrayList<HotFixWindows>();
+		return  lista;
 	}
+
+	
 	
 }

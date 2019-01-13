@@ -2,6 +2,7 @@ package Controle;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ import DAO.Maquinas;
 import DAO.PropriedadesJDBCDAO;
 import DAO.PropriedadesSGBDDAO;
 import DAO.ServicoDAO;
+import Entidades.HotFixWindows;
 import Entidades.Maquina;
 import Entidades.Propriedades;
 import Entidades.PropriedadesJDBC;
@@ -67,7 +69,7 @@ public class BuscarController extends HttpServlet
 				request.setAttribute("erro", mensagem);
 				request.getRequestDispatcher("/retornoErro.jsp").forward(request, response);
 			}	
-			
+		
 			request.setAttribute("maquina",host);
 			request.getRequestDispatcher("/protegido/inventario.jsp").forward(request,response);
 					

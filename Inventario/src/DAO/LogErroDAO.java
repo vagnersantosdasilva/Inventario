@@ -4,6 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import Entidades.HotFixWindows;
 import Entidades.LogErro;
 
 
@@ -143,5 +147,39 @@ public class LogErroDAO
 		return false;
 	}
 	
+	public List<LogErro> obterLogs(Connection conn,String codigoMaquina) 
+	{
+		
+		try
+		{
+			PreparedStatement pstmt = conn.prepareStatement("select * from evento_erro where codigo_maquina=?");
+			pstmt.setString(1, codigoMaquina);
+			ResultSet rs = pstmt.executeQuery();
+			List<LogErro> lista = new ArrayList<LogErro>();
+			if (rs.next())
+			{
+				LogErro log = new LogErro();
+				log.setCategory(rs.getString("category"));
+				log.setEventCode(rs.getString("event_code"));
+				log.setLogFile(rs.getString("log_file"));
+				log.setMessage(rs.getString("message"));
+				log.setRecordNumber(rs.getString("record_name"));
+				log.setSourceName(rs.getString("source_name"));
+				log.setType(rs.getString("type"));
+				log.setUser(rs.getString("user"));
+				log.setTimeGenerated(rs.getString("time_generated"));
+				log.setCodigoMaquina(rs.getString("codigo_maquina"));
+				lista.add(log);
+			}
+			
+			return lista;
+		}
+		catch(SQLException e) 
+		{
+			System.out.println("[LogErroDAO:obterLogs] : "+e.getMessage() );
+			e.printStackTrace();
+			return new ArrayList<LogErro>();
+		}
+	}
 
 }

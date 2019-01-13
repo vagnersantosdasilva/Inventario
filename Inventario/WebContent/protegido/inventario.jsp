@@ -198,17 +198,17 @@
 										<table class="table">
 											<tr>
 												<th>Nome </th>
-												<th>Versão </th>
 												<th>Arquitetura </th>
-												<th>Última Atualização</th>
-												<th>Licença</th>
+												<th>Versão </th>
+												<th>Atualização</th>
+												
 											</tr>
 											<tr>
 												<td><c:out value="${maquina.sistemaOperacional.nome}" /></td>
 												<td><c:out value="${maquina.sistemaOperacional.arquitetura}" /></td>
 												<td><c:out value="${maquina.sistemaOperacional.versao}" /></td>
 												<td><c:out value="${maquina.sistemaOperacional.atualizacao}" /></td>
-												<td ><span class="glyphicon glyphicon-edit"> </span></td>
+												
 											</tr>
 																						
 										</table>
@@ -229,16 +229,51 @@
 												<tr>
 													<th>Nome </th>
 													<th>Arquitetura </th>
-													<th>Data De Instalação</th>
+													<th>Data</th>
 													
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach items="${maquina.listaDeSoftwares}" var="software">						
 												<tr>
-													<td><c:out value="${software.nome}" default=" " /> </td>
-													<td><c:out value="${software.arquitetura}" default=" " /></td>
-													<td><c:out value="${software.dataInstalacao}" default=" " /></td>
+													<td style="color:red;"><c:out value="${software.nome}" default=" " /> </td>
+													<td style="color:blue;" ><c:out value="${software.arquitetura}" default=" " /></td>
+													<td style="color:green;"><c:out value="${software.dataInstalacao}" default=" " /></td>
+													
+												</tr>
+												</c:forEach>
+											</tbody>						
+										</table>
+									</div>
+								</div>
+							</div>
+							
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion1" href="#hotfix">HotFix Windows</a>
+									</h4>
+								</div>
+								<div id="hotfix" class="panel-collapse collapse">
+									<div class="panel-body">
+										<!--  <table class="table">-->
+										<table width="99%" class="table table-striped table-bordered table-hover" id="dataTables">
+											<thead>				
+												<tr>
+													<th>ID </th>
+													<th>Título </th>
+													<th>Descrição</th>
+													<th>Data</th>
+													
+												</tr>
+											</thead>
+											<tbody>
+												<c:forEach items="${maquina.listaDeAtualizacoes}" var="hotFixWindows">	
+												<tr>
+													<td style="color:red;"><b><c:out value="${hotFixWindows.hotFixID}" default=" " /> </b></td>
+													<td style="color:blue;"><b><c:out value="${hotFixWindows.caption}" default=" " /></b></td>
+													<td style="color:green;"><b><c:out value="${hotFixWindows.description}" default=" " /></b></td>
+													<td style="color:black;"><b><c:out value="${hotFixWindows.installedOn}" default=" " /></b></td>
 													
 												</tr>
 												</c:forEach>
@@ -259,7 +294,7 @@
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h4 class="panel-title">
-											<a data-toggle="collapse" data-parent="#accordion2" href="#cpu">CPU</a>
+											<a data-toggle="collapse" data-parent="#accordion2" href="#cpu">Processador</a>
 										</h4>
 									</div>
 									<div id="cpu" class="panel-collapse collapse in">
@@ -371,6 +406,61 @@
 									</div>
 								</div>
 							</div>
+							
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion2" href="#audio">Drive de Áudio</a>
+									</h4>
+								</div>
+								<div id="audio" class="panel-collapse collapse">
+									<div class="panel-body">
+										<table class="table">
+											<tr> 
+												<th>Fabricante</th>
+												<th>Data</th>
+												<th>Status</th>
+											</tr>	
+											<tr>
+												
+												<td><c:out value="${maquina.hardware.som.fabricante}" default="?" /></td>
+												<td><c:out value="${maquina.hardware.som.datainstalacao}" default="?"/></td>
+												<td><c:out value="${maquina.hardware.som.status}" default="?"/></td>
+											</tr>	
+										</table>       
+									</div>
+								</div>
+							</div>
+							
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion2" href="#video">Drive de Vídeo</a>
+									</h4>
+								</div>
+								<div id="video" class="panel-collapse collapse">
+									<div class="panel-body">
+										<table class="table">
+											<tr> 
+												<th>Drive</th>
+												<th>Horizontal</th>
+												<th>Vertical</th>
+												<th>Data</th>
+												<th>Versão</th>
+											</tr>	
+											<tr>
+												<td><c:out value="${maquina.hardware.video.nome}" default="?" /></td>
+												<td><c:out value="${maquina.hardware.video.currentHorizontalResolution}" default="?" /></td>
+												<td><c:out value="${maquina.hardware.video.currentVerticalResolution}" default="?"/></td>
+												<td><c:out value="${maquina.hardware.video.driverDate}" default="?"/></td>
+												<td><c:out value="${maquina.hardware.video.driverVersion}" default="?"/></td>
+											</tr>	
+										</table>             
+									</div>
+								</div>
+							</div>
+							
+							
 						</div>
 					</div>	
 				</div>	

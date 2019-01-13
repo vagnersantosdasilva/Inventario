@@ -24,8 +24,10 @@ public class SoftwareDAO
 				+ "(codigo_maquina,"
 				+ "nome,"
 				+ "arquitetura,"
-				+ "data_instalacao)"
-				+ " values(?,?,?,?)"
+				+ "data_instalacao,"
+				+ "install_location,"
+				+ "uninstall_location)"
+				+ " values(?,?,?,?,?,?)"
 			);
 			
 			pstmt.setString(1,unidade.getCodigoMaquina());
@@ -33,6 +35,8 @@ public class SoftwareDAO
 			pstmt.setString(2,unidade.getNome());
 			pstmt.setString(3, unidade.getArquitetura());
 			pstmt.setString(4, unidade.getDataInstalacao());
+			pstmt.setString(5, unidade.getInstallLocation());
+			pstmt.setString(6, unidade.getUninstallString());
 			int n=pstmt.executeUpdate();
 			pstmt.close();
 			return n==1;
@@ -80,6 +84,8 @@ public class SoftwareDAO
 				unidade.setNome(rs.getString("nome"));
 				unidade.setArquitetura(rs.getString("arquitetura"));
 				unidade.setDataInstalacao(rs.getString("data_instalacao"));
+				unidade.setInstallLocation(rs.getString("install_location"));
+				unidade.setUninstallString(rs.getString("uninstall_location"));
 				listaDeUnidades.add(unidade);
 			}
 			while(rs.next());
@@ -100,14 +106,18 @@ public class SoftwareDAO
 					(
 						"update software set "
 							+ "arquitetura=?,"
-							+ "data_instalacao=?"
+							+ "data_instalacao=?,"
+							+ "install_location=?,"
+							+ "uninstall_location=? "
 							+ " where codigo_maquina=? "
 					        + "and nome=?"
 					);
 					pstmt.setString(1, unidade.getArquitetura());
 					pstmt.setString(2,unidade.getDataInstalacao());
-					pstmt.setString(3, unidade.getCodigoMaquina());
-					pstmt.setString(4,unidade.getNome());
+					pstmt.setString(3, unidade.getInstallLocation());
+					pstmt.setString(4, unidade.getUninstallString());
+					pstmt.setString(5, unidade.getCodigoMaquina());
+					pstmt.setString(6,unidade.getNome());
 					int n = pstmt.executeUpdate();
 					pstmt.close();
 					return n==1;

@@ -43,7 +43,7 @@ public class Som implements Serializable{
 	public void setDatainstalacao(String datainstalacao) {
 		this.datainstalacao = datainstalacao;
 	}
-	public String getSatus() {
+	public String getStatus() {
 		return status;
 	}
 	public void setStatus(String satus) {
@@ -57,7 +57,7 @@ public class Som implements Serializable{
 				(this.datainstalacao.equals(som.getDatainstalacao()))&&
 				(this.fabricante.equals(som.getFabricante()))&&
 				(this.nome.equals(som.getNome()))&&
-				(this.status.equals(som.getSatus()))) return true;
+				(this.status.equals(som.getStatus()))) return true;
 		return false;
 	}
 	

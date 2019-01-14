@@ -1,8 +1,13 @@
 package Controle;
+
 import java.sql.Connection;
-import java.util.Date;
+import java.util.List;
+
 import DAO.Maquinas;
+import Entidades.Hardware;
 import Entidades.Maquina;
+import Entidades.Memoria;
+import Entidades.UnidadeArmazenamento;
 import Estruturas.Fila;
 
 public class Atendente 
@@ -43,9 +48,7 @@ public class Atendente
 		try 
 		{
 			if (maquina!=null) {
-				Date date = new Date();
-				
-				System.out.println("["+date.toString()+"] Máquina Código "+maquina.getCodigoMaquina() +" inserido em fila...");
+				System.out.println("Máquina Código "+maquina.getCodigoMaquina() +" inserido em fila...");
 				
 			}
 			if(!(fila.estaCheia()))
@@ -75,8 +78,7 @@ public class Atendente
 				if (dao.incluir(conn, unidade))
 				{
 					conn.commit();
-					Date date = new Date();
-					System.out.println("["+date.toString()+"] Mantido : "+unidade.getHostname());
+					System.out.println("Mantido : "+unidade.getHostname());
 				}
 				
 				notifyAll();

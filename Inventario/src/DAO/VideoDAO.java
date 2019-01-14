@@ -135,4 +135,32 @@ public class VideoDAO
 		
 		return new Video();
 	}
+
+	public boolean existe(Connection conn, String codigoMaquina) {
+		try
+		{
+			PreparedStatement pstmt = conn.prepareStatement("select * from video where codigo_maquina=?");
+			pstmt.setString(1, codigoMaquina);
+			ResultSet rs = pstmt.executeQuery();
+			int cont=0;
+			if (rs.next())
+			{
+				do
+				{
+					cont=rs.getRow();
+				}
+				while(rs.next());
+				rs.close();
+				pstmt.close();
+			}
+			if(cont>0)return true;
+			return false;
+		}
+		catch(SQLException e)
+		{
+			System.out.println("Erro[VideoDAO:existe]"+e.getMessage());
+			e.printStackTrace();
+		}
+		return false;
+	}
 }

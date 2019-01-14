@@ -20,6 +20,7 @@ import Entidades.Cdrom;
 import Entidades.Hardware;
 import Entidades.HotFixWindows;
 import Entidades.InventarioCorporativo;
+import Entidades.Licenca;
 import Entidades.LogErro;
 
 
@@ -46,6 +47,8 @@ public class Maquinas extends Thread
 	private CPUDAO cpuDAO = new CPUDAO();
 	private MemoriasDAO memoriasDAO = new MemoriasDAO();
 	private PlacaMaeDAO placaDAO = new PlacaMaeDAO();
+	private VideoDAO videoDAO = new VideoDAO();
+	private SomDAO somDAO  = new SomDAO();
 	private SoftwareDAO softwareDAO = new SoftwareDAO();
 	private InventarioDAO inventarioDAO = new InventarioDAO();
 	private LicencasDAO licencasDAO = new LicencasDAO();
@@ -134,6 +137,16 @@ public class Maquinas extends Thread
 					if (placaDAO.existe(conn, unidade.getCodigoMaquina())) {placaDAO.atualizarRegistro(conn, placa);}
 					else {placaDAO.incluir(conn, placa);}
 				}
+				
+				if (video.getCodigoMaquina()!=null) {
+					if (videoDAO.existe(conn, unidade.getCodigoMaquina())) {videoDAO.update(conn,video);}
+					else{videoDAO.incluir(conn, video);}
+				}
+				
+				if (som.getCodigoMaquina()!=null) {
+					if (somDAO.existe(conn, unidade.getCodigoMaquina())) {somDAO.update(conn, som);}
+					else{somDAO.incluir(conn, som);}
+				}
 				return true;
 		}	
 		System.out.println("Tentativa de inclusão falhou - Objeto Nulo");
@@ -220,11 +233,19 @@ public class Maquinas extends Thread
 		{
 			so = soDAO.obterSistema(conn, codigoMaquina);
 			List <Software>listaSoftwares = softwareDAO.listarSoftwares(conn, codigoMaquina);
+			List <HotFixWindows>listaDeAtualizacoes = hotDAO.obterListaDeHotFix(conn,codigoMaquina);
+			List <LogErro>listaDeLogs = logDAO.obterLogs(conn, codigoMaquina);
+			
 			maquina.setListaDeSoftwares(listaSoftwares);
+			maquina.setListaDeAtualizacoes(listaDeAtualizacoes);
+			maquina.setListaDeLogsDeErro(listaDeLogs);
+			
 			hardware.setListaDeUnidadesDeArmazenamento(armazenamentoDAO.buscarUnidades(conn, codigoMaquina));
 			hardware.setCpu((CPU)cpuDAO.buscarProcessador(conn, codigoMaquina));
 			hardware.setListaDeMemorias(memoriasDAO.buscarUnidades(conn, codigoMaquina));
 			hardware.setPlacamae(placaDAO.obterPlacaMae(conn, codigoMaquina));
+			hardware.setVideo(videoDAO.getVideo(conn, codigoMaquina));
+			hardware.setSom(somDAO.getSom(conn, codigoMaquina));
 			maquina.setCodigoMaquina(codigoMaquina);
 			maquina.setSistemaOperacional(so);
 			maquina.setHostname(so.getHostname());

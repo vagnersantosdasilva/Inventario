@@ -77,7 +77,7 @@ public class Memoria implements Serializable{
 		this.velocidade = velocidade;
 	}
 	public String getTipo() {
-		return tipo;
+		return converterTipo(tipo);
 	}
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
@@ -113,6 +113,43 @@ public class Memoria implements Serializable{
 		 if ((slot.equals("B2")) || (slot.indexOf("DIMM6")>=0)) return 7;
 		 if ((slot.equals("B3")) || (slot.indexOf("DIMM7")>=0)) return 8;
 		 return 0;
+	 }
+	 private String converterTipo(String type) {
+		 if (tipo.equals ("0")) return "Unknown";
+		 if (tipo.equals ("1")) return "Other";
+		 if (tipo.equals ("2")) return "DRAM";
+		 if (tipo.equals ("3")) return "Synch.DRAM";
+		 if (tipo.equals ("4")) return "Cache DRAM";
+		 if (tipo.equals ("5")) return "EDO";
+		 if (tipo.equals ("6")) return "EDRAM";
+		 if (tipo.equals ("7")) return "VRAM";
+		 if (tipo.equals ("8")) return "SRAM";
+		 if (tipo.equals ("9")) return "RAM";
+		 if (tipo.equals ("10")) return "ROM";
+		 if (tipo.equals ("11")) return "Flash";
+		 if (tipo.equals ("12")) return "EEPROM";
+		 if (tipo.equals ("13")) return "FEPROM";
+		 if (tipo.equals ("14")) return "EPROM";
+		 if (tipo.equals ("15")) return "CDRAM";
+		 if (tipo.equals ("16")) return "3DRAM";
+		 if (tipo.equals ("18")) return "SDRAM";
+		 if (tipo.equals ("19")) return "SGRAM";
+		 if (tipo.equals ("20")) return "RDRAM";
+		 if (tipo.equals ("21")) return "DDR";
+		 if (tipo.equals ("22")) return "DDR2";
+		 if (tipo.equals ("23")) return "DDR2FBDIMM";
+		 if (tipo.equals ("24")) return "DDR3";
+		 if (tipo.equals ("25")) return "FBD2";
+		 if (isDDR4(type)) return "DDR4";
+		 return type;
+		 
+	 }
+	 private boolean isDDR4(String type) {
+		 if (type!=null) {		 
+			 int frequencia  =  Integer.parseInt(velocidade);
+			 if (frequencia >1600) return true;
+		 }
+		 return false;
 	 }
 	 
 	 public boolean equals(Memoria memoria)

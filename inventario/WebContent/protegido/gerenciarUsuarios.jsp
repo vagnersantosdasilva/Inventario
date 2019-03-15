@@ -142,7 +142,7 @@
 						<button type="button" class="close" data-dismiss="modal" id="btn-fechar-x">&times;</button>
 						<h4 class="modal-title">Configuração de Usuários</h4>
 					</div>
-					<form  id="usuario_form"  Action="salvarusuario" Method="post" data-toggle="validator" role="form">	
+					<form  id="cliente_form"  Action="Cadastro.php" Method="post" data-toggle="validator" role="form">	
 					<div class="modal-body">
 						<input type="hidden" name="contexto" class="form-control " id="mcontexto"  >
 						<div class="form-group">
